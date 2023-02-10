@@ -8,8 +8,6 @@
   </head>
   <body>
 
-
-
     <div class="container" id="container">
       <div class="form">
         <label for="username">Username:</label>

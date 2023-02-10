@@ -6,3 +6,9 @@
 /www/**
 .DS_Store
 /buildtest
+*.json
+.env
+*.env/*
+cli/.env/
+cli/.env/**
+cli/.env
