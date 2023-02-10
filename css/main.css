@@ -1,0 +1,124 @@
+:root {
+    --globalBackground:#fff;
+    --globalBackgroundOpaque:#fff;
+    --globalSecondaryBackground:#f1f1f1;
+    --globalTertiaryBackground:#dad8d6;
+    --globalAccentBackground:#fff;
+    --globalSecondaryAccentBackground:#f8f8f8;
+    --globalSiteBackground:#f8f8f8;
+    --subtleButtonBackground:#e7e6e5;
+    --globalBorder:rgba(0,0,0,.1);
+    --globalGray:#dad8d6;
+    --globalGraySoft:#f1f1f1;
+    --globalColorThemeFull:#312e2b;
+    --globalColorThemeHigh:#4b4847;
+    --globalColorThemeMid:#666564;
+    --globalColorThemeLow:#8b8987;
+    --globalColorThemeLower:#bebdb9;
+    --globalColorThemeLink:#3a729c;
+    --globalColorThemeBlueToWhite:#0b5987;
+    --globalColorThemeBlueToMid:#3a729c;
+    --globalColorThemeBlueToMidHover:rgba(58,114,156,.8);
+    --globalColorThemeBlueToHigh:#3a729c;
+    --globalColorThemeBlueToHighHover:rgba(58,114,156,.8);
+    --globalColorThemeHighToMid:#4b4847;
+    --globalColorThemeFullToMid:#312e2b;
+    --globalColorNeutral50:#f8f8f8;
+    --globalColorNeutral100:#f1f1f1;
+    --globalColorNeutral200:#dad8d6;
+    --globalSecondaryFont:"Montserrat",sans-serif;
+    --easeOutCubic:cubic-bezier(.33,1,.68,1);
+    --globalOverlayBackground:#f1f1f1
+   }
+   .dark-mode {
+    --globalBackground:rgba(0,0,0,.2);
+    --globalBackgroundOpaque:#262421;
+    --globalSecondaryBackground:rgba(0,0,0,.14);
+    --globalTertiaryBackground:rgba(0,0,0,.18);
+    --globalAccentBackground:hsla(0,0%,100%,.14);
+    --globalSecondaryAccentBackground:hsla(0,0%,100%,.05);
+    --globalSiteBackground:#312e2b;
+    --subtleButtonBackground:hsla(0,0%,100%,.16);
+    --globalBorder:hsla(0,0%,100%,.1);
+    --globalGray:hsla(0,0%,100%,.08);
+    --globalGraySoft:hsla(0,0%,100%,.08);
+    --globalColorThemeFull:#fff;
+    --globalColorThemeHigh:hsla(0,0%,100%,.85);
+    --globalColorThemeMid:hsla(0,0%,100%,.72);
+    --globalColorThemeLow:hsla(0,0%,100%,.5);
+    --globalColorThemeLower:hsla(0,0%,100%,.2);
+    --globalColorThemeLink:#52b1dc;
+    --globalColorThemeBlueToWhite:#fff;
+    --globalColorThemeBlueToMid:hsla(0,0%,100%,.72);
+    --globalColorThemeBlueToMidHover:hsla(0,0%,100%,.85);
+    --globalColorThemeBlueToHigh:hsla(0,0%,100%,.85);
+    --globalColorThemeBlueToHighHover:#fff;
+    --globalColorThemeHighToMid:hsla(0,0%,100%,.72);
+    --globalColorThemeFullToMid:hsla(0,0%,100%,.72);
+    --globalColorNeutral50:rgba(0,0,0,.1);
+    --globalColorNeutral100:rgba(0,0,0,.2);
+    --globalColorNeutral200:rgba(0,0,0,.4);
+    --globalOverlayBackground:#262421
+   }
+
+body {
+
+    font-family: system-ui,Helvetica,Arial,sans-serif;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form {
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px #ddd;
+    border-radius: 5px;
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  #username {
+    width: 50%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  #button {
+    width: 50%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #537133;
+    font-family: var(--globalSecondaryFont,),sans-serif;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
