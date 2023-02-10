@@ -5,14 +5,14 @@ def main():
 
     if arg_one == "--user":
         if len(sys.argv) < 3:
-            print("usage: python3 --user [username]")
+            print("usage: python3 chess_api_cli.py --user [username]")
             exit()
         else:
             user = sys.argv[2] 
             get_games(user)
     elif arg_one == "--stats":
         if len(sys.argv) < 3:
-            print("usage: python3 --stats [path/to/json_file.json]")
+            print("usage: python3 chess_api_cli.py --stats [path/to/json_file.json]")
             exit()
         else:
             json_path = sys.argv[2]
