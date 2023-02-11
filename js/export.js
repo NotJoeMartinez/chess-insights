@@ -29,6 +29,7 @@ function exportToCSV() {
  
     // Get each row data
     var rows = gameTable.getElementsByTagName('tr');
+
     for (var i = 0; i < rows.length; i++) {
  
         // Get each column data
@@ -38,9 +39,17 @@ function exportToCSV() {
         var csvrow = [];
         for (var j = 0; j < cols.length; j++) {
  
+            cell = cols[j].innerHTML;
             // Get the text data of each cell of
-            // a row and push it to csvrow
-            csvrow.push(cols[j].innerHTML);
+            if (cols[j].firstElementChild != null){
+                console.log("here");
+                csvrow.push(cols[j].firstElementChild.getAttribute("href"));
+            }
+            else {
+                // a row and push it to csvrow
+                csvrow.push(cell);
+            }
+
         }
  
         // Combine each column value with comma
@@ -56,7 +65,12 @@ function exportToCSV() {
 
     // a.href = window.URL.createObjectURL( csv, {type: 'text/csv'});
 
-    a.download = 'chess_com_data.csv';
+    // let today = new Date().format('Y-m-d');   //  07-06-2016 06:38:34
+    let today = new Date().toISOString().slice(0, 10)
+    let uname = document.getElementById("title").textContent;
+    let fname = `chess_com_${uname}_${today.replace("-","_")}.csv`
+
+    a.download = fname;
     // Append anchor to body.
     document.body.appendChild(a);
     a.click();

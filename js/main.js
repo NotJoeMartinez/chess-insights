@@ -17,12 +17,18 @@ function clearData() {
         document.getElementById("playerStats").remove();
     }  
 
+    title = document.getElementById("title")
+    title.textContent = "";
+
 }
 
 async function getAllUserData() {
 
     clearData();
     let userName = getUserName();
+
+    title = document.getElementById("title")
+    title.textContent = userName;
 
     archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
 
