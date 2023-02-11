@@ -47,9 +47,9 @@ async function getAllUserData() {
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
-    console.log(playerStats);
+
     writePlayerStats(playerStats);
-        
     writeAllGamesTable(archivedGames, userName);
+    writeExportButton();
 }
 

@@ -7,6 +7,7 @@
     <script src="js/parseGameNode.js"></script>
     <script src="js/writeData.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/export.js"></script>
   </head>
   <body>
 
