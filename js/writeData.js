@@ -17,6 +17,7 @@ function writeTable(tableTitle, tableId, tableStr){
 
   // create a table tag
   const table = document.createElement("table"); 
+  table.setAttribute("class", "sortable")
 
   // add table str to tbody element 
   let tableBody = document.createElement("tbody"); 
@@ -30,32 +31,37 @@ function writeTable(tableTitle, tableId, tableStr){
  }
 
 
-function writeArchiveGameUrls(archiveGameUrls, userName) {
+function writeAllGamesTable(archiveGameUrls, userName) {
 
   let tableStr = "";
   tableStr += "<tr>";
-  tableStr += "<th> Url </th>";
+  tableStr += "<th>  Url </th>";
   tableStr += "<th> Date </th>";
   tableStr += "<th> Game Type </th>";
   tableStr += "<th> Color </th>";
   tableStr += "<th> Result </th>";
   tableStr += "<th> Opponent </th>";
+  tableStr += "<th> Opponent Rating</th>";
+  tableStr += "<th> User Rating </th>";
+  tableStr += "<th> Opponent Accuracy </th>";
+  tableStr += "<th> User Accuracy </th>";
   tableStr += "<th> Opening </th>";
   tableStr += "</tr>";
 
   for (var i=0; i < archiveGameUrls.length; i++) {
       let gameNode = parseGameNode(archiveGameUrls[i], userName);
-      let gameUrl = gameNode.url;
-      let gameColor = gameNode.color;
-      let gameResult = gameNode.result;
-      let gameOpponent = gameNode.opponent;
+
       tableStr += "<tr> ";
-      tableStr += `<td> <a href="${gameUrl}"  target='_blank' > Link </td>`;
+      tableStr += `<td> <a href="${gameNode.url}"  target='_blank' > Link </td>`;
       tableStr += `<td> ${gameNode.date} </td>`;
       tableStr += `<td> ${gameNode.gameType} </td>`;
-      tableStr += `<td> ${gameColor} </td>`;
-      tableStr += `<td> ${gameResult} </td>`;
-      tableStr += `<td> <a href="${gameNode.opponentUrl}"  target='_blank' > ${gameOpponent} </td>`;
+      tableStr += `<td> ${gameNode.color} </td>`;
+      tableStr += `<td> ${gameNode.result} </td>`;
+      tableStr += `<td> <a href="${gameNode.opponentUrl}"  target='_blank' > ${gameNode.opponent} </td>`;
+      tableStr += `<td> ${gameNode.opponentRating} </td>`;
+      tableStr += `<td>  ${gameNode.userRating} </td>`;
+      tableStr += `<td> ${gameNode.opponentAccuracy} </td>`;
+      tableStr += `<td> ${gameNode.userAccuracy} </td>`;
       tableStr += `<td> <a href="${gameNode.openingUrl}"  target='_blank' > ${gameNode.opening} </td>`;
       tableStr += "</tr> ";
    }

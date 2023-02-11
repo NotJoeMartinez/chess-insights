@@ -10,12 +10,38 @@ function parseGameNode(gameNode, uname) {
         parsedGameNode["result"] = gameNode.white.result;
         parsedGameNode["opponent"] = gameNode.black.username; 
         parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.black.username}`; 
+
+        parsedGameNode["opponentRating"] = gameNode.black.rating;
+        parsedGameNode["userRating"] = gameNode.white.rating;
+
+        if (gameNode.hasOwnProperty("accuracies")) {
+            parsedGameNode["userAccuracy"] = gameNode.accuracies.white;
+            parsedGameNode["opponentAccuracy"] = gameNode.accuracies.black;
+        }
+        else {
+            parsedGameNode["userAccuracy"] = "" ;
+            parsedGameNode["opponentAccuracy"] = ""; 
+        }
+
     }
     else {
         parsedGameNode["color"] = "black";
         parsedGameNode["result"] = gameNode.black.result;
         parsedGameNode["opponent"] = gameNode.white.username; 
         parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white  .username}`; 
+
+        parsedGameNode["opponentRating"] = gameNode.white.rating;
+        parsedGameNode["userRating"] = gameNode.black.rating;
+
+        if (gameNode.hasOwnProperty("accuracies")) {
+            parsedGameNode["userAccuracy"] = gameNode.accuracies.black;
+            parsedGameNode["opponentAccuracy"] = gameNode.accuracies.white;
+        }
+        else {
+            parsedGameNode["userAccuracy"] = "" ;
+            parsedGameNode["opponentAccuracy"] = ""; 
+        }
+
     }
 
     let pgn = gameNode.pgn.split('\n');

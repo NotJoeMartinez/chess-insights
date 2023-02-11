@@ -49,7 +49,7 @@ async function getAllUserData() {
     var playerStats = await playerStatsRes.json();
     console.log(playerStats);
     writePlayerStats(playerStats);
-
-    writeArchiveGameUrls(archivedGames, userName);
+        
+    writeAllGamesTable(archivedGames, userName);
 }
 
