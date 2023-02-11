@@ -153,45 +153,55 @@ function writePlayerStats(playerStats) {
   tableStr += `<th>Best Rated Win</th>`;
 
   // Daily stats
-  let bestDailyRating = "No Daily Wins";
-  let bestDailyRatingUrl = "";
-  if (playerStats.chess_daily.record.win > 0) {
-      bestDailyRating =  playerStats.chess_daily.best.rating;
-    if (playerStats.chess_daily.hasOwnProperty("game")) {
-      bestDailyRatingUrl =  playerStats.chess_daily.best.game;
+let bestDailyRating = "N/A";
+let bestDailyRatingUrl = "";
+
+  if (playerStats.hasOwnProperty("chess_daily")){
+    if (playerStats.chess_daily.record.win > 0) {
+        bestDailyRating =  playerStats.chess_daily.best.rating;
+      if (playerStats.chess_daily.hasOwnProperty("game")) {
+        bestDailyRatingUrl =  playerStats.chess_daily.best.game;
+      }
     }
   }
 
-  // Rapid stats
-  let bestRapidRating = "No Rapid Wins"; 
-  let bestRapidRatingUrl = ""; 
+// Rapid stats
+let bestRapidRating = "N/A"; 
+let bestRapidRatingUrl = ""; 
+
+if (playerStats.hasOwnProperty("chess_rapid")) {
   if (playerStats.chess_rapid.record.win > 0) {
-      bestRapidRating = playerStats.chess_rapid.best.rating;
+        bestRapidRating = playerStats.chess_rapid.best.rating;
     if (playerStats.chess_rapid.best.hasOwnProperty("game")) {
-      bestRapidRatingUrl = playerStats.chess_rapid.best.game;
-      console.log(`172: ${bestRapidRatingUrl}`);
+        bestRapidRatingUrl = playerStats.chess_rapid.best.game;
+        console.log(`172: ${bestRapidRatingUrl}`);
+      }
     }
-  }
+}
 
   // Bullet stats
-  let bestBulletRating = "No Bullet Wins";
+  let bestBulletRating = "N/A";
   let bestBulletRatingUrl = "";
+if (playerStats.hasOwnProperty("chess_bullet")){ 
   if (playerStats.chess_bullet.record.win > 0) {
       bestBulletRating =  playerStats.chess_bullet.best.rating;
-    if (playerStats.chess_daily.best.hasOwnProperty("game")) {
+    if (playerStats.chess_bullet.best.hasOwnProperty("game")) {
       bestBulletRatingUrl =  playerStats.chess_bullet.best.game;
     }
   }
+}
 
 // Blitz Stats
-  let bestBlitzRating = "No Blitz Wins";
+  let bestBlitzRating = "N/A";
   let bestBlitzRatingUrl = "";
+if (playerStats.hasOwnProperty("chess_blitz")) {
   if (playerStats.chess_blitz.record.win > 0) {
       bestBlitzRating =  playerStats.chess_blitz.best.rating;
     if (playerStats.chess_blitz.best.hasOwnProperty("game")) {
       bestBlitzRatingUrl =  playerStats.chess_blitz.best.game;
     }
   }
+}
 
   console.log(`rapid: ${bestRapidRating}`)
   console.log(`rapidurl: ${bestRapidRatingUrl}`)
