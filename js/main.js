@@ -13,6 +13,9 @@ function clearData() {
         document.getElementById("statTable").remove();
     }  
 
+    if (document.contains(document.getElementById("playerStats"))) {
+        document.getElementById("playerStats").remove();
+    }  
 
 }
 
@@ -41,10 +44,11 @@ async function getAllUserData() {
 
     writeGameStats(archivedGames, userName);
 
-    // playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`
-    // var response = await fetch(archiveUrl);
-    // var playerStats = await response.json();
-    // writePlayerStats(playerStats);
+    playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
+    var playerStatsRes = await fetch(playerStatsUrl);
+    var playerStats = await playerStatsRes.json();
+    console.log(playerStats);
+    writePlayerStats(playerStats);
 
     writeArchiveGameUrls(archivedGames, userName);
 }

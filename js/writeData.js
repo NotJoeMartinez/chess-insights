@@ -11,17 +11,11 @@
 
   // create a table tag
   const table = document.createElement("table"); 
+
+  // add table str to tbody element 
   let tableBody = document.createElement("tbody"); 
-
-  // let tableStr = "";
-  // tableStr += "<tr>";
-  // for (var i=0; i<tableHeaders.length; i++) {
-  //   tableStr += `<th> ${table} </th>`;
-  // }
-  // tableStr += "</tr>";
-  
-
   tableBody.innerHTML += tableStr;
+
 
   table.appendChild(tableBody);
   tableDiv.appendChild(table);
@@ -29,20 +23,8 @@
 
  }
 
+
 function writeArchiveGameUrls(archiveGameUrls, userName) {
-
-  // const mainDiv = document.getElementById("container")
-  
-
-  // // create a div for the table
-  // let gameTableDiv = document.createElement("div"); 
-  // gameTableDiv.setAttribute("id",'gameTable');
-
-  // gameTableDiv.innerHTML += "<h4>All Games</h4>";
-
-  // // create a table tag
-  // const gameTable = document.createElement("table"); 
-  // let gameTableBody = document.createElement("tbody"); 
 
   let tableStr = "";
   tableStr += "<tr>";
@@ -72,14 +54,8 @@ function writeArchiveGameUrls(archiveGameUrls, userName) {
       tableStr += "</tr> ";
    }
 
-
   writeTable("All Games", "gameTable", tableStr);
-  
 
-  // gameTableBody.innerHTML += tableStr;
-  // gameTable.appendChild(gameTableBody);
-  // gameTableDiv.appendChild(gameTable);
-  // mainDiv.appendChild(gameTableDiv);
 }
 
 function writeGameStats(archivedGames, uname){
@@ -132,23 +108,10 @@ function writeGameStats(archivedGames, uname){
       }
 
 
-
   }
 
-  const mainDiv = document.getElementById("container")
 
-  // create a div for the table
-  let statTableDiv = document.createElement("div"); 
-  statTableDiv.setAttribute("id",'statTable');
-
-  statTableDiv.innerHTML += "<h4>Game Stats</h4>";
-
-  // create a table tag
-  const statTable = document.createElement("table"); 
-  let statTableBody = document.createElement("tbody"); 
-
-
-
+  // make table header 
   let tableStr = "";
   tableStr += "<tr>";
   tableStr += "<th> Games Played </th>";
@@ -158,6 +121,7 @@ function writeGameStats(archivedGames, uname){
   tableStr += "</tr>";
 
 
+  // make table data
   tableStr += "<tr> ";
   tableStr += `<td> ${numGames} </td>`;
   tableStr += `<td> ${numWins} </td>`;
@@ -165,18 +129,110 @@ function writeGameStats(archivedGames, uname){
   tableStr += `<td> ${numDraw} </td>`;
   tableStr += "</tr> ";
 
-   statTableBody.innerHTML += tableStr;
-   statTable.appendChild(statTableBody);
-   statTableDiv.appendChild(statTable);
-
-   mainDiv.appendChild(statTableDiv);
+  writeTable("Overall Game Stats", "statTable", tableStr);
 
 }
 
 
 
-// function writePlayerStats(playerStats) {
+function writePlayerStats(playerStats) {
+
+  tableStr = "";
+
+  // headers
+  tableStr += "<tr>";
+  tableStr += "<th></th>";
+  tableStr += "<td> Daily </td>";
+  tableStr += "<td> Rapid </td>";
+  tableStr += "<td> Bullet </td>";
+  tableStr += "<td> Blitz </td>";
+  tableStr += "</tr>";
+
+  
+  tableStr += "<tr>";
+  tableStr += `<th>Best Rated Win</th>`;
+
+  // Daily stats
+  let bestDailyRating = "No Daily Wins";
+  let bestDailyRatingUrl = "";
+  if (playerStats.chess_daily.record.win > 0) {
+      bestDailyRating =  playerStats.chess_daily.best.rating;
+    if (playerStats.chess_daily.hasOwnProperty("game")) {
+      bestDailyRatingUrl =  playerStats.chess_daily.best.game;
+    }
+  }
+
+  // Rapid stats
+  let bestRapidRating = "No Rapid Wins"; 
+  let bestRapidRatingUrl = ""; 
+  if (playerStats.chess_rapid.record.win > 0) {
+      bestRapidRating = playerStats.chess_rapid.best.rating;
+    if (playerStats.chess_rapid.best.hasOwnProperty("game")) {
+      bestRapidRatingUrl = playerStats.chess_rapid.best.game;
+      console.log(`172: ${bestRapidRatingUrl}`);
+    }
+  }
+
+  // Bullet stats
+  let bestBulletRating = "No Bullet Wins";
+  let bestBulletRatingUrl = "";
+  if (playerStats.chess_bullet.record.win > 0) {
+      bestBulletRating =  playerStats.chess_bullet.best.rating;
+    if (playerStats.chess_daily.best.hasOwnProperty("game")) {
+      bestBulletRatingUrl =  playerStats.chess_bullet.best.game;
+    }
+  }
+
+// Blitz Stats
+  let bestBlitzRating = "No Blitz Wins";
+  let bestBlitzRatingUrl = "";
+  if (playerStats.chess_blitz.record.win > 0) {
+      bestBlitzRating =  playerStats.chess_blitz.best.rating;
+    if (playerStats.chess_blitz.best.hasOwnProperty("game")) {
+      bestBlitzRatingUrl =  playerStats.chess_blitz.best.game;
+    }
+  }
+
+  console.log(`rapid: ${bestRapidRating}`)
+  console.log(`rapidurl: ${bestRapidRatingUrl}`)
+
+  if (bestDailyRatingUrl != "" ) {
+    tableStr += `<td> <a href="${bestDailyRatingUrl}"  target='_blank' > ${bestDailyRating}</td>`;
+  }
+  else {
+    tableStr += `<td>${bestDailyRating}</td>`;
+  }
+
+  // rapid
+  if ( bestRapidRatingUrl != ""){
+    tableStr += `<td> <a href="${bestRapidRatingUrl}"  target='_blank' > ${bestRapidRating}</td>`;
+  }
+  else {
+    tableStr += `<td> ${bestRapidRating}</td>`;
+  }
+
+  
+  // 
+  if (bestBulletRatingUrl != "") {
+    tableStr += `<td> <a href="${bestBulletRatingUrl}"  target='_blank' > ${bestBulletRating}</td>`;
+  }
+  else {
+    tableStr += `<td> ${bestBulletRating}</td>`;
+  }
+
+  // blitz
+  if (bestBlitzRatingUrl != "") {
+    tableStr += `<td> <a href="${bestBlitzRatingUrl}"  target='_blank' > ${bestBlitzRating}</td>`;
+  }
+  else {
+    tableStr += `<td>${bestBlitzRating}</td>`;
+  }
+  
+  tableStr += "</tr>";
 
 
 
-// }
+  writeTable("Player Stats", "playerStats", tableStr);
+
+
+}
