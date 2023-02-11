@@ -12,3 +12,6 @@
 cli/.env/
 cli/.env/**
 cli/.env
+tests/
+tests
+tests/**
