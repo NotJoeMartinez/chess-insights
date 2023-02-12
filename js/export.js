@@ -1,7 +1,7 @@
 
 function writeExportButton() {
 
-    let table = document.getElementById("gameTable");
+    let table = document.getElementById("statTable");
     let title = table.firstElementChild
 
     let exportButton = document.createElement("button"); 
@@ -9,6 +9,7 @@ function writeExportButton() {
     let lineBreak = document.createElement("br"); 
 
     exportButton.setAttribute("id","exportButton");
+    exportButton.setAttribute("class","btn");
     exportButton.setAttribute("onclick","exportToCSV()");
 
     exportButton.innerText = "Export To CSV";

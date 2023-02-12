@@ -1,6 +1,7 @@
 
 function getUserName(){
     let userName = document.getElementById("username");
+    console.log(userName.value  )
     return userName.value;
 }
 

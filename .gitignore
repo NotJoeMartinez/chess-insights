@@ -15,3 +15,4 @@ cli/.env
 tests/
 tests
 tests/**
+*.png_original

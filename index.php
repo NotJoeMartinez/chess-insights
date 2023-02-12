@@ -3,8 +3,11 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/main.css">
     <title id="title"></title>
+    <link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css
+        integrity=sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ crossorigin=anonymous>
+    <link href="css/main.css" rel=stylesheet>
+
     <script src="js/parseGameNode.js"></script>
     <script src="js/writeData.js"></script>
     <script src="js/main.js"></script>
@@ -12,14 +15,39 @@
   </head>
   <body>
 
-    <div class="container" id="container">
-      <div class="form">
-        <label for="username">Username:</label>
-        <br>
-        <input type="text" id="username" name="username" >
-        <button id="button" onclick="getAllUserData()"> submit</button>
-      </div>
+  <div id="app">
+        <div id="main">
+            <header>
+                <div class="container header-section"><img
+                        src="imgs/chesslogo.png"
+                        width="300">
+                    <h1>Free Chess.com Insights</h1>
+                    <div class="input-group input-group-lg input-group--username">
+                 
+
+                        <input type="text" placeholder="Username"
+                            id="username"
+                            aria-describedby="u-addon" 
+                            autocapitalize="none" 
+                            autocorrect="off"
+                            class="form-control username-input"> 
+                        <span class="input-group-btn">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                id="button"
+                                onclick="getAllUserData()">
+                                Get Insights 
+                        </button>
+                    </span>
+                </div>
+                </div>
+            </header>
+               </div>
+            </div>
+        </div>
     </div>
+  </div>
+
 
   </body>
 </html>

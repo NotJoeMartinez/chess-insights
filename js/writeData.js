@@ -7,17 +7,18 @@ function utcToHuman(unix_timestamp) {
 
 function writeTable(tableTitle, tableId, tableStr){
 
-  mainDiv = document.getElementById("container")
+  mainDiv = document.getElementById("main")
 
   // create a div for the table
   let tableDiv = document.createElement("div"); 
   tableDiv.setAttribute("id",tableId);
+  tableDiv.setAttribute("class","container");
 
-  tableDiv.innerHTML += `<h4>${tableTitle}</h4>`;
+  tableDiv.innerHTML += `<h2>${tableTitle}</h2>`;
 
   // create a table tag
   const table = document.createElement("table"); 
-  table.setAttribute("class", "sortable")
+  table.setAttribute("class", "table")
 
   // add table str to tbody element 
   let tableBody = document.createElement("tbody"); 
@@ -34,19 +35,22 @@ function writeTable(tableTitle, tableId, tableStr){
 function writeAllGamesTable(archiveGameUrls, userName) {
 
   let tableStr = "";
+  tableStr += "<thead>";
   tableStr += "<tr>";
-  tableStr += "<th>  Url </th>";
-  tableStr += "<th> Date </th>";
-  tableStr += "<th> Game Type </th>";
-  tableStr += "<th> Color </th>";
-  tableStr += "<th> Result </th>";
-  tableStr += "<th> Opponent </th>";
-  tableStr += "<th> Opponent Rating</th>";
-  tableStr += "<th> User Rating </th>";
-  tableStr += "<th> Opponent Accuracy </th>";
-  tableStr += "<th> User Accuracy </th>";
-  tableStr += "<th> Opening </th>";
+  tableStr += "<th scope='col'>  Url </th>";
+  tableStr += "<th scope='col' > Date </th>";
+  tableStr += "<th scope='col'> Game Type </th>";
+  tableStr += "<th scope='col' > Color </th>";
+  tableStr += "<th scope='col'> Result </th>";
+  tableStr += "<th scope='col'> Opponent </th>";
+  tableStr += "<th scope='col'> Opponent Rating</th>";
+  tableStr += "<th scope='col'> User Rating </th>";
+  tableStr += "<th scope='col'> Opponent Accuracy </th>";
+  tableStr += "<th scope='col'> User Accuracy </th>";
+  tableStr += "<th scope='col'> Opening </th>";
   tableStr += "</tr>";
+
+  tableStr += "</thead>";
 
   for (var i=0; i < archiveGameUrls.length; i++) {
       let gameNode = parseGameNode(archiveGameUrls[i], userName);
@@ -125,18 +129,18 @@ function writeGameStats(archivedGames, uname){
   // make table header 
   let tableStr = "";
   tableStr += "<tr>";
-  tableStr += "<th> Games Played </th>";
-  tableStr += "<th> Wins </th>";
-  tableStr += "<th> Losses </th>";
-  tableStr += "<th> Draws </th>";
+  tableStr += "<th scope='col'>Games</th>";
+  tableStr += "<th scope='col'>Wins</th>";
+  tableStr += "<th scope='col'>Losses</th>";
+  tableStr += "<th scope='col'>Draws</th>";
   tableStr += "</tr>";
 
   // make table data
   tableStr += "<tr> ";
-  tableStr += `<td> ${numGames} </td>`;
-  tableStr += `<td> ${numWins} </td>`;
-  tableStr += `<td> ${numLosses} </td>`;
-  tableStr += `<td> ${numDraw} </td>`;
+  tableStr += `<td>${numGames}</td>`;
+  tableStr += `<td>${numWins}</td>`;
+  tableStr += `<td>${numLosses}</td>`;
+  tableStr += `<td>${numDraw}</td>`;
   tableStr += "</tr> ";
 
   writeTable("Overall Game Stats", "statTable", tableStr);
@@ -151,10 +155,10 @@ function writePlayerStats(playerStats) {
   // headers
   tableStr += "<tr>";
   tableStr += "<th></th>";
-  tableStr += "<td> Daily </td>";
-  tableStr += "<td> Rapid </td>";
-  tableStr += "<td> Bullet </td>";
-  tableStr += "<td> Blitz </td>";
+  tableStr += "<td scope='col'> Daily </td>";
+  tableStr += "<td scope='col'> Rapid </td>";
+  tableStr += "<td scope='col'> Bullet </td>";
+  tableStr += "<td scope='col'> Blitz </td>";
   tableStr += "</tr>";
 
   tableStr += "<tr>";
