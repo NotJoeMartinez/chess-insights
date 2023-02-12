@@ -5,6 +5,26 @@ function getUserName(){
     return userName.value;
 }
 
+function toggleSpinner() {
+    if (document.contains(document.getElementById("spinner-div"))) {
+        document.getElementById("spinner-div").remove();
+    }
+    else {
+        let spinnerDiv = document.createElement("div");
+        spinnerDiv.setAttribute("id","spinner-div");
+        spinnerDiv.setAttribute("class","container");
+
+        let spinner = document.createElement("div");
+        spinner.setAttribute("class","spinner-border")
+
+        spinnerDiv.appendChild(spinner)
+
+        let mainDiv = document.getElementById("main");
+        mainDiv.appendChild(spinnerDiv);
+
+    }
+}
+
 function clearData() {
     if (document.contains(document.getElementById("gameTable"))) {
         document.getElementById("gameTable").remove();
@@ -26,6 +46,7 @@ function clearData() {
 async function getAllUserData() {
 
     clearData();
+    toggleSpinner();
     let userName = getUserName();
 
     title = document.getElementById("title")
@@ -58,5 +79,6 @@ async function getAllUserData() {
     writePlayerStats(playerStats);
     writeAllGamesTable(archivedGames, userName);
     writeExportButton();
+    toggleSpinner();
 }
 

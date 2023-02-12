@@ -45,10 +45,12 @@
                                 onclick="getAllUserData()">
                                 Get Insights 
                         </button>
-                    </span>
-                </div>
+                        </span>
+
+                    </div>
                 </div>
             </header>
+
                </div>
             </div>
         </div>
