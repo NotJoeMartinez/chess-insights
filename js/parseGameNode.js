@@ -47,7 +47,8 @@ function parseGameNode(gameNode, uname) {
     let pgn = gameNode.pgn.split('\n');
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
     parsedGameNode["openingUrl"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl/g,'');
-    parsedGameNode["opening"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
+    let tmp_opening = pgn[10].replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
+    parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
     parsedGameNode["gameType"] = gameNode.time_class;   
     parsedGameNode["url"] = gameNode.url;   
 
