@@ -71,7 +71,6 @@ async function getAllUserData() {
         }
     }
 
-    console.log(`before json str ${typeof(archivedGames)}`)
     window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
     window.localStorage.setItem("userName", userName);
 
@@ -83,8 +82,9 @@ async function getAllUserData() {
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
+    window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
 
-    writePlayerStats(playerStats);
+    writePlayerStats();
     writeAllGamesTable();
     writeExportButton();
     toggleSpinner();

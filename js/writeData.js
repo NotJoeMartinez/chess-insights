@@ -188,7 +188,8 @@ function writeGameStats(){
 }
 
 
-function writePlayerStats(playerStats) {
+function writePlayerStats() {
+  playerStats = window.localStorage.getItem("playerStats");
 
   tableStr = "";
 
