@@ -26,25 +26,9 @@ function toggleSpinner() {
 }
 
 function clearData() {
-    if (document.contains(document.getElementById("gameTable"))) {
-        document.getElementById("gameTable").remove();
-    }   
-
-    if (document.contains(document.getElementById("statTable"))) {
-        document.getElementById("statTable").remove();
-    }  
-
-    if (document.contains(document.getElementById("playerStats"))) {
-        document.getElementById("playerStats").remove();
-    }  
-    
-   if (document.contains(document.getElementById("openings"))) {
-        document.getElementById("openings").remove();
-    }  
-    
-   if (document.contains(document.getElementById("eloOverTime"))) {
-        document.getElementById("eloOverTime").remove();
-    }  
+    if (document.contains(document.getElementById("insights"))) {
+        document.getElementById("insights").remove();
+    }
     localStorage.removeItem("userName");
     localStorage.removeItem("archivedGames");
 
