@@ -1,48 +1,4 @@
 
-function getUserName(){
-    let userName = document.getElementById("username");
-    console.log(userName.value)
-    return userName.value;
-}
-
-function toggleSpinner() {
-    if (document.contains(document.getElementById("spinner-div"))) {
-        document.getElementById("spinner-div").remove();
-    }
-    else {
-        let spinnerDiv = document.createElement("div");
-        spinnerDiv.setAttribute("id","spinner-div");
-        spinnerDiv.setAttribute("class","container");
-
-        let spinner = document.createElement("div");
-        spinner.setAttribute("class","spinner-border")
-
-        spinnerDiv.appendChild(spinner)
-
-        let mainDiv = document.getElementById("main");
-        mainDiv.appendChild(spinnerDiv);
-
-    }
-}
-
-function clearData() {
-    if (document.contains(document.getElementById("insights"))) {
-        document.getElementById("insights").remove();
-    }
-    localStorage.removeItem("userName");
-    localStorage.removeItem("archivedGames");
-
-    title = document.getElementById("title")
-    title.textContent = "";
-    
-}
-
-
-function getArchivedGames() {
-    let archive = window.localStorage.getItem("archivedGames");
-    return JSON.parse(archive);
-}
-
 async function getAllUserData() {
 
     clearData();
