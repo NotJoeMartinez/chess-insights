@@ -29,7 +29,9 @@ function writeInsightsDiv() {
 }
 
 
-function eloOverTime(archivedGames,gameType){
+function eloOverTime(gameType){
+
+  archivedGames = getArchivedGames();
   let insightsDiv = document.getElementById("insights");
   let eloDiv = document.createElement("div");
   eloDiv.classList.add("container", "eloOverTime");
@@ -81,7 +83,9 @@ function writeTable(tableTitle, tableId, tableStr){
  }
 
 
-function writeAllGamesTable(archiveGameUrls, userName) {
+function writeAllGamesTable() {
+  archivedGames = getArchivedGames();
+  userName = window.localStorage.getItem("userName");
 
   let tableStr = "";
   tableStr += "<thead>";
@@ -101,8 +105,8 @@ function writeAllGamesTable(archiveGameUrls, userName) {
 
   tableStr += "</thead>";
 
-  for (var i=0; i < archiveGameUrls.length; i++) {
-      let gameNode = parseGameNode(archiveGameUrls[i], userName);
+  for (var i=0; i < archivedGames.length; i++) {
+      let gameNode = parseGameNode(archivedGames[i], userName);
 
       tableStr += "<tr> ";
       tableStr += `<td> <a href="${gameNode.url}"  target='_blank' > Link </td>`;
@@ -123,8 +127,9 @@ function writeAllGamesTable(archiveGameUrls, userName) {
 
 }
 
-function writeGameStats(uname){
-  archivedGames = getArchivedGames();
+function writeGameStats(){
+  let archivedGames = getArchivedGames();
+  let uname = window.localStorage.getItem("userName");
   let numGames = archivedGames.length;
   let numWins = 0;
   let numLosses = 0;

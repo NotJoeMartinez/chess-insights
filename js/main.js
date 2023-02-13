@@ -1,7 +1,7 @@
 
 function getUserName(){
     let userName = document.getElementById("username");
-    console.log(userName.value  )
+    console.log(userName.value)
     return userName.value;
 }
 
@@ -38,6 +38,13 @@ function clearData() {
         document.getElementById("playerStats").remove();
     }  
     
+   if (document.contains(document.getElementById("openings"))) {
+        document.getElementById("openings").remove();
+    }  
+    
+   if (document.contains(document.getElementById("eloOverTime"))) {
+        document.getElementById("eloOverTime").remove();
+    }  
     localStorage.removeItem("userName");
     localStorage.removeItem("archivedGames");
 
@@ -83,11 +90,10 @@ async function getAllUserData() {
     console.log(`before json str ${typeof(archivedGames)}`)
     window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
     window.localStorage.setItem("userName", userName);
-    // testLocalStorage();
 
 
-    writeGameStats(userName);
-    eloOverTime(archivedGames, "rapid");
+    writeGameStats();
+    eloOverTime("rapid");
     writeOpenings(archivedGames);
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
@@ -95,7 +101,7 @@ async function getAllUserData() {
     var playerStats = await playerStatsRes.json();
 
     writePlayerStats(playerStats);
-    writeAllGamesTable(archivedGames, userName);
+    writeAllGamesTable();
     writeExportButton();
     toggleSpinner();
 }
