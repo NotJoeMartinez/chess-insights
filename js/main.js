@@ -47,6 +47,8 @@ async function getAllUserData() {
 
     clearData();
     toggleSpinner();
+    writeInsightsDiv();
+
     let userName = getUserName();
 
     title = document.getElementById("title")
@@ -71,7 +73,7 @@ async function getAllUserData() {
 
 
     writeGameStats(archivedGames, userName);
-
+    eloOverTime(archivedGames, "rapid");
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();

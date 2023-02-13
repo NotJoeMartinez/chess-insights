@@ -28,7 +28,7 @@ function parseGameNode(gameNode, uname) {
         parsedGameNode["color"] = "black";
         parsedGameNode["result"] = gameNode.black.result;
         parsedGameNode["opponent"] = gameNode.white.username; 
-        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white  .username}`; 
+        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white.username}`; 
 
         parsedGameNode["opponentRating"] = gameNode.white.rating;
         parsedGameNode["userRating"] = gameNode.black.rating;

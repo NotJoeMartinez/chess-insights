@@ -13,12 +13,15 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
     crossorigin="anonymous">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link href="css/main.css" rel=stylesheet>
 
     <script src="js/parseGameNode.js"></script>
     <script src="js/writeData.js"></script>
     <script src="js/main.js"></script>
     <script src="js/export.js"></script>
+    <script src="js/graphics.js"></script>
   </head>
   <body>
 

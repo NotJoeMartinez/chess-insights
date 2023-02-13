@@ -5,9 +5,30 @@ function utcToHuman(unix_timestamp) {
   return formattedDate;
 }
 
+function writeInsightsDiv() {
+
+  let mainDiv = document.getElementById("main");
+  let insightsDiv = document.createElement("div");
+  insightsDiv.classList.add("container", "insights")
+  insightsDiv.setAttribute("id","insights");
+  mainDiv.appendChild(insightsDiv);
+
+}
+
+
+function eloOverTime(archivedGames,gameType){
+  let insightsDiv = document.getElementById("insights");
+  let eloDiv = document.createElement("div");
+  eloDiv.classList.add("container", "eloOverTime");
+  eloDiv.innerHTML += `<h2> ${gameType} ELO Over Time </h1>`;
+  eloDiv.innerHTML += "<canvas id='eloOverTime'></canvas>"
+  insightsDiv.appendChild(eloDiv);
+  graphElo(archivedGames, gameType);
+}
+
 function writeTable(tableTitle, tableId, tableStr){
 
-  mainDiv = document.getElementById("main")
+  mainDiv = document.getElementById("insights")
 
   // create a div for the table
   let tableDiv = document.createElement("div"); 
