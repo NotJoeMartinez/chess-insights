@@ -1,12 +1,22 @@
 
 
-function parseGameNode(gameNode, uname) {
+function parseGameNode(gameNode) {
+    uname = window.localStorage.getItem("userName");
 
     let parsedGameNode = {};
 
+    // easy ones
+    parsedGameNode["timeClass"] = gameNode.time_class;   
+    parsedGameNode["gameUrl"] = gameNode.url;   
+    parsedGameNode["fen"] = gameNode.fen;  
+    
+    let ogPgn = gameNode.pgn;
+    let stripedPgn = ogPgn.replace(/(\r\n|\r|\n)/g,''); 
+    parsedGameNode["pgn"] = stripedPgn;  
+
     // find game color
     if(gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
-        parsedGameNode["color"] = "white";
+        parsedGameNode["userColor"] = "white";
         parsedGameNode["result"] = gameNode.white.result;
         parsedGameNode["opponent"] = gameNode.black.username; 
         parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.black.username}`; 
@@ -25,7 +35,7 @@ function parseGameNode(gameNode, uname) {
 
     }
     else {
-        parsedGameNode["color"] = "black";
+        parsedGameNode["userColor"] = "black";
         parsedGameNode["result"] = gameNode.black.result;
         parsedGameNode["opponent"] = gameNode.white.username; 
         parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white.username}`; 
@@ -43,14 +53,17 @@ function parseGameNode(gameNode, uname) {
         }
 
     }
-
+    // pgn parsing
     let pgn = gameNode.pgn.split('\n');
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
-    parsedGameNode["openingUrl"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl/g,'');
+    parsedGameNode["openingUrl"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl/g,''); // sometimes returns utc timestamp
     let tmp_opening = pgn[10].replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
     parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
-    parsedGameNode["gameType"] = gameNode.time_class;   
-    parsedGameNode["url"] = gameNode.url;   
+    parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g,'');
+    parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g,'');
+
+    // ugly  
+    parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
 
 
     return parsedGameNode;

@@ -3,6 +3,12 @@ function getUserName(){
     return userName.value;
 }
 
+function utcToHuman(unix_timestamp) {
+    let date = new Date(unix_timestamp * 1000);
+    let formattedDate = date.toISOString().substring(0, 10);
+    return formattedDate;
+  }
+
 function clearData() {
     if (document.contains(document.getElementById("insights"))) {
         document.getElementById("insights").remove();
@@ -18,4 +24,9 @@ function clearData() {
 function getArchivedGames() {
     let archive = window.localStorage.getItem("archivedGames");
     return JSON.parse(archive);
+}
+
+function getPlayerStats() {
+    let playerStats = window.localStorage.getItem("playerStats");
+    return JSON.parse(playerStats);
 }

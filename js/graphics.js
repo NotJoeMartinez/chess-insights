@@ -20,9 +20,10 @@ function toggleSpinner() {
 }
 
 
-function graphElo(archivedGames,gameType)  {
-
+function graphElo(gameType)  {
+    archivedGames = getArchivedGames();
     uname = getUserName();
+
     let data = [];
     let dates = []
     for (var i=0; i<archivedGames.length; i++)
@@ -85,9 +86,9 @@ function graphElo(archivedGames,gameType)  {
             label_count.push(instances)
         }
     }
-    console.log(`all: ${openings.length}`);
-    console.log(`uniq: ${labels.length}`);
-    console.log(`count ${label_count.length}`);
+    // console.log(`all: ${openings.length}`);
+    // console.log(`uniq: ${labels.length}`);
+    // console.log(`count ${label_count.length}`);
 
     const ctx = document.getElementById(canvasId);
     const data = {

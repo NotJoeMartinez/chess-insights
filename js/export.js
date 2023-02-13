@@ -21,56 +21,83 @@ function writeExportButton() {
 
 function exportToCSV() {
 
+    let headers = ["userAccuracy", "opponentAccuracy", "gameUrl", "gameId", 
+                    "timeClass", "fen", "userColor", "userRating", 
+                    "opponent", "opponentRating", "opponentUrl", "result", 
+                    "date", "openingUrl", "opening", "startTime", "endTime","pgn"];
 
-    let gameTableDiv = document.getElementById('gameTable');
+    let csv_data = [headers]
 
-    let gameTable = gameTableDiv.querySelector("table")
+    let archivedGames = getArchivedGames();
 
-    var csv_data = [];
+    for (var i=0; i<archivedGames.length; i++ ) {
+        var row = [];
+        let gameNode = archivedGames[i];
+        let parsedGameNode = parseGameNode(gameNode);
+
+        row.push(parsedGameNode.userAccuracy);
+        row.push(parsedGameNode.opponentAccuracy);
+        row.push(parsedGameNode.gameUrl);
+        row.push(parsedGameNode.gameId);
+        row.push(parsedGameNode.timeClass);
+        row.push(parsedGameNode.fen);
+        row.push(parsedGameNode.userColor);
+        row.push(parsedGameNode.userRating);
+        row.push(parsedGameNode.opponent);
+        row.push(parsedGameNode.opponentRating);
+        row.push(parsedGameNode.opponentUrl);
+        row.push(parsedGameNode.result);
+        row.push(parsedGameNode.date);
+        row.push(parsedGameNode.openingUrl);
+        row.push(parsedGameNode.opening);
+        row.push(parsedGameNode.startTime);
+        row.push(parsedGameNode.endTime);
+        row.push(parsedGameNode.pgn);
+
+        csv_data.push(row);
+    }
+
  
     // TODO: find a way to cache the data in browser so we don't have to parse out the table like this
     // Get each row data
-    var rows = gameTable.getElementsByTagName('tr');
 
-    for (var i = 0; i < rows.length; i++) {
+    // for (var i = 0; i < rows.length; i++) {
  
         // Get each column data
-        var cols = rows[i].querySelectorAll('td,th');
+        // var cols = rows[i].querySelectorAll('td,th');
  
         // Stores each csv row data
-        var csvrow = [];
-        for (var j = 0; j < cols.length; j++) {
+        // var csvrow = [];
+        // for (var j = 0; j < cols.length; j++) {
  
-            cell = cols[j].innerHTML;
+            // cell = cols[j].innerHTML;
             // Get the text data of each cell of
-            if (cols[j].firstElementChild != null){
-                console.log("here");
-                csvrow.push(cols[j].firstElementChild.getAttribute("href"));
-            }
-            else {
+            // if (cols[j].firstElementChild != null){
+                // console.log("here");
+                // csvrow.push(cols[j].firstElementChild.getAttribute("href"));
+            // }
+            // else {
                 // a row and push it to csvrow
-                csvrow.push(cell);
-            }
+                // csvrow.push(cell);
+            // }
 
-        }
+        // }
  
         // Combine each column value with comma
-        csv_data.push(csvrow.join(","));
-    }
+        // csv_data.push(csvrow.join(","));
+    // }
     // combine each row data with new line character
     csv_data = csv_data.join('\n');
-
     csvFile = new Blob([csv_data], {type: 'text/csv'})
 
     var a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(csvFile);
 
-    // a.href = window.URL.createObjectURL( csv, {type: 'text/csv'});
 
     // let today = new Date().format('Y-m-d');   //  07-06-2016 06:38:34
     let today = new Date().toISOString().slice(0, 10)
     let uname = document.getElementById("title").textContent;
-    let fname = `chess_com_${uname}_${today.replace("-","_")}.csv`
+    let fname = `chess_com_${uname}_${today.replace("-","_")}.csv`;
 
     a.download = fname;
     // Append anchor to body.

@@ -21,4 +21,5 @@ cli/*.txt
 cli/*.db
 *.db
 notes.md
-    
+scratch.txt    
+js/chart.js

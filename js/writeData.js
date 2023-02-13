@@ -1,9 +1,4 @@
 
-function utcToHuman(unix_timestamp) {
-  let date = new Date(unix_timestamp * 1000);
-  let formattedDate = date.toISOString().substring(0, 10);
-  return formattedDate;
-}
 
 function writeInsightsDiv() {
   let mainDiv = document.getElementById("main");
@@ -24,7 +19,7 @@ function eloOverTime(gameType){
   eloDiv.innerHTML += `<h2> ${gameType} ELO Over Time </h1>`;
   eloDiv.innerHTML += "<canvas id='eloOverTime'></canvas>"
   insightsDiv.appendChild(eloDiv);
-  graphElo(archivedGames, gameType);
+  graphElo(gameType);
 }
 
 
@@ -95,10 +90,10 @@ function writeAllGamesTable() {
       let gameNode = parseGameNode(archivedGames[i], userName);
 
       tableStr += "<tr> ";
-      tableStr += `<td> <a href="${gameNode.url}"  target='_blank' > Link </td>`;
+      tableStr += `<td> <a href="${gameNode.gameUrl}"  target='_blank' > Link </td>`;
       tableStr += `<td> ${gameNode.date} </td>`;
-      tableStr += `<td> ${gameNode.gameType} </td>`;
-      tableStr += `<td> ${gameNode.color} </td>`;
+      tableStr += `<td> ${gameNode.timeClass} </td>`;
+      tableStr += `<td> ${gameNode.userColor} </td>`;
       tableStr += `<td> ${gameNode.result} </td>`;
       tableStr += `<td> <a href="${gameNode.opponentUrl}"  target='_blank' > ${gameNode.opponent} </td>`;
       tableStr += `<td> ${gameNode.opponentRating} </td>`;
@@ -189,7 +184,7 @@ function writeGameStats(){
 
 
 function writePlayerStats() {
-  playerStats = window.localStorage.getItem("playerStats");
+  playerStats = getPlayerStats(); 
 
   tableStr = "";
 

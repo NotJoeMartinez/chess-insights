@@ -32,8 +32,8 @@ async function getAllUserData() {
 
 
     writeGameStats();
-    eloOverTime("rapid");
-    writeOpenings(archivedGames);
+    // eloOverTime("rapid");
+    // writeOpenings(archivedGames);
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
@@ -43,6 +43,6 @@ async function getAllUserData() {
     writePlayerStats();
     writeAllGamesTable();
     writeExportButton();
-    toggleSpinner();
+    // toggleSpinner();
 }
 
