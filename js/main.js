@@ -74,6 +74,8 @@ async function getAllUserData() {
 
     writeGameStats(archivedGames, userName);
     eloOverTime(archivedGames, "rapid");
+    writeOpenings(archivedGames);
+
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();

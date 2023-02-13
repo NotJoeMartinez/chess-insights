@@ -15,7 +15,6 @@ function graphElo(archivedGames,gameType)  {
             dates.push(date)
         }
     }
-    console.log(data);
 
     // get min elo
     // get max elo
@@ -38,4 +37,56 @@ function graphElo(archivedGames,gameType)  {
           }
         }
       });
+ }
+
+ function openingsPieChart(archivedGames, canvasId) {
+
+    let uname = getUserName();
+    openings=[]
+    for (var i=0; i<archivedGames.length; i++){
+        parsedGameNode = parseGameNode(archivedGames[i], uname);
+        opening = parsedGameNode.opening;
+        openings.push(opening);
+    }
+    let labels = [... new Set(openings)];
+
+    let label_count = [];
+
+    for (var i=0; i<labels.length; i++) {
+        for (var j=0; j<openings.length; j++) {
+            var instances = 0;
+            if (openings[j] == labels[i])
+            {
+                instances++;
+            }
+        }
+        if (label_count != 0) {
+
+            label_count.push(instances)
+        }
+    }
+    console.log(`all: ${openings.length}`);
+    console.log(`uniq: ${labels.length}`);
+    console.log(`count ${label_count.length}`);
+
+    const ctx = document.getElementById(canvasId);
+    const data = {
+        labels:labels, 
+        datasets: [{
+          label: 'openings',
+          data: label_count,
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+      new Chart(ctx, {
+        type: "pie",
+        data: data,
+        responsive: true
+      });
+     
  }

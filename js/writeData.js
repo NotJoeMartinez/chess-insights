@@ -26,6 +26,21 @@ function eloOverTime(archivedGames,gameType){
   graphElo(archivedGames, gameType);
 }
 
+
+function writeOpenings(archivedGames){
+  let insightsDiv = document.getElementById("insights");
+  let openingDiv = document.createElement("div");
+  openingDiv.classList.add("container", "openings","h-50");
+  let divStr  = "";
+  divStr += "<h2>Openings</h1>";
+  divStr += "<div class='row'> ";
+  divStr += "<div class='col'> <canvas id='openings'></canvas> </div>";
+  divStr += "</div> ";
+  openingDiv.innerHTML += divStr;
+  insightsDiv.appendChild(openingDiv);
+  openingsPieChart(archivedGames, "openings");
+}
+
 function writeTable(tableTitle, tableId, tableStr){
 
   mainDiv = document.getElementById("insights")

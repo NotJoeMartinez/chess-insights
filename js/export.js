@@ -28,6 +28,7 @@ function exportToCSV() {
 
     var csv_data = [];
  
+    // TODO: find a way to cache the data in browser so we don't have to parse out the table like this
     // Get each row data
     var rows = gameTable.getElementsByTagName('tr');
 

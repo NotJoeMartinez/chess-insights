@@ -182,6 +182,7 @@ h1 {
 .username-input:-ms-input-placeholder {
       font-size: 1.25rem;
 }
+}
 
 /* .btn {
     padding: 0 1.5rem !important;
@@ -415,4 +416,13 @@ a {
 a:hover {
     text-decoration: none;
     background-color: rgba(0, 150, 255, 0.1);
+}
+
+#openings{
+  /* display: flex; */
+  /* align-items: center; */
+  /* position: relative; */
+  margin: auto;
+  height: 400px;
+  width: 400px;
 }
