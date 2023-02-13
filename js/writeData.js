@@ -5,6 +5,19 @@ function utcToHuman(unix_timestamp) {
   return formattedDate;
 }
 
+function testLocalStorage() {
+  let uname = window.localStorage.getItem("userName");
+  let archive = window.localStorage.getItem("archivedGames");
+  console.log(`archive = ${archive}`);
+  console.log(`archive.length = ${archive.length}`);
+  console.log(`archive = ${typeof(archive)}`);
+  archiveObj = JSON.parse(archive);
+  console.log(typeof(archiveObj));
+  // for (var i=0; i<archive.length; i++) {
+  //   console.log(`archive = ${archive[i]}`);
+  // }
+}
+
 function writeInsightsDiv() {
 
   let mainDiv = document.getElementById("main");
@@ -110,8 +123,8 @@ function writeAllGamesTable(archiveGameUrls, userName) {
 
 }
 
-function writeGameStats(archivedGames, uname){
-
+function writeGameStats(uname){
+  archivedGames = getArchivedGames();
   let numGames = archivedGames.length;
   let numWins = 0;
   let numLosses = 0;

@@ -19,3 +19,6 @@ tests/**
 cli/game_keys.py
 cli/*.txt
 cli/*.db
+*.db
+notes.md
+    

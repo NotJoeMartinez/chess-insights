@@ -37,10 +37,19 @@ function clearData() {
     if (document.contains(document.getElementById("playerStats"))) {
         document.getElementById("playerStats").remove();
     }  
+    
+    localStorage.removeItem("userName");
+    localStorage.removeItem("archivedGames");
 
     title = document.getElementById("title")
     title.textContent = "";
+    
+}
 
+
+function getArchivedGames() {
+    let archive = window.localStorage.getItem("archivedGames");
+    return JSON.parse(archive);
 }
 
 async function getAllUserData() {
@@ -71,8 +80,13 @@ async function getAllUserData() {
         }
     }
 
+    console.log(`before json str ${typeof(archivedGames)}`)
+    window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+    window.localStorage.setItem("userName", userName);
+    // testLocalStorage();
 
-    writeGameStats(archivedGames, userName);
+
+    writeGameStats(userName);
     eloOverTime(archivedGames, "rapid");
     writeOpenings(archivedGames);
 

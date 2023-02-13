@@ -21,8 +21,3 @@ Game month archives
 https://api.chess.com/pub/player/{username}/games/{YYYY}/{MM}
 ```
 
-### common openings without variations
-- Vienna Game
-- Vant Kruijs Opening
-- Three Knights
- 
