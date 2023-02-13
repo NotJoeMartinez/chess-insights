@@ -16,3 +16,6 @@ tests/
 tests
 tests/**
 *.png_original
+cli/game_keys.py
+cli/*.txt
+cli/*.db
