@@ -126,6 +126,11 @@ h1 {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
+
+.btn.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
 .btn:focus {
     box-shadow: 0 0 0 2px rgba(153, 236, 167, 0.5);
 }

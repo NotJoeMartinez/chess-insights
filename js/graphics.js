@@ -20,16 +20,17 @@ function toggleSpinner() {
 }
 
 
-function graphElo(gameType)  {
+function graphElo(timeClass="rapid")  {
     archivedGames = getArchivedGames();
     uname = getUserName();
+
 
     let data = [];
     let dates = []
     for (var i=0; i<archivedGames.length; i++)
     {
         parsedGameNode = parseGameNode(archivedGames[i],uname);
-        if (parsedGameNode.gameType == gameType) {
+        if (parsedGameNode.timeClass == timeClass) {
             let rating = parsedGameNode.userRating;
             let date = parsedGameNode.date;
             data.push(rating)
@@ -56,7 +57,8 @@ function graphElo(gameType)  {
               beginAtZero: true
             }
           }
-        }
+        },
+        
       });
  }
 

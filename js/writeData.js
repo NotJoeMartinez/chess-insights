@@ -10,16 +10,46 @@ function writeInsightsDiv() {
 }
 
 
-function eloOverTime(gameType){
+function eloOverTime(timeClass="rapid"){
 
-  archivedGames = getArchivedGames();
-  let insightsDiv = document.getElementById("insights");
-  let eloDiv = document.createElement("div");
-  eloDiv.classList.add("container", "eloOverTime");
-  eloDiv.innerHTML += `<h2> ${gameType} ELO Over Time </h1>`;
-  eloDiv.innerHTML += "<canvas id='eloOverTime'></canvas>"
-  insightsDiv.appendChild(eloDiv);
-  graphElo(gameType);
+  testNode = document.getElementById("eloGraph");
+  if (( testNode == null ) || (testNode.timeClass != timeClass)) {
+
+      if (testNode != null)  {
+        document.getElementById("eloGraph").remove(); 
+      }
+
+      archivedGames = getArchivedGames();
+      let insightsDiv = document.getElementById("insights");
+      let eloDiv = document.createElement("div");
+      eloDiv.classList.add("container", "eloOverTime");
+      eloDiv.setAttribute("id", "eloGraph");
+      eloDiv.setAttribute("timeClass", timeClass);
+      eloDiv.innerHTML += `<h2> ${timeClass} ELO Over Time </h1>`;
+      eloDiv.innerHTML += "<canvas id='eloOverTime'></canvas>"
+
+      let btnList = ["blitz", "rapid", "daily","bullet"];
+      for (var i=0; i<btnList.length; i++){
+            
+            
+          if (btnList[i] == timeClass){
+            eloDiv.innerHTML += "<button class='btn active' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+          else {
+            eloDiv.innerHTML += "<button class='btn' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+      }
+      // insightsDiv.prepend(eloDiv);
+      insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
+    
+      graphElo(timeClass);
+
+  }
+
+  else {
+    console.log('I already exists');
+  }
+
 }
 
 
