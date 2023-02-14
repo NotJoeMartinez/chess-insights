@@ -402,9 +402,9 @@ section.summary {
 label {
   margin-bottom: 0;
 }
-canvas {
+/* canvas {
   margin-bottom: 1rem;
-}
+} */
 
 /* @media (min-width: 992px) {
 
@@ -422,6 +422,9 @@ a:hover {
     text-decoration: none;
     background-color: rgba(0, 150, 255, 0.1);
 }
+#exportButton {
+  margin-bottom: 5%;
+}
 
 #openings{
   /* display: flex; */
@@ -432,8 +435,56 @@ a:hover {
   width: 400px;
 }
 
+.graphics {
+  width: 100%;
+}
+
 /* #eloGraph {
   display: inline-block;
   position: relative;
   height: 25%;
 } */
+
+
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+  /* #eloGraph {
+    height: 100% !important;
+  } */
+  h2 {
+    font-size: 2rem !important ;
+  }
+  #eloGraph {
+    height: 300px !important;
+  }
+  .btn.graphics {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 10px !important;
+    cursor: pointer;
+    z-index: 1;
+    padding: 0.7rem !important;
+    font-size: 0.5rem !important;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+/* @media (max-width: 767.98px) { ... } */
+/* 
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) { ... }
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) { ... }
+
+// X-Large devices (large desktops, less than 1400px)
+@media (max-width: 1399.98px) { ... }
+
+// XX-Large devices (larger desktops)
+// No media query since the xxl breakpoint has no upper bound on its width */

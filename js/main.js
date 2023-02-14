@@ -31,8 +31,8 @@ async function getAllUserData() {
     window.localStorage.setItem("userName", userName);
 
 
-    writeGameStats();
     eloOverTime();
+    writeGameStats();
     // writeOpenings(archivedGames);
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;

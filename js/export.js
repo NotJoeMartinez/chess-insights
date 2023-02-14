@@ -1,21 +1,19 @@
 
 function writeExportButton() {
 
-    let table = document.getElementById("statTable");
-    let title = table.firstElementChild
+    let insights = document.getElementById("insights");
+    // let title = table.firstElementChild;
 
     let exportButton = document.createElement("button"); 
 
-    let lineBreak = document.createElement("br"); 
 
     exportButton.setAttribute("id","exportButton");
     exportButton.setAttribute("class","btn");
     exportButton.setAttribute("onclick","exportToCSV()");
 
-    exportButton.innerText = "Export To CSV";
+    exportButton.innerText = "Export All Data To CSV";
 
-    title.appendChild(lineBreak);
-    title.appendChild(exportButton);
+    insights.prepend(exportButton);
 
 }
 

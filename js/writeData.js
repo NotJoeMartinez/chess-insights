@@ -28,30 +28,37 @@ function eloOverTime(timeClass="rapid"){
 
       eloStr = "";
 
+      eloStr += `<h3  > ELO Over Time </h3>`;
       eloStr += "<div class='row'>";
-      eloStr += "<div class='col-12'>";
-      eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
-      eloStr += `<h3 class='card-title'> ${timeClass} ELO Over Time </h3>`;
-      eloStr += "<div class='card-body'>";
+      // eloStr += "<div class='col-12'>";
+      // eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      // eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
 
+      // eloStr += "</div>";
+      // eloStr += "</div>";
+      // eloStr += "</div>";
+      eloStr += "</div>";
+
+
+      eloStr += "<div id='graphBtns' class='row'>";
+      
       let btnList = ["blitz", "rapid", "daily","bullet"];
       for (var i=0; i<btnList.length; i++){
             
-            
+          eloStr+="<div class='col'>"  
           if (btnList[i] == timeClass){
-            eloStr += "<button class='btn active' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            eloStr += "<button class='btn active graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
           else {
-            eloStr += "<button class='btn btn-primary' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            eloStr += "<button class='btn btn-primary graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
+
+          eloStr+="</div>"  
       }
 
-      eloStr += "</div>";
-      eloStr += "</div>";
-      eloStr += "</div>";
-      eloStr += "</div>";
+      eloStr += "</div>"; 
       eloDiv.innerHTML += eloStr;
       // insightsDiv.prepend(eloDiv);
       insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
@@ -81,7 +88,7 @@ function writeOpenings(archivedGames){
   openingsPieChart(archivedGames, "openings");
 }
 
-function writeTable(tableTitle, tableId, tableStr){
+function writeTable( tableId, tableStr){
 
   mainDiv = document.getElementById("insights")
 
@@ -90,7 +97,7 @@ function writeTable(tableTitle, tableId, tableStr){
   tableDiv.setAttribute("id",tableId);
   tableDiv.setAttribute("class","container");
 
-  tableDiv.innerHTML += `<h2>${tableTitle}</h2>`;
+  // tableDiv.innerHTML += `<h2>${tableTitle}</h2>`;
 
   // create a table tag
   const table = document.createElement("table"); 
@@ -148,7 +155,7 @@ function writeAllGamesTable() {
       tableStr += "</tr> ";
    }
 
-  writeTable("All Games", "gameTable", tableStr);
+  writeTable("gameTable", tableStr);
 
 }
 
@@ -222,7 +229,7 @@ function writeGameStats(){
   tableStr += `<td>${numDraw}</td>`;
   tableStr += "</tr> ";
 
-  writeTable("Overall Game Stats", "statTable", tableStr);
+  writeTable("statTable", tableStr);
 
 }
 
@@ -354,7 +361,7 @@ tableStr += `<td>${bestBlitzRatingDate}</td>`;
 
 tableStr += "</tr>";
 
-writeTable("Player Stats", "playerStats", tableStr);
+writeTable("playerStats", tableStr);
 
 
 }
