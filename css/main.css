@@ -452,11 +452,14 @@ a:hover {
   /* #eloGraph {
     height: 100% !important;
   } */
+  .row {
+    height: 50%;
+  }
   h2 {
     font-size: 2rem !important ;
   }
   #eloGraph {
-    height: 300px !important;
+    height: 450px !important;
   }
   .btn.graphics {
     background-color: #85a35a;
@@ -471,6 +474,20 @@ a:hover {
     font-size: 0.5rem !important;
     box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
 
+  }
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      z-index: 1;
+  }
+  .btn:active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+  }
+
+  .btn.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
   }
 }
 
