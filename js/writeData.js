@@ -28,37 +28,48 @@ function eloOverTime(timeClass="rapid"){
 
       eloStr = "";
 
-      eloStr += `<h3  > ELO Over Time </h3>`;
+      eloStr += `<h3> ELO Over Time </h3>`;
       eloStr += "<div class='row'>";
       // eloStr += "<div class='col-12'>";
-      // eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
-      // eloStr += "<div class='card-body'>";
+      eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
 
-      // eloStr += "</div>";
-      // eloStr += "</div>";
+      let btnList = ["blitz", "rapid", "daily","bullet"];
+      for (var i=0; i<btnList.length; i++){
+            
+          if (btnList[i] == timeClass){
+            eloStr += "<button class='btn active ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+          else {
+            eloStr += "<button class='btn btn-primary ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+
+      }
+      eloStr += "</div>";
+      eloStr += "</div>";
       // eloStr += "</div>";
       eloStr += "</div>";
 
 
-      eloStr += "<div id='graphBtns' class='row'>";
+      // eloStr += "<div id='graphBtns' class='row'>";
       
-      let btnList = ["blitz", "rapid", "daily","bullet"];
-      for (var i=0; i<btnList.length; i++){
+      // let btnList = ["blitz", "rapid", "daily","bullet"];
+      // for (var i=0; i<btnList.length; i++){
             
-          eloStr+="<div class='col'>"  
-          if (btnList[i] == timeClass){
-            eloStr += "<button class='btn active graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
-          }
-          else {
-            eloStr += "<button class='btn btn-primary graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
-          }
+      //     eloStr+="<div class='col'>"  
+      //     if (btnList[i] == timeClass){
+      //       eloStr += "<button class='btn active graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+      //     }
+      //     else {
+      //       eloStr += "<button class='btn btn-primary graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+      //     }
 
-          eloStr+="</div>"  
-      }
+      //     eloStr+="</div>"  
+      // }
 
-      eloStr += "</div>"; 
+      // eloStr += "</div>"; 
       eloDiv.innerHTML += eloStr;
       // insightsDiv.prepend(eloDiv);
       insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
