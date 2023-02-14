@@ -25,20 +25,34 @@ function eloOverTime(timeClass="rapid"){
       eloDiv.classList.add("container", "eloOverTime");
       eloDiv.setAttribute("id", "eloGraph");
       eloDiv.setAttribute("timeClass", timeClass);
-      eloDiv.innerHTML += `<h2> ${timeClass} ELO Over Time </h1>`;
-      eloDiv.innerHTML += "<canvas id='eloOverTime'></canvas>"
+
+      eloStr = "";
+
+      eloStr += "<div class='row'>";
+      eloStr += "<div class='col-12'>";
+      eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      eloStr += `<h3 class='card-title'> ${timeClass} ELO Over Time </h3>`;
+      eloStr += "<div class='card-body'>";
+
+      eloStr += "<canvas id='eloOverTime'></canvas>"
 
       let btnList = ["blitz", "rapid", "daily","bullet"];
       for (var i=0; i<btnList.length; i++){
             
             
           if (btnList[i] == timeClass){
-            eloDiv.innerHTML += "<button class='btn active' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            eloStr += "<button class='btn active' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
           else {
-            eloDiv.innerHTML += "<button class='btn' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            eloStr += "<button class='btn btn-primary' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
       }
+
+      eloStr += "</div>";
+      eloStr += "</div>";
+      eloStr += "</div>";
+      eloStr += "</div>";
+      eloDiv.innerHTML += eloStr;
       // insightsDiv.prepend(eloDiv);
       insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
     

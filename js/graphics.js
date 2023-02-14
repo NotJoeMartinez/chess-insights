@@ -52,6 +52,7 @@ function graphElo(timeClass="rapid")  {
           }]
         },
         options: {
+          responsive: true,
           scales: {
             y: {
               beginAtZero: true
