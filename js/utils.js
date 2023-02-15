@@ -42,6 +42,13 @@ function getArchivedGames() {
 
 }
 
+function isTop90Percentile(number, numbers) {
+    numbers.sort((a, b) => a - b); // Sort the array in ascending order
+    const index = Math.ceil(numbers.length * 0.9) - 1; // Find the index of the 90th percentile
+    const percentileValue = numbers[index]; // Get the value at the 90th percentile
+    return number >= percentileValue; // Compare the number to the 90th percentile value
+  }
+  
 function getPlayerStats() {
     let playerStats = window.localStorage.getItem("playerStats");
     return JSON.parse(playerStats);

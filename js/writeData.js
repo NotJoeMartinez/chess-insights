@@ -28,7 +28,7 @@ function eloOverTime(timeClass="rapid"){
 
       eloStr = "";
 
-      eloStr += `<h3> ELO Over Time </h3>`;
+      eloStr += `<h2> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
       eloStr += "<div class='row'>";
       // eloStr += "<div class='col-12'>";
       eloStr += "<div class='card'style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
@@ -66,21 +66,78 @@ function eloOverTime(timeClass="rapid"){
 }
 
 
-function openings(){
-  let insightsDiv = document.getElementById("insights");
-  let openingDiv = document.createElement("div");
-  openingDiv.classList.add("container", "openings",);
+function writeOpenings(timeClass="all"){
+  testNode = document.getElementById("openings");
+  if (( testNode == null ) || (testNode.timeClass != timeClass)) {
 
-  let divStr  = "";
-  divStr += "<h2>Openings</h1>";
-  divStr += "<div class='row'> ";
-  divStr += "<div class='col'> <canvas id='openings'></canvas> </div>";
-  divStr += "</div> ";
+      if (testNode != null)  {
+        document.getElementById("openings").remove(); 
+        let cardBody = document.querySelector("#openingsGraph div.card-body:first-of-type")
+        let canvas = document.createElement("canvas");
+        canvas.setAttribute("id", "openings");
+        cardBody.prepend(canvas);
 
-  openingDiv.innerHTML += divStr;
-  console.log(openingDiv)
-  insightsDiv.prepend(openingDiv);
-  graphOpenings("openings");
+        // let buttons= document.querySelectorAll("#openingsGraph .btn");
+        
+        let buttons= document.querySelectorAll("#openingsGraph .btn");
+
+        for (let i = 0; i < buttons.length; i++) {
+          let button = buttons[i]; 
+            for (let j = 0; j < button.classList.length; j++) {
+              if (button.classList[j] == "active") {
+                button.classList.remove("active");
+              }
+              if (button.innerText == timeClass.toUpperCase()){
+                  button.classList.add("active");
+                }
+              }
+          }
+
+        // oldActive.classList.remove("active");
+
+
+        graphOpenings(timeClass);
+      }
+    else {
+      let insightsDiv = document.getElementById("insights");
+      let openingDiv = document.createElement("div");
+      openingDiv.setAttribute("id", "openingsGraph")
+      openingDiv.classList.add("container", "openings",);
+      let divStr  = "";
+      divStr += "<div class='row'> ";
+      divStr += `<h2>${timeClass.toUpperCase()} Openings </h2>`;
+      divStr += "</div>";
+      divStr += `<p><sub>(top 90% percentile)</sub></p>`;
+      divStr += "<div class='row'> ";
+      divStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      divStr += "<div class='card-body'>";
+      divStr += "<canvas id='openings'></canvas>";
+  
+  
+      let btnList = ["all", "blitz", "rapid", "daily","bullet"];
+      for (var i=0; i<btnList.length; i++){
+            
+          if (btnList[i] == timeClass){
+            divStr+= "<button class='btn btn-primary active' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+          else {
+            divStr+= "<button class='btn btn-primary' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+  
+      }
+  
+    
+      divStr += "</div> ";
+      divStr += "</div> ";
+      divStr += "</div> ";
+      openingDiv.innerHTML += divStr;
+      insightsDiv.appendChild(openingDiv);
+      graphOpenings(timeClass);
+
+    }
+
+
+  }
 }
 
 function writeTable( tableId, tableStr){

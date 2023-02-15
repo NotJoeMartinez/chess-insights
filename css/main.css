@@ -138,12 +138,7 @@ h1 {
 .header-section {
   max-width: 900px;
 }
-.comment {
-  word-wrap: break-word;
-}
-.summary {
-  text-align: left;
-}
+
 @-webkit-keyframes ajax {
 50% {
     -webkit-transform: scale(2.5);
@@ -189,11 +184,7 @@ h1 {
 }
 }
 
-/* .btn {
-    padding: 0 1.5rem !important;
-    font-size: 1rem !important;
-} */
-/* } */
+
 
 input[type="range"] {
   -webkit-appearance: none;
@@ -307,9 +298,7 @@ input[type="range"]:focus::-ms-fill-lower {
 input[type="range"]:focus::-ms-fill-upper {
   background: linear-gradient(135deg, #00bec7, #0073e8);
 }
-.container--summary {
-  padding: 0;
-}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -318,15 +307,7 @@ hr {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin: 2rem 0;
 }
-section.summary {
-  padding: 4rem 0 2rem;
-  margin-bottom: 4rem;
-  border-radius: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-top: 3px solid #4fd316;
-}
+
 h2, h3 {
   word-wrap: break-word;
   font-size: 2rem;
@@ -348,14 +329,7 @@ p {
 a {
   transition: all 0.2s ease;
 }
-/* a:hover {
-    text-decoration: none;
-    background-color: rgba(9, 9, 9, 0.1);
-} */
-/* ul li:hover a {
-  color: white;
-  background: transparent;
-} */
+
 ul li:first-child {
   font-weight: 600;
   box-shadow: 0 5px 60px -2px rgba(0, 50, 150, 0.25);
@@ -402,13 +376,6 @@ section.summary {
 label {
   margin-bottom: 0;
 }
-/* canvas {
-  margin-bottom: 1rem;
-} */
-
-/* @media (min-width: 992px) {
-
-} */
 
 
 p {
@@ -426,14 +393,14 @@ a {
   margin-bottom: 5%;
 }
 
-#openings{
+/* #openings{ */
   /* display: flex; */
   /* align-items: center; */
   /* position: relative; */
-  margin: auto;
+  /* margin: auto;
   height: 400px;
   width: 400px;
-}
+} */
 
 .graphics {
   width: 100%;
@@ -459,13 +426,17 @@ a {
   }
 
   .row {
-    height: 50%;
+    height: auto;
   }
   h2 {
     font-size: 2rem !important ;
   }
   #eloGraph {
-    height: 450px !important;
+    height: 350px !important;
+  }
+
+  #openingsGraph {
+    height: 350px !important;
   }
   .btn.graphics {
     background-color: #85a35a;

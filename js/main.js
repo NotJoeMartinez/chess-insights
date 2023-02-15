@@ -46,8 +46,8 @@ async function getAllUserData() {
 
 
     eloOverTime();
-    // graphOpenings();
-    writeGameStats();
+    writeOpenings();
+    // writeGameStats();
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);

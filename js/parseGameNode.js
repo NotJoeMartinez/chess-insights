@@ -57,14 +57,27 @@ function parseGameNode(gameNode) {
     let pgn = gameNode.pgn.split('\n');
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
     parsedGameNode["openingUrl"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl/g,''); // sometimes returns utc timestamp
+
     let tmp_opening = pgn[10].replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
     parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
+
+    let mainLine = parsedGameNode["opening"].match(/^(\D*)(?=\d)/);
+    if (mainLine){
+        parsedGameNode["mainLineOpening"] = mainLine[1];
+    }
+    else {
+        parsedGameNode["mainLineOpening"] = parsedGameNode["opening"]; 
+    }
+
     parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g,'');
     parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g,'');
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
 
+
+    // main line openings 
+    
 
     return parsedGameNode;
 } 

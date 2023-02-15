@@ -99,89 +99,119 @@ function graphElo(timeClass="rapid")  {
       });
  }
 
- function graphOpenings(canvasId) {
-  const ctx = document.getElementById(canvasId);
-  // Chart.defaults.interaction.mode = 'nearest';
-   let uname = getUserName();
-    // data=[]
-    // for (var i=0; i<archivedGames.length; i++){
-    //     parsedGameNode = parseGameNode(archivedGames[i], uname);
-    //     opening = parsedGameNode.opening;
-    //     data.push(opening);
-    // }
-    // let labels = [... new Set(openings)];
-    const labels = ["Jan", "Feb", "March", "April", "May", "June", "July"];
-    const myData= {
-      labels: labels,
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
-        ],
-        borderWidth: 1
-      }]
-    };
-  // Interaction mode is set to nearest because it was not overridden here
-  new Chart(ctx, {
-      type: 'line',
-      data: myData 
-  });
+ function graphOpenings(timeClass="all") {
+  const ctx = document.getElementById("openings");
+
+  archivedGames = getArchivedGames();
+  uname = getUserName();
+
+  
+  const openingData = {};
+  if (timeClass=="all"){
+    for (let i = 0; i < archivedGames.length; i++) {
+      let parsedGameNode = parseGameNode(archivedGames[i]);
+      const string = parsedGameNode.opening;
+      openingData[string] = (openingData[string] || 0) + 1;
+    }
+  } else {
+    for (let i = 0; i < archivedGames.length; i++) {
+      let parsedGameNode = parseGameNode(archivedGames[i]);
+      if (parsedGameNode.timeClass == timeClass) {
+        const string = parsedGameNode.opening;
+        openingData[string] = (openingData[string] || 0) + 1;
+      }
+    }
+  }
+
   
 
- 
-    // let label_count = [];
+  const sortedOpeningData = {};
 
-    // for (var i=0; i<labels.length; i++) {
-    //     for (var j=0; j<openings.length; j++) {
-    //         var instances = 0;
-    //         if (openings[j] == labels[i])
-    //         {
-    //             instances++;
-    //         }
-    //     }
-    //     if (label_count != 0) {
+  for (let i = 0; i < archivedGames.length; i++) {
 
-    //         label_count.push(instances)
-    //     }
-    // }
-    // // console.log(`all: ${openings.length}`);
-    // // console.log(`uniq: ${labels.length}`);
-    // // console.log(`count ${label_count.length}`);
+  }
+  
 
-    // const ctx = document.getElementById(canvasId);
-    // const data = {
-    //     labels:labels, 
-    //     datasets: [{
-    //       label: 'openings',
-    //       data: label_count,
-    //       backgroundColor: [
-    //         'rgb(255, 99, 132)',
-    //         'rgb(54, 162, 235)',
-    //         'rgb(255, 205, 86)'
-    //       ],
-    //       hoverOffset: 4
-    //     }]
-    //   };
-    //   new Chart(ctx, {
-    //     type: "pie",
-    //     data: data,
-    //     responsive: true
-    //   });
+  
+
+  let allNumbers = []
+
+  for (const [key, value] of Object.entries(openingData)) {
+    allNumbers.push(value)
+  }
+
+  let titles = []
+  let values = []
+
+  for (const [key, value] of Object.entries(openingData)) {
+    // console.log(`${value}/${total} = ` + value/total );
+    if (isTop90Percentile(value, allNumbers)) {
+      // if (key.length > 20) {
+      //   const first20 = key.slice(0, 20);
+      //   titles.push(first20);
+      //   values.push(value);
+      // }
+      // else {
+        titles.push(key);
+        values.push(value);
+      // }
+
+    }
+  }
+
+  arrayLabel = ["Total", "301 Redirect", "Broken Pages (4xx Errors)", "Uncategorised HTTP Response Codes", "5xx Errors", "Unauthorised Pages", "Non-301 Redirects"]
+  arrayData = [16, 1, 14, 0, 0, 0, 1];
+
+  arrayOfObj = titles.map(function(d, i) {
+    return {
+      label: d,
+      data: values[i] || 0
+    };
+  });
+
+  sortedArrayOfObj = arrayOfObj.sort(function(a, b) {
+    return b.data>a.data;
+  });
+
+  sortedTitles = [];
+  sortedValues = [];
+
+  sortedArrayOfObj.forEach(function(d){
+    sortedTitles.push(d.label);
+    sortedValues.push(d.data);
+  })
+
+  // console.log(sorte)
+  // console.log(values.length)
+
+  var myChart = new Chart(ctx, {
+    type: "bar",
+    label: "openings",
+    data: {
+    labels: sortedTitles,
+    datasets: [
+      {
+      label: "times used",
+      data: sortedValues,
+      borderWidth: 1
+    }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+      x: {
+        ticks: {
+            display: false
+       }
+    }
+    }
+  }
+
+});
+
      
  }
