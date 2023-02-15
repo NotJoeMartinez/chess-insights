@@ -13,6 +13,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.0/chartjs-plugin-zoom.min.js" 
+    integrity="sha512-B6F98QATBNaDHSE7uANGo5h0mU6fhKCUD+SPAY7KZDxE8QgZw9rewDtNiu3mbbutYDWOKT3SPYD8qDBpG2QnEg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" 
+    integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <link href="css/main.css" rel=stylesheet>
 
@@ -61,6 +71,73 @@
             </div>
         </div>
     </div>
+    <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Export Modal -->
+<div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="export modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exportModalTitle">
+          For more info about export data <a href="https://github.com/NotJoeMartinez/chess-insights#available-data" target="_blank">click here</a>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><b>Everything:</b> all available data to csv</li>
+          <li><b>Simplified:</b> date, timeClass, result, rating and gameUrl</li>
+          <li><b>PGN:</b> <a href="https://en.wikipedia.org/wiki/Portable_Game_Notation" target="_blank">Portable Game Notation</a></li>
+          <li><b>JSON: </b><a href="https://en.wikipedia.org/wiki/JSON" target="_blank">Javascript Object Notation</a></li>
+          <li><b>Custom:</b> Select what data to export</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+
+        <div class="row">
+            <button type="button" class="btn btn-primary export-option mb-1" onclick="exportData('all')">Everything (.csv)</button>
+            <button type="button" class="btn btn-primary export-option mb-1" onclick="exportData('simple')">Simplified (.csv)</button>
+            <button type="button" class="btn btn-primary export-option mb-1" onclick="exportData('pgn')">PGN (.pgn)</button>
+            <button type="button" class="btn btn-primary export-option mb-1" onclick="exportData('json')">JSON (.json)</button>
+            <button type="button" id='custom-export-btn' data-bs-toggle='modal' data-bs-target="#custom-export-modal" class="btn btn-primary export-option mb-1" onclick='showCustomExport()'>Custom</button>
+
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="custom-export-modal" tabindex="-1" aria-labelledby="custom export modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="customExportTitle">
+          Custom export
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body" id="customExportBody"> 
+
+      </div>
+
+      <div class="modal-footer">
+      <div class="row">
+            <button type="button" class="btn btn-primary export-option mb-1" onclick="makeCustomExport()">Export</button>
+      </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
   </div>
 
 

@@ -89,31 +89,61 @@ function graphElo(timeClass="rapid")  {
    
 
     const ctx = document.getElementById('eloOverTime');
+    // let timeFormat = "MM/DD/YYYY HH:mm";
     const eloChart = new Chart(ctx, {
         type: 'line',
         data: {
           // labels: dates,
           datasets: [
             {
-            // label: 'ELO',
+            label: 'ELO',
             data: allData,
             borderWidth: 1
             }
         ]
         },
         options: {
+          responsive: true,
+
           parsing: {
             yAxisKey: 'game.elo',
             xAxisKey: 'date'
           },
-          responsive: true
-          // scales: {
-          //   y: {
-          //     beginAtZero: true
-          //   }
-          // }
+          xAxes: [
+            {
+              type: "time",
+              // time: {
+                // parser: timeFormat
+                // unit: "minute",
+                // displayFormats: {
+                  // minute: "YYYY-MM-DD:hh:mm"
+                  // second: "MM/DD/YYYY HH:mm"
+                // }
+              // }
+            }
+          ],
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: false,
+                },
+                // pan: {
+                //   enabled: true
+                // },
+                // drag: {
+                //   enabled: true
+                // },
+                limits: {
+                    y: {min: 100, max: 1000},
+                    x: {min: 100, max: 1000}
+                  },
+                mode: 'xy',
+                sensitivity: 1
+              }
+            }
+          }
         }
-        
       });
 
       function clickHandler(click) {
@@ -126,6 +156,8 @@ function graphElo(timeClass="rapid")  {
         }
       }
       ctx.onclick = clickHandler;
+
+      // ctx.register(zoomPlugin);
  }
 
 
@@ -238,7 +270,7 @@ function graphElo(timeClass="rapid")  {
     }
   }
 
-});
+  });
 
-     
  }
+

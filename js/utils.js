@@ -10,7 +10,9 @@ function utcToHuman(unix_timestamp) {
     const day = date.getUTCDate().toString().padStart(2, "0");
     const hour = date.getUTCHours().toString().padStart(2, "0");
     const minute = date.getUTCMinutes().toString().padStart(2, "0");
-    return `${year}-${month}-${day}:${hour}:${minute}`;
+    //  minute: "MM/DD/YYYY hh:mm"
+    // return `${year}-${month}-${day}:${hour}:${minute}`;
+    return `${month}/${day}/${year} ${hour}:${minute}`;
 
   }
 

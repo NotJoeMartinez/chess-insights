@@ -106,7 +106,6 @@ function writeOpenings(timeClass="all"){
         graphOpenings(timeClass);
       }
     else {
-      console.log("I should only run once")
       let insightsDiv = document.getElementById("insights");
       let openingDiv = document.createElement("div");
       openingDiv.setAttribute("id", "openingsGraph")

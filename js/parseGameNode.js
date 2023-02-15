@@ -15,6 +15,8 @@ function parseGameNode(gameNode) {
     let stripedPgn = ogPgn.replace(/(\r\n|\r|\n)/g,''); 
     parsedGameNode["pgn"] = stripedPgn;  
 
+    parsedGameNode["ogPgn"] = gameNode.pgn;  
+
     // find game color
     if(gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
         parsedGameNode["userColor"] = "white";
