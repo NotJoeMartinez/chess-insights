@@ -12,6 +12,20 @@ function writeInsightsDiv() {
 
 function eloOverTime(timeClass="rapid"){
 
+  let userStats = getPlayerStats();
+  let apiTimeClass = "chess_" + timeClass;
+  
+  let wins = 0;
+  let losses = 0; 
+  let draws = 0;
+
+  if (userStats.hasOwnProperty(apiTimeClass)){
+    wins = userStats[apiTimeClass].record.win;
+    losses = userStats[apiTimeClass].record.loss;
+    draws = userStats[apiTimeClass].record.draw;
+  }
+
+
   testNode = document.getElementById("eloGraph");
   if (( testNode == null ) || (testNode.timeClass != timeClass)) {
 
@@ -30,10 +44,12 @@ function eloOverTime(timeClass="rapid"){
 
 
       eloStr += "<div class='row'>";
-      eloStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      eloStr += "<div class='card'>";
 
       eloStr += `<h2 class='cart-title'> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
       eloStr += `<p class="card-text"> Click data points to open game in another window <p>`;
+      eloStr += "<p class='card-text'>"; 
+      eloStr += `Wins: <b>${wins}</b> Losses: <b> ${losses}</b> Draws: <b>${draws}</b> <p>`;
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
@@ -113,7 +129,7 @@ function writeOpenings(timeClass="all"){
       let divStr  = "";
 
       divStr += "<div class='row'> ";
-      divStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      divStr += "<div class='card'>";
 
       divStr += "<div class='card-body'>";
       divStr += `<h2 id="openingsTitle" class='card-title'>${timeClass.toUpperCase()} Openings </h2>`;

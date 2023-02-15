@@ -340,6 +340,13 @@ a {
   background-color: #312e2b;
   color: #ffffff;
 }
+
+.card {
+width: 100%; 
+height: 100%; 
+margin: auto;  
+background-color: rgba(255, 255, 255, 0.0) !important;
+}
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
   /* #eloGraph {
@@ -355,14 +362,14 @@ a {
   /* h2 {
     font-size: 2rem !important ;
   } */
-  #eloGraph {
+  /* #eloGraph {
     height: 350px !important;
   }
 
   #openingsGraph {
     margin-top: 50px;
     height: 350px !important;
-  }
+  } */
   .btn.graphics {
     background-color: #85a35a;
     color: #ffffff;
