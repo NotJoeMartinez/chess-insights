@@ -226,24 +226,24 @@ hr {
   margin: 2rem 0;
 }
 
-h2, h3 {
+/* h2, h3 {
   word-wrap: break-word;
   font-size: 2rem;
   font-weight: 300;
   text-align: center ;
   margin-bottom: 1.25rem;
   font-weight: 500;
-}
+} */
 h3 {
   font-weight: 300;
   font-size: 1.75rem;
   margin-bottom: 1rem;
 }
 
-p {
+/* p {
   font-size: 18px;
   color: #cad6e6 !important;
-}
+} */
 a {
   transition: all 0.2s ease;
 }
@@ -346,14 +346,15 @@ a {
   .row {
     height: auto;
   }
-  h2 {
+  /* h2 {
     font-size: 2rem !important ;
-  }
+  } */
   #eloGraph {
     height: 350px !important;
   }
 
   #openingsGraph {
+    margin-top: 50px;
     height: 350px !important;
   }
   .btn.graphics {

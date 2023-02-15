@@ -28,9 +28,12 @@ function eloOverTime(timeClass="rapid"){
 
       eloStr = "";
 
-      eloStr += `<h2> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
+
       eloStr += "<div class='row'>";
       eloStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+
+      eloStr += `<h2 class='cart-title'> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
+      eloStr += `<p class="card-text"> Click data points to open game in another window <p>`;
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
@@ -70,16 +73,23 @@ function writeOpenings(timeClass="all"){
   if (( testNode == null ) || (testNode.timeClass != timeClass)) {
 
       if (testNode != null)  {
+
+
+        // update card title
+        let cardTitle = document.getElementById("openingsTitle");
+        cardTitle.innerText = `${timeClass.toUpperCase()} Openings`;
+
+        // remove and update graph
         document.getElementById("openings").remove(); 
-        let cardBody = document.querySelector("#openingsGraph div.card-body:first-of-type")
         let canvas = document.createElement("canvas");
         canvas.setAttribute("id", "openings");
-        cardBody.prepend(canvas);
 
-        // let buttons= document.querySelectorAll("#openingsGraph .btn");
+        cardText = document.querySelector('#openingsTitle');
+        firstParagraph = openingsTitle.nextElementSibling;
+        firstParagraph.after(canvas);
         
-        let buttons= document.querySelectorAll("#openingsGraph .btn");
-
+        // update buttons
+        let buttons = document.querySelectorAll("#openingsGraph .btn");
         for (let i = 0; i < buttons.length; i++) {
           let button = buttons[i]; 
             for (let j = 0; j < button.classList.length; j++) {
@@ -92,24 +102,23 @@ function writeOpenings(timeClass="all"){
               }
           }
 
-        // oldActive.classList.remove("active");
-
 
         graphOpenings(timeClass);
       }
     else {
+      console.log("I should only run once")
       let insightsDiv = document.getElementById("insights");
       let openingDiv = document.createElement("div");
       openingDiv.setAttribute("id", "openingsGraph")
       openingDiv.classList.add("container", "openings",);
       let divStr  = "";
-      divStr += "<div class='row'> ";
-      divStr += `<h2>${timeClass.toUpperCase()} Openings </h2>`;
-      divStr += "</div>";
-      divStr += `<p><sub>(top 90% percentile)</sub></p>`;
+
       divStr += "<div class='row'> ";
       divStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+
       divStr += "<div class='card-body'>";
+      divStr += `<h2 id="openingsTitle" class='card-title'>${timeClass.toUpperCase()} Openings </h2>`;
+      divStr += `<p class='card-text'> top 90% percentile</p>`;
       divStr += "<canvas id='openings'></canvas>";
   
   
