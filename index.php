@@ -28,10 +28,11 @@
   <div id="app">
         <div id="main">
             <header>
-                <div class="container header-section"><img
+                <div class="container header-section">
+                    <img id="chesslogo"
                         src="imgs/chesslogo.png"
                         width="300">
-                    <h1>Free Chess.com Insights</h1>
+                    <h1>Chess.com Insights</h1>
                     <div class="input-group input-group-lg input-group--username">
                  
 

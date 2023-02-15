@@ -454,6 +454,10 @@ a:hover {
   /* #eloGraph {
     height: 100% !important;
   } */
+  #chesslogo {
+    width: 200px !important;
+  }
+
   .row {
     height: 50%;
   }
