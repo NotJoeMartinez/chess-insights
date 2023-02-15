@@ -73,52 +73,18 @@ function graphElo(timeClass="rapid")  {
     let parsedDates = [];
     let allData = [];
 
-    for (var i=0; i<archivedGames.length; i++)
-    {
+    for (var i=0; i<archivedGames.length; i++) {
         parsedGameNode = parseGameNode(archivedGames[i],uname);
-        if (parsedGameNode.timeClass == timeClass) {
-
-            let inputDate = parsedGameNode.date;
-
-            if (inArr(inputDate,parsedDates ) == true) {
-              continue;
-            }
-            else {
-
-              // find all days with input date in archivedGames 
-              days = [];
-              for (let j=0; j<archivedGames.length; j++){
-                let currentParsedGameNode = parseGameNode(archivedGames[i])
-                let currentDate = currentParsedGameNode.date 
-
-                if (currentDate == inputDate){
-                    days.push(currentParsedGameNode);
-                  }
-              }
-
-          
-              maxIndex = 0;
-              // go through the matching days and 
-              for (let k = 0; k < days.length; k++) {
-                  for (let l=0; l<days[l].length; l++) {
-                      if(days[k].rating > days[l].rating){
-                          maxIndex = k;
-                        }
-                    }
-                }
-
-            parsedDates.push(inputDate);
-            highestDateEloObj = days[maxIndex];
-
-            let rating = highestDateEloObj.userRating;
-            let link = highestDateEloObj.gameUrl;
-            let safeDate = highestDateEloObj.date.replaceAll(".","-");
-
-            allData.push({ date: `${safeDate}`, game: {elo: rating, link: `${link}`} });
-
-            }
+        if (parsedGameNode.timeClass == timeClass){
+          let rating = parsedGameNode.userRating;
+          let link = parsedGameNode.gameUrl;
+          let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
+          allData.push({ date: `${safeDate}`, game: {elo: rating, link: `${link}`} });
         }
+
+
     }
+  
 
    
 

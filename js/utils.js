@@ -4,9 +4,14 @@ function getUserName(){
 }
 
 function utcToHuman(unix_timestamp) {
-    let date = new Date(unix_timestamp * 1000);
-    let formattedDate = date.toISOString().substring(0, 10);
-    return formattedDate;
+    const date = new Date(unix_timestamp* 1000); 
+    const year = date.getUTCFullYear();
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    const day = date.getUTCDate().toString().padStart(2, "0");
+    const hour = date.getUTCHours().toString().padStart(2, "0");
+    const minute = date.getUTCMinutes().toString().padStart(2, "0");
+    return `${year}-${month}-${day}:${hour}:${minute}`;
+
   }
 
 function clearData() {

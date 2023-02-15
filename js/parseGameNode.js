@@ -9,6 +9,7 @@ function parseGameNode(gameNode) {
     parsedGameNode["timeClass"] = gameNode.time_class;   
     parsedGameNode["gameUrl"] = gameNode.url;   
     parsedGameNode["fen"] = gameNode.fen;  
+    parsedGameNode["timeStamp"] = utcToHuman(gameNode.end_time);
     
     let ogPgn = gameNode.pgn;
     let stripedPgn = ogPgn.replace(/(\r\n|\r|\n)/g,''); 
