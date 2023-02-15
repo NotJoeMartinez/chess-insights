@@ -56,48 +56,113 @@ function progressBar(prog) {
 
 }
 
+function inArr(str, arr) {
+  for (var i = 0; i<arr.length; i++){
+    if (arr[i] == str){
+      return true;
+    }
+  }
+  return false;
+}
+
 function graphElo(timeClass="rapid")  {
     archivedGames = getArchivedGames();
     uname = getUserName();
 
 
-    let data = [];
-    let dates = []
+    let parsedDates = [];
+    let allData = [];
+
     for (var i=0; i<archivedGames.length; i++)
     {
         parsedGameNode = parseGameNode(archivedGames[i],uname);
         if (parsedGameNode.timeClass == timeClass) {
-            let rating = parsedGameNode.userRating;
-            let date = parsedGameNode.date;
-            data.push(rating)
-            dates.push(date)
+
+            let inputDate = parsedGameNode.date;
+
+            if (inArr(inputDate,parsedDates ) == true) {
+              continue;
+            }
+            else {
+
+              // find all days with input date in archivedGames 
+              days = [];
+              for (let j=0; j<archivedGames.length; j++){
+                let currentParsedGameNode = parseGameNode(archivedGames[i])
+                let currentDate = currentParsedGameNode.date 
+
+                if (currentDate == inputDate){
+                    days.push(currentParsedGameNode);
+                  }
+              }
+
+          
+              maxIndex = 0;
+              // go through the matching days and 
+              for (let k = 0; k < days.length; k++) {
+                  for (let l=0; l<days[l].length; l++) {
+                      if(days[k].rating > days[l].rating){
+                          maxIndex = k;
+                        }
+                    }
+                }
+
+            parsedDates.push(inputDate);
+            highestDateEloObj = days[maxIndex];
+
+            let rating = highestDateEloObj.userRating;
+            let link = highestDateEloObj.gameUrl;
+            let safeDate = highestDateEloObj.date.replaceAll(".","-");
+
+            allData.push({ date: `${safeDate}`, game: {elo: rating, link: `${link}`} });
+
+            }
         }
     }
 
-    // get min elo
-    // get max elo
+   
+
     const ctx = document.getElementById('eloOverTime');
-    new Chart(ctx, {
+    const eloChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: dates,
-          datasets: [{
-            label: 'ELO',
-            data: data,
+          // labels: dates,
+          datasets: [
+            {
+            // label: 'ELO',
+            data: allData,
             borderWidth: 1
-          }]
+            }
+        ]
         },
         options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        },
+          parsing: {
+            yAxisKey: 'game.elo',
+            xAxisKey: 'date'
+          },
+          responsive: true
+          // scales: {
+          //   y: {
+          //     beginAtZero: true
+          //   }
+          // }
+        }
         
       });
+
+      function clickHandler(click) {
+        const points = eloChart.getElementsAtEventForMode(click, 'nearest',
+        {intersect: true}, true);
+        if (points.length) {
+          const firstPoint = points[0]
+          const value = eloChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+          window.open(value.game.link, "_blank");
+        }
+      }
+      ctx.onclick = clickHandler;
  }
+
+
 
  function graphOpenings(timeClass="all") {
   const ctx = document.getElementById("openings");
@@ -159,8 +224,6 @@ function graphElo(timeClass="rapid")  {
     }
   }
 
-  arrayLabel = ["Total", "301 Redirect", "Broken Pages (4xx Errors)", "Uncategorised HTTP Response Codes", "5xx Errors", "Unauthorised Pages", "Non-301 Redirects"]
-  arrayData = [16, 1, 14, 0, 0, 0, 1];
 
   arrayOfObj = titles.map(function(d, i) {
     return {
@@ -181,8 +244,6 @@ function graphElo(timeClass="rapid")  {
     sortedValues.push(d.data);
   })
 
-  // console.log(sorte)
-  // console.log(values.length)
 
   var myChart = new Chart(ctx, {
     type: "bar",

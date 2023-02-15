@@ -2,7 +2,6 @@
 function writeExportButton() {
 
     let insights = document.getElementById("insights");
-    // let title = table.firstElementChild;
 
     let exportButton = document.createElement("button"); 
 
@@ -55,35 +54,6 @@ function exportToCSV() {
         csv_data.push(row);
     }
 
- 
-    // TODO: find a way to cache the data in browser so we don't have to parse out the table like this
-    // Get each row data
-
-    // for (var i = 0; i < rows.length; i++) {
- 
-        // Get each column data
-        // var cols = rows[i].querySelectorAll('td,th');
- 
-        // Stores each csv row data
-        // var csvrow = [];
-        // for (var j = 0; j < cols.length; j++) {
- 
-            // cell = cols[j].innerHTML;
-            // Get the text data of each cell of
-            // if (cols[j].firstElementChild != null){
-                // console.log("here");
-                // csvrow.push(cols[j].firstElementChild.getAttribute("href"));
-            // }
-            // else {
-                // a row and push it to csvrow
-                // csvrow.push(cell);
-            // }
-
-        // }
- 
-        // Combine each column value with comma
-        // csv_data.push(csvrow.join(","));
-    // }
     // combine each row data with new line character
     csv_data = csv_data.join('\n');
     csvFile = new Blob([csv_data], {type: 'text/csv'})

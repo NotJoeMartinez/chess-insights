@@ -3,6 +3,7 @@ body {
   font-family: "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background-color: #312e2b;
 }
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -128,28 +129,7 @@ h1 {
   max-width: 900px;
 }
 
-@-webkit-keyframes ajax {
-50% {
-    -webkit-transform: scale(2.5);
-            transform: scale(2.5);
-    box-shadow: 0 8px 50px -4px rgba(0, 50, 150, 0.2);
-}
-100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-}
-}
-@keyframes ajax {
-50% {
-    -webkit-transform: scale(2.5);
-            transform: scale(2.5);
-    box-shadow: 0 8px 50px -4px rgba(0, 50, 150, 0.2);
-}
-100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-}
-}
+
 .input-group {
   background: rgba(0, 10, 25, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.4);
