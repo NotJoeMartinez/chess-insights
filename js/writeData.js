@@ -31,7 +31,7 @@ function eloOverTime(timeClass="rapid"){
       eloStr += `<h3> ELO Over Time </h3>`;
       eloStr += "<div class='row'>";
       // eloStr += "<div class='col-12'>";
-      eloStr += "<div class='card'style='width: 75%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      eloStr += "<div class='card'style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
@@ -49,27 +49,8 @@ function eloOverTime(timeClass="rapid"){
       }
       eloStr += "</div>";
       eloStr += "</div>";
-      // eloStr += "</div>";
       eloStr += "</div>";
 
-
-      // eloStr += "<div id='graphBtns' class='row'>";
-      
-      // let btnList = ["blitz", "rapid", "daily","bullet"];
-      // for (var i=0; i<btnList.length; i++){
-            
-      //     eloStr+="<div class='col'>"  
-      //     if (btnList[i] == timeClass){
-      //       eloStr += "<button class='btn active graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
-      //     }
-      //     else {
-      //       eloStr += "<button class='btn btn-primary graphics' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
-      //     }
-
-      //     eloStr+="</div>"  
-      // }
-
-      // eloStr += "</div>"; 
       eloDiv.innerHTML += eloStr;
       // insightsDiv.prepend(eloDiv);
       insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
@@ -85,18 +66,21 @@ function eloOverTime(timeClass="rapid"){
 }
 
 
-function writeOpenings(archivedGames){
+function openings(){
   let insightsDiv = document.getElementById("insights");
   let openingDiv = document.createElement("div");
-  openingDiv.classList.add("container", "openings","h-50");
+  openingDiv.classList.add("container", "openings",);
+
   let divStr  = "";
   divStr += "<h2>Openings</h1>";
   divStr += "<div class='row'> ";
   divStr += "<div class='col'> <canvas id='openings'></canvas> </div>";
   divStr += "</div> ";
+
   openingDiv.innerHTML += divStr;
-  insightsDiv.appendChild(openingDiv);
-  openingsPieChart(archivedGames, "openings");
+  console.log(openingDiv)
+  insightsDiv.prepend(openingDiv);
+  graphOpenings("openings");
 }
 
 function writeTable( tableId, tableStr){

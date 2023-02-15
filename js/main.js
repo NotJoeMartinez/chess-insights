@@ -27,21 +27,33 @@ async function getAllUserData() {
         }
     }
 
-    window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+    console.log(archivedGames.length);
     window.localStorage.setItem("userName", userName);
+    try {
+        window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+      }
+      catch(err) {
+        // console.log(err);
+        let inlineStorage = document.createElement("div");
+        let appDiv = document.getElementById("app");
+        inlineStorage.setAttribute("id", "inlineStorage");
+        inlineStorage.setAttribute("hidden", "hidden");
+        inlineStorage.textContent = JSON.stringify(archivedGames);
+        appDiv.appendChild(inlineStorage);
+      }
 
 
     eloOverTime();
+    // graphOpenings();
     writeGameStats();
-    // writeOpenings(archivedGames);
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
     window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
 
-    writePlayerStats();
-    writeAllGamesTable();
+    // writePlayerStats();
+    // writeAllGamesTable();
     writeExportButton();
     toggleSpinner();
 }
