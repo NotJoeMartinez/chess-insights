@@ -21,9 +21,9 @@ tr {
 a {
   color: #85a35a;
 }
-a:hover, a:focus {
-    color: #cee4ae;
-}
+/* a:hover, a:focus {
+    color: #ffffff;
+} */
 .section-illustration {
   max-width: 100%;
   width: 250px;
@@ -348,14 +348,14 @@ p {
 a {
   transition: all 0.2s ease;
 }
-a:hover {
+/* a:hover {
     text-decoration: none;
-    background-color: rgba(13, 164, 71, 0.1);
-}
-ul li:hover a {
+    background-color: rgba(9, 9, 9, 0.1);
+} */
+/* ul li:hover a {
   color: white;
   background: transparent;
-}
+} */
 ul li:first-child {
   font-weight: 600;
   box-shadow: 0 5px 60px -2px rgba(0, 50, 150, 0.25);
@@ -418,10 +418,10 @@ p {
 a {
   transition: all 0.2s ease;
 }
-a:hover {
+/* a:hover {
     text-decoration: none;
     background-color: rgba(0, 150, 255, 0.1);
-}
+} */
 #exportButton {
   margin-bottom: 5%;
 }
