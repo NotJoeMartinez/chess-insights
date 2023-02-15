@@ -11,11 +11,7 @@
     crossorigin="anonymous">
 
 
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- <script src=" https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js "></script> -->
-
 
 
     <link href="css/main.css" rel=stylesheet>
