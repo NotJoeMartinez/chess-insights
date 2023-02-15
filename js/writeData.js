@@ -31,7 +31,7 @@ function eloOverTime(timeClass="rapid"){
       eloStr += `<h2> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
       eloStr += "<div class='row'>";
       // eloStr += "<div class='col-12'>";
-      eloStr += "<div class='card'style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
+      eloStr += "<div class='card' style='width: 100%; height: 100%; margin: auto;  background-color: rgba(255, 255, 255, 0.0);'>";
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
