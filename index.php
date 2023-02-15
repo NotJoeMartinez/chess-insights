@@ -33,6 +33,8 @@
                         src="imgs/chesslogo.png"
                         width="300">
                     <h1>Chess.com Insights</h1>
+                    <p style="text-align:center">Enter your chess.com username to generate a full export of your games.
+                     <a href="https://github.com/NotJoeMartinez/chess-insights" target="_blank">View Source Code</a>. </p>
                     <div class="input-group input-group-lg input-group--username">
                  
 

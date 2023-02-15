@@ -19,10 +19,10 @@ tr {
 }
 
 a {
-  color: #6edbff;
+  color: #85a35a;
 }
 a:hover, a:focus {
-    color: #a1e8ff;
+    color: #cee4ae;
 }
 .section-illustration {
   max-width: 100%;
@@ -43,7 +43,7 @@ header {
 header::before {
     display: inline-block;
     opacity: 0.8;
-    content: "";
+    /* content: ""; */
     height: 800px;
     width: 200%;
     /* background: url(data:image/svg+xml;base64,overlyimg) no-repeat; */
