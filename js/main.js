@@ -2,7 +2,6 @@
 async function getAllUserData() {
 
     clearData();
-    toggleSpinner();
     writeInsightsDiv();
 
     let userName = getUserName();
@@ -25,9 +24,12 @@ async function getAllUserData() {
         {
             archivedGames.push(archiveGameList[j]);
         }
-    }
 
-    console.log(archivedGames.length);
+        let prog = Math.ceil((i/ archiveUrls.length) * 100);
+        progressBar(prog);
+    }
+    progressBar("remove")
+
     window.localStorage.setItem("userName", userName);
     try {
         window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
@@ -55,6 +57,5 @@ async function getAllUserData() {
     // writePlayerStats();
     // writeAllGamesTable();
     writeExportButton();
-    toggleSpinner();
 }
 

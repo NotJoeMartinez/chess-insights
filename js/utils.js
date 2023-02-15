@@ -37,8 +37,6 @@ function getArchivedGames() {
     else {
         let inlineDiv = document.getElementById("inlineStorage");
         let archive = inlineDiv.textContent;
-        console.log(archive);
-        console.log(typeof(JSON.parse(archive)));
         return JSON.parse(archive);
     }
 

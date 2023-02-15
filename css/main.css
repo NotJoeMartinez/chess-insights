@@ -445,7 +445,9 @@ a:hover {
   height: 25%;
 } */
 
-
+#progBar {
+  background-color: #85a35a;
+}
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 

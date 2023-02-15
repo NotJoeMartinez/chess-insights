@@ -19,6 +19,42 @@ function toggleSpinner() {
   }
 }
 
+function progressBar(prog) {
+  // if there is no progress bar write one  
+  let progExists = document.contains(document.getElementById("progress-div"))
+  if (progExists != true && prog < 100) {
+
+      let progDiv = document.createElement("div");
+      progDiv.setAttribute("id","progress-div");
+      progDiv.setAttribute("class","container");
+
+      let progStr = "";
+      progStr+="<div class='progress'>";
+      progStr+="<div id='progBar' class='progress-bar' role='progressbar' aria-label='Example with label'"; 
+      progStr+=`style='width: ${prog}%;' aria-valuenow='prog' aria-valuemin='0' aria-valuemax='100'>${prog}%</div>`;
+      progStr+= "</div>";
+
+
+      progDiv.innerHTML += progStr;
+
+      let mainDiv = document.getElementById("main");
+      mainDiv.appendChild(progDiv);
+  }
+  // if the bar exists update the values
+  if ((progExists == true) && (prog < 100) ){
+      let progBar = document.getElementById("progBar");
+      let style = `width: ${prog}%;`;
+      progBar.style = style;
+      progBar.innerText = `${prog}%`;
+  }
+
+  if (prog == "remove"){
+    document.getElementById("progress-div").remove();
+  }
+
+
+
+}
 
 function graphElo(timeClass="rapid")  {
     archivedGames = getArchivedGames();

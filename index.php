@@ -23,7 +23,7 @@
 
     <link href="css/main.css" rel=stylesheet>
 
-    <script src="js/myUtils.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/parseGameNode.js"></script>
     <script src="js/writeData.js"></script>
     <script src="js/main.js"></script>
