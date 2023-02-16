@@ -37,14 +37,14 @@
 
   <div id="app">
         <div id="main">
+          <?php require('nav.php'); ?>
             <header>
                 <div class="container header-section">
                     <img id="chesslogo"
                         src="imgs/chesslogo.png"
                         width="300">
                     <h1>Chess.com Insights</h1>
-                    <p style="text-align:center">Enter your chess.com username to generate a full export of your games.
-                     <a href="https://github.com/NotJoeMartinez/chess-insights" target="_blank">View Source Code</a>. </p>
+                    <p style="text-align:center">Enter your chess.com username to generate a full export of your games</p>
                     <div class="input-group input-group-lg input-group--username">
                  
 
@@ -71,11 +71,6 @@
             </div>
         </div>
     </div>
-    <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button> -->
-
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="export modal" aria-hidden="true">
   <div class="modal-dialog">

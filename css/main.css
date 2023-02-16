@@ -38,8 +38,14 @@ header {
   /* background: radial-gradient(circle at 50% 1%, #474ebd, #371c84); */
   padding: 2rem 0 2rem;
   margin-bottom: 3rem;
-  box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4); */
+  -webkit-box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.42);
+  -moz-box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.42);
+  box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.4);
   overflow: hidden;
+}
+.header-section {
+  z-index: -1;
 }
 header::before {
     display: inline-block;
@@ -297,6 +303,17 @@ p small {
   margin: 0 auto;
   margin-top: -0.5rem;
 }
+
+.navbar {
+  /* box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4); */
+  position: relative;
+  background-color: #312e2b;
+  z-index: 1;
+
+}
+
+
+
 @media (min-width: 992px) {
 section.summary {
     padding: 5rem;
