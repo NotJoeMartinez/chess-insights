@@ -15,16 +15,21 @@ function eloOverTime(timeClass="rapid"){
   let userStats = getPlayerStats();
   let apiTimeClass = "chess_" + timeClass;
   
-  let wins = 0;
-  let losses = 0; 
-  let draws = 0;
+  let numWins = 0;
+  let numLosses = 0; 
+  let numDraws = 0;
+
 
   if (userStats.hasOwnProperty(apiTimeClass)){
-    wins = userStats[apiTimeClass].record.win;
-    losses = userStats[apiTimeClass].record.loss;
-    draws = userStats[apiTimeClass].record.draw;
+    numWins = userStats[apiTimeClass].record.win;
+    numLosses = userStats[apiTimeClass].record.loss;
+    numDraws = userStats[apiTimeClass].record.draw;
   }
 
+  let totalGames = numWins + numDraws + numLosses;
+  percentWins = Math.round((numWins/totalGames)  * 100)/10;
+  percentLosses = Math.round((numLosses/totalGames) * 100)/10;
+  percentDraws = Math.round((numDraws/totalGames)  * 100)/10;
 
   testNode = document.getElementById("eloGraph");
   if (( testNode == null ) || (testNode.timeClass != timeClass)) {
@@ -43,13 +48,26 @@ function eloOverTime(timeClass="rapid"){
       eloStr = "";
 
 
+      eloStr += `<h2> ELO Over Time </h2>`;
       eloStr += "<div class='row'>";
       eloStr += "<div class='card'>";
 
-      eloStr += `<h2 class='cart-title'> ${timeClass.toUpperCase()} ELO Over Time </h2>`;
       eloStr += `<p class="card-text"> Click data points to open game in another window <p>`;
       eloStr += "<p class='card-text'>"; 
-      eloStr += `Wins: <b>${wins}</b> Losses: <b> ${losses}</b> Draws: <b>${draws}</b> <p>`;
+
+      eloStr += "<div class='row'>";
+      eloStr += `<div class='col'> <h3><b>${percentWins}%</b></h3> ${numWins} Won</div>`;
+      eloStr += `<div class='col'> <h3><b>${percentDraws}%</b></h3> ${numDraws} Drawn</div>`;
+      eloStr += `<div class='col'> <h3><b>${percentLosses}%</b></h3> ${numLosses} Lost</div>`;
+      eloStr += "</div>";
+
+      eloStr += "<div class='progress'>";
+          eloStr += "<div class='progress-bar' id='progWinds' role='progressbar' style='width: 49%; background-color: #85a94e;' aria-valuenow='49' aria-valuemin='0' aria-valuemax='100'>Wins</div>";
+          eloStr += "<div class='progress-bar ' id='progDraws' role='progressbar' style='width: 3.9%; background-color: #8b8987;' aria-valuenow='3.9' aria-valuemin='0' aria-valuemax='100'>Draws</div>";
+          eloStr += "<div class='progress-bar ' id='progLoss' role='progressbar' style='width: 47.1%; background-color: #b23330;' aria-valuenow='47.1' aria-valuemin='0' aria-valuemax='100'>Losses</div>"
+      eloStr += "</div>";
+
+
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
@@ -440,3 +458,11 @@ writeTable("playerStats", tableStr);
 
 
 }
+
+// function gamesPlayed() {
+//   userStats = getPlayerStats();
+
+//   document.getElementById("")
+ 
+
+// }

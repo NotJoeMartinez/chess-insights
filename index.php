@@ -23,6 +23,7 @@
     referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f46eb5b3f0.js" crossorigin="anonymous"></script>
 
     <link href="css/main.css" rel=stylesheet>
 
@@ -43,7 +44,7 @@
                     <img id="chesslogo"
                         src="imgs/chesslogo.png"
                         width="300">
-                    <h1>Chess.com Insights</h1>
+                    <h1>Free Chess.com Insights</h1>
                     <p style="text-align:center">Enter your chess.com username to generate a full export of your games</p>
                     <div class="input-group input-group-lg input-group--username">
                  
