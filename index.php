@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title id="title">Free chess.com Insights</title>
+    <title id="title">Free chess.com Insights - Export And Visualize All Your Chess.com Games</title>
 
     <link rel="icon" type="image/x-icon" href="imgs/favicon100x100.png">
     <!-- Bootstrap CSS -->

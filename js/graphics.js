@@ -19,7 +19,7 @@ function toggleSpinner() {
   }
 }
 
-function progressBar(prog) {
+function progressBar(prog, gamesFound) {
   // if there is no progress bar write one  
   let progExists = document.contains(document.getElementById("progress-div"))
   if (progExists != true && prog < 100) {
@@ -29,6 +29,7 @@ function progressBar(prog) {
       progDiv.setAttribute("class","container");
 
       let progStr = "";
+      progStr+=`<h3 id='gamesFound'> ${gamesFound} Games Found</h3><br>`;
       progStr+="<div class='progress'>";
       progStr+="<div id='progBar' class='progress-bar' role='progressbar' aria-label='Example with label'"; 
       progStr+=`style='width: ${prog}%;' aria-valuenow='prog' aria-valuemin='0' aria-valuemax='100'>${prog}%</div>`;
@@ -42,6 +43,9 @@ function progressBar(prog) {
   }
   // if the bar exists update the values
   if ((progExists == true) && (prog < 100) ){
+
+      let fetchCounter = document.getElementById("gamesFound");
+      fetchCounter.innerText=`${gamesFound} Games Found`;
       let progBar = document.getElementById("progBar");
       let style = `width: ${prog}%;`;
       progBar.style = style;

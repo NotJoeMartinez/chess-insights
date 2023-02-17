@@ -26,6 +26,7 @@ async function getAllUserData() {
     var response = await fetch(archiveUrl);
     var archiveMonths = await response.json();
     var archiveUrls = archiveMonths.archives
+    let totalGames = 0;
 
     archivedGames = []
     for (var i=0; i<archiveUrls.length; i++) {
@@ -36,11 +37,12 @@ async function getAllUserData() {
         {
           if (verifyLiveChess(archiveGameList[j])){
               archivedGames.push(archiveGameList[j]);
+              totalGames++;
           }
         }
 
         let prog = Math.ceil((i/ archiveUrls.length) * 100);
-        progressBar(prog);
+        progressBar(prog,totalGames);
     }
     progressBar("remove")
 
@@ -68,6 +70,7 @@ async function getAllUserData() {
     writeOpenings();
     writeWon();
     writeLoss();
+
     toggleSpinner();
     // writeGameStats();
     // writePlayerStats();
