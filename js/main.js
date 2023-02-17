@@ -9,6 +9,22 @@ async function getAllUserData() {
     title = document.getElementById("title")
     title.textContent = userName;
 
+
+    playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
+    var playerStatsRes = await fetch(playerStatsUrl);
+    var playerStats = await playerStatsRes.json();
+
+    if (playerStatsRes.status != 404) {
+      window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
+    } 
+    else {
+      alert("User Not found");
+      return;
+    }
+    
+
+
+
     archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
 
     var response = await fetch(archiveUrl);
@@ -48,17 +64,15 @@ async function getAllUserData() {
 
 
     writeExportButton();
+    toggleSpinner();
 
 
-    playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
-    var playerStatsRes = await fetch(playerStatsUrl);
-    var playerStats = await playerStatsRes.json();
-    window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
 
     eloOverTime();
     writeOpenings();
     writeWon();
     writeLoss();
+    toggleSpinner();
     // writeGameStats();
     // writePlayerStats();
     // writeAllGamesTable();
