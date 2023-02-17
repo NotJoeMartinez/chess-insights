@@ -150,7 +150,7 @@ function writeOpenings(timeClass="all"){
       divStr += "<div class='card'>";
 
       divStr += "<div class='card-body'>";
-      divStr += `<h2 id="openingsTitle" class='card-title'>${timeClass.toUpperCase()} Openings </h2>`;
+      divStr += `<h2 id="openingsTitle" class='card-title'>Top openings for <b>${timeClass.toUpperCase()}</b> games</h2>`;
       divStr += `<p class='card-text'> top 90% percentile</p>`;
       divStr += "<canvas id='openings'></canvas>";
   

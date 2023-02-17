@@ -1,5 +1,17 @@
 
 
+function verifyLiveChess(gameNode){
+    let ogPgn = gameNode.pgn;
+    let pgnList = gameNode.pgn.split('\n')
+
+    if (pgnList[0] != "[Event \"Live Chess\"]"){
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 function parseGameNode(gameNode) {
     uname = window.localStorage.getItem("userName");
 

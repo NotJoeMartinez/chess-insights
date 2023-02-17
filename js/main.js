@@ -22,7 +22,9 @@ async function getAllUserData() {
         var archiveGameList = archiveJson.games;
         for (var j=0; j<archiveGameList.length; j++)  
         {
-            archivedGames.push(archiveGameList[j]);
+          if (verifyLiveChess(archiveGameList[j])){
+              archivedGames.push(archiveGameList[j]);
+          }
         }
 
         let prog = Math.ceil((i/ archiveUrls.length) * 100);
