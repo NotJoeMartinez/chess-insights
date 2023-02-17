@@ -257,24 +257,7 @@ hr {
   margin: 2rem 0;
 }
 
-/* h2, h3 {
-  word-wrap: break-word;
-  font-size: 2rem;
-  font-weight: 300;
-  text-align: center ;
-  margin-bottom: 1.25rem;
-  font-weight: 500;
-} */
-h3 {
-  font-weight: 300;
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-}
 
-/* p {
-  font-size: 18px;
-  color: #cad6e6 !important;
-} */
 a {
   transition: all 0.2s ease;
 }
@@ -376,6 +359,12 @@ height: 100%;
 margin: auto;  
 background-color: rgba(255, 255, 255, 0.0) !important;
 }
+
+#lossContainer {
+  max-width: 600px !important;
+  /* max-height: 500px !important;  */
+}
+
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
   /* #eloGraph {

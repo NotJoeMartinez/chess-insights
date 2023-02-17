@@ -56,7 +56,42 @@ function isTop90Percentile(number, numbers) {
     return number >= percentileValue; 
   }
   
+
 function getPlayerStats() {
     let playerStats = window.localStorage.getItem("playerStats");
     return JSON.parse(playerStats);
 }
+
+function makeDiv(classNames=[], id="", customAtters=[]){
+
+    const node = document.createElement("div");
+
+  
+    if (classNames.length != 0) {
+        classNames.forEach(className => node.classList.add(className));
+        // node.classList.add(classNames);
+    }
+
+    if (id != ""){
+        node.setAttribute("id", id);
+    }
+
+    if (customAtters.length != 0) {
+
+        for (let i=0; i<customAtters.length; i++) {
+
+            for (let key in customAtters[i]) {
+                const val = customAtters[i][key];
+                node.setAttribute(key,val);
+            }
+        }
+
+    }
+
+    return node;
+
+}
+
+
+
+

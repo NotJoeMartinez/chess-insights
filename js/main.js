@@ -45,17 +45,21 @@ async function getAllUserData() {
       }
 
 
-    eloOverTime();
-    writeOpenings();
-    // writeGameStats();
+    writeExportButton();
+
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
+    console.log(playerStats)
     window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
 
+    eloOverTime();
+    writeOpenings();
+    writeLoss();
+    // writeGameStats();
     // writePlayerStats();
     // writeAllGamesTable();
-    writeExportButton();
+    
 }
 

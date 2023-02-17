@@ -209,16 +209,8 @@ function graphElo(timeClass="rapid")  {
   for (const [key, value] of Object.entries(openingData)) {
     // console.log(`${value}/${total} = ` + value/total );
     if (isTop90Percentile(value, allNumbers)) {
-      // if (key.length > 20) {
-      //   const first20 = key.slice(0, 20);
-      //   titles.push(first20);
-      //   values.push(value);
-      // }
-      // else {
         titles.push(key);
         values.push(value);
-      // }
-
     }
   }
 
@@ -274,3 +266,62 @@ function graphElo(timeClass="rapid")  {
 
  }
 
+function graphLosses(canvasId) {
+
+  archivedGames = getArchivedGames();
+  userName = window.localStorage.getItem("userName");
+  ctx = document.getElementById(canvasId);
+
+  lAbandoned = 0;
+  lCheckmated = 0;
+  lResignation = 0;
+  lTimeOut = 0;
+
+  for (var i=0; i<archivedGames.length; i++) {
+    parsedGameNode = parseGameNode(archivedGames[i]);
+    let result = parsedGameNode.result;
+    switch (result) {
+      case "abandoned":
+        lAbandoned++;
+      case "checkmated":
+        lCheckmated++;
+      case "resigned":
+        lResignation++;
+      case "timeout":
+        lTimeOut++;
+
+    }
+  }
+
+  labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
+  data = [lAbandoned,lCheckmated,lResignation,lTimeOut];
+  var myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Games You Lost By",
+          data: data,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+          ],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true
+    }
+  });
+
+}

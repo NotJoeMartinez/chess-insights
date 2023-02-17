@@ -459,10 +459,33 @@ writeTable("playerStats", tableStr);
 
 }
 
-// function gamesPlayed() {
-//   userStats = getPlayerStats();
 
-//   document.getElementById("")
- 
+function writeLoss() {
 
-// }
+  let mainDiv = document.getElementById("main");
+  let container = makeDiv(["container","loss-by"], id="lossContainer");
+
+
+  let row = makeDiv(["row", "loss-by"]);
+  let card = makeDiv(["card", "loss-by"]);
+  let cardText = makeDiv(["card-text"]);
+  let cardTitle = makeDiv(["card-title"]);
+  cardTitle.innerHTML += "<h2> Games You Lost By</h2>";
+  let cardBody = makeDiv(["card-body"]);
+  let canvas = document.createElement("canvas");
+  canvas.setAttribute("id","GamesLostBy");
+
+
+  // append the things
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(cardText);
+  cardBody.appendChild(canvas);
+  card.appendChild(cardBody);
+  row.appendChild(card);
+  container.appendChild(row)
+  // insert the lost Container into the main div
+  mainDiv.appendChild(container)
+
+  graphLosses("GamesLostBy");
+}
+

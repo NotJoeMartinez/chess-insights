@@ -68,7 +68,6 @@
                 </div>
             </header>
 
-               </div>
             </div>
         </div>
     </div>
