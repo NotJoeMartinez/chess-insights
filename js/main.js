@@ -6,10 +6,6 @@ async function getAllUserData() {
 
     let userName = getUserName();
 
-    title = document.getElementById("title")
-    title.textContent = userName;
-
-
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();

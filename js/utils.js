@@ -29,8 +29,6 @@ function clearData() {
     localStorage.removeItem("userName");
     localStorage.removeItem("archivedGames");
 
-    title = document.getElementById("title")
-    title.textContent = "";
     
 }
 
