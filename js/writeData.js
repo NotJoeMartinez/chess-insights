@@ -27,9 +27,18 @@ function eloOverTime(timeClass="rapid"){
   }
 
   let totalGames = numWins + numDraws + numLosses;
-  percentWins = Math.round((numWins/totalGames)  * 100)/10;
-  percentLosses = Math.round((numLosses/totalGames) * 100)/10;
-  percentDraws = Math.round((numDraws/totalGames)  * 100)/10;
+
+
+  
+  let decWins = (numWins * 100)/totalGames;
+  percentWins = Math.round(decWins * 100 ) / 100;
+
+  let decDraws = (numDraws * 100)/totalGames;
+  percentDraws = Math.round(decDraws * 100)/100;
+
+  let decLosses = (numLosses * 100)/totalGames;
+  percentLosses = Math.round(decLosses * 100)/100;
+
 
   testNode = document.getElementById("eloGraph");
   if (( testNode == null ) || (testNode.timeClass != timeClass)) {
