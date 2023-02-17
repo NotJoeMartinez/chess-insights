@@ -1,15 +1,22 @@
 
 
+// verify that this game is actually chess
 function verifyLiveChess(gameNode){
-    let ogPgn = gameNode.pgn;
-    let pgnList = gameNode.pgn.split('\n')
+    try {
+        let ogPgn = gameNode.pgn;
+        let pgnList = gameNode.pgn.split('\n')
+        if ((gameNode.rules == "chess")){
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+    }
+    catch (error){
+        return false
+    }
 
-    if (pgnList[0] != "[Event \"Live Chess\"]"){
-        return false;
-    }
-    else {
-        return true;
-    }
 }
 
 function parseGameNode(gameNode) {
