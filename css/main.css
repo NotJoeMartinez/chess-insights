@@ -360,7 +360,7 @@ margin: auto;
 background-color: rgba(255, 255, 255, 0.0) !important;
 }
 
-#lossContainer {
+#lossContainer, #wonContainer{
   max-width: 600px !important;
   /* max-height: 500px !important;  */
 }

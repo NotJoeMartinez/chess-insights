@@ -51,11 +51,11 @@ async function getAllUserData() {
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
-    console.log(playerStats)
     window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
 
     eloOverTime();
     writeOpenings();
+    writeWon();
     writeLoss();
     // writeGameStats();
     // writePlayerStats();

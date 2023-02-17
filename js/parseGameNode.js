@@ -56,6 +56,17 @@ function parseGameNode(gameNode) {
         }
 
     }
+
+    // find out how you won
+    parsedGameNode["wonBy"] = "";
+    if ((parsedGameNode.userColor == "white") && (parsedGameNode.result == "win")) {
+        parsedGameNode["wonBy"] = gameNode.black.result;
+    }
+
+    if ((parsedGameNode.userColor == "black") && (parsedGameNode.result == "win")) {
+        parsedGameNode["wonBy"] = gameNode.white.result;
+    }
+
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');

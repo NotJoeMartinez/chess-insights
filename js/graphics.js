@@ -266,42 +266,73 @@ function graphElo(timeClass="rapid")  {
 
  }
 
-function graphLosses(canvasId) {
+function graphWinLoss(canvasId, inputResult) {
 
   archivedGames = getArchivedGames();
   userName = window.localStorage.getItem("userName");
   ctx = document.getElementById(canvasId);
+  labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
+  // let data = [];
 
-  lAbandoned = 0;
-  lCheckmated = 0;
-  lResignation = 0;
-  lTimeOut = 0;
+  if (inputResult=="loss"){
+    lAbandoned = 0;
+    lCheckmated = 0;
+    lResignation = 0;
+    lTimeOut = 0;
 
-  for (var i=0; i<archivedGames.length; i++) {
-    parsedGameNode = parseGameNode(archivedGames[i]);
-    let result = parsedGameNode.result;
-    switch (result) {
-      case "abandoned":
-        lAbandoned++;
-      case "checkmated":
-        lCheckmated++;
-      case "resigned":
-        lResignation++;
-      case "timeout":
-        lTimeOut++;
+    for (var i=0; i<archivedGames.length; i++) {
+      parsedGameNode = parseGameNode(archivedGames[i]);
+      let result = parsedGameNode.result;
+      switch (result) {
+        case "abandoned":
+          lAbandoned++;
+        case "checkmated":
+          lCheckmated++;
+        case "resigned":
+          lResignation++;
+        case "timeout":
+          lTimeOut++;
 
+      }
+      
+      data = [lAbandoned,lCheckmated,lResignation,lTimeOut];
     }
   }
 
-  labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
-  data = [lAbandoned,lCheckmated,lResignation,lTimeOut];
+  if (inputResult == "win") {
+    wAbandoned = 0;
+    wCheckmated = 0;
+    wResignation = 0;
+    wTimeOut = 0;
+
+    for (var i=0; i<archivedGames.length; i++) {
+      parsedGameNode = parseGameNode(archivedGames[i]);
+      let wonBy = parsedGameNode.wonBy;
+
+      if (wonBy != "") {
+        switch (wonBy) {
+          case "abandoned":
+            wAbandoned++;
+          case "checkmated":
+            wCheckmated++;
+          case "resigned":
+            wResignation++;
+          case "timeout":
+            wTimeOut++;
+
+        }
+        data = [wAbandoned,wCheckmated,wResignation,wTimeOut];
+      }
+    }
+  }
+
   var myChart = new Chart(ctx, {
     type: "pie",
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Games You Lost By",
+          label: "Number of games",
           data: data,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",

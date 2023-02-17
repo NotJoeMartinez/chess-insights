@@ -463,9 +463,9 @@ writeTable("playerStats", tableStr);
 function writeLoss() {
 
   let mainDiv = document.getElementById("main");
+  let insightsDiv = document.getElementById("insights");
+
   let container = makeDiv(["container","loss-by"], id="lossContainer");
-
-
   let row = makeDiv(["row", "loss-by"]);
   let card = makeDiv(["card", "loss-by"]);
   let cardText = makeDiv(["card-text"]);
@@ -483,9 +483,40 @@ function writeLoss() {
   card.appendChild(cardBody);
   row.appendChild(card);
   container.appendChild(row)
+  insightsDiv.appendChild(container)
   // insert the lost Container into the main div
-  mainDiv.appendChild(container)
+  mainDiv.appendChild(insightsDiv)
 
-  graphLosses("GamesLostBy");
+  graphWinLoss("GamesLostBy", "loss");
 }
 
+
+function writeWon() {
+
+  let mainDiv = document.getElementById("main");
+  let insightsDiv = document.getElementById("insights");
+
+  let container = makeDiv(["container","won-by"], id="wonContainer");
+  let row = makeDiv(["row", "won-by"]);
+  let card = makeDiv(["card", "won-by"]);
+  let cardText = makeDiv(["card-text"]);
+  let cardTitle = makeDiv(["card-title"]);
+  cardTitle.innerHTML += "<h2> Games You won By</h2>";
+  let cardBody = makeDiv(["card-body"]);
+  let canvas = document.createElement("canvas");
+  canvas.setAttribute("id","gamesWonBy");
+
+
+  // append the things
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(cardText);
+  cardBody.appendChild(canvas);
+  card.appendChild(cardBody);
+  row.appendChild(card);
+  container.appendChild(row)
+  insightsDiv.appendChild(container)
+  // insert the lost Container into the main div
+  mainDiv.appendChild(insightsDiv)
+
+  graphWinLoss("gamesWonBy", "win");
+}
