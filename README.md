@@ -1,5 +1,5 @@
 # [chessinsights.xyz](https://chessinsights.xyz/)
-
+![img](imgs/rapidOverTime.png)
 Chess Insights is a tool that uses the chess.com api to export all user data to a 
 csv file. It also has home data visualization tools that are still a work in progress. 
 Some data points might not be available depending on your account type, account creation date 
@@ -54,6 +54,7 @@ https://api.chess.com/pub/player/{username}/games/{YYYY}/{MM}
 
 ### Demo
 ![img](imgs/demo.png)
-![img](imgs/demo2.png)
-![img](imgs/demo3.png)
+![img](imgs/rapidOverTime.png)
+![img](imgs/topOpenings.png)
+![img](imgs/gamesWonBy.png)
 

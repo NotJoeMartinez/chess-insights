@@ -188,15 +188,6 @@ function graphElo(timeClass="rapid")  {
 
   
 
-  const sortedOpeningData = {};
-
-  for (let i = 0; i < archivedGames.length; i++) {
-
-  }
-  
-
-  
-
   let allNumbers = []
 
   for (const [key, value] of Object.entries(openingData)) {
