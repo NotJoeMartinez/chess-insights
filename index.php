@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title id="title">Free chess.com Insights - Export And Visualize All Your Chess.com Games</title>
 
+    <!-- favicon -->
     <link rel="icon" type="image/x-icon" href="imgs/favicon100x100.png">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
     rel="stylesheet" 
@@ -20,6 +22,27 @@
 
     <!-- Chart JS  -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- moment js -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+
+    <!-- moment JS adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+
+    <!-- hammer js  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" 
+    integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer">
+    </script>
+
+    <!-- chart js zoom plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.0/chartjs-plugin-zoom.min.js" 
+    integrity="sha512-B6F98QATBNaDHSE7uANGo5h0mU6fhKCUD+SPAY7KZDxE8QgZw9rewDtNiu3mbbutYDWOKT3SPYD8qDBpG2QnEg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>         
+
+
 
     <!-- Custom CSS -->
     <link href="css/main.css" rel=stylesheet>

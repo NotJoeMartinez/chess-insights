@@ -3,16 +3,24 @@ function getUserName(){
     return userName.value;
 }
 
-function utcToHuman(unix_timestamp) {
-    const date = new Date(unix_timestamp* 1000); 
-    const year = date.getUTCFullYear();
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
-    const day = date.getUTCDate().toString().padStart(2, "0");
-    const hour = date.getUTCHours().toString().padStart(2, "0");
-    const minute = date.getUTCMinutes().toString().padStart(2, "0");
-    //  minute: "MM/DD/YYYY hh:mm"
-    // return `${year}-${month}-${day}:${hour}:${minute}`;
-    return `${month}/${day}/${year} ${hour}:${minute}`;
+function utcToHuman(unixTimestamp) {
+    // const date = new Date(unix_timestamp* 1000); 
+    // const year = date.getUTCFullYear();
+    // const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+    // const day = date.getUTCDate().toString().padStart(2, "0");
+    // const hour = date.getUTCHours().toString().padStart(2, "0");
+    // const minute = date.getUTCMinutes().toString().padStart(2, "0");
+
+    // return `${year}-${month}-${day} ${hour}:${minute}`;
+    const dateObject = new Date(unixTimestamp * 1000);
+    const year = dateObject.getFullYear();
+    const month = ('0' + (dateObject.getMonth() + 1)).slice(-2);
+    const day = ('0' + dateObject.getDate()).slice(-2);
+    const hours = ('0' + dateObject.getHours()).slice(-2);
+    const minutes = ('0' + dateObject.getMinutes()).slice(-2);
+    const seconds = ('0' + dateObject.getSeconds()).slice(-2);
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
   }
 

@@ -62,6 +62,7 @@ function eloOverTime(timeClass="rapid"){
       eloStr += "<div class='card'>";
 
       eloStr += `<p class="card-text"> Click data points to open game in another window <p>`;
+      eloStr += `<p class="card-text"> Click and drag to zoom in on specific area<p>`;
       eloStr += "<p class='card-text'>"; 
 
       eloStr += "<div class='row'>";

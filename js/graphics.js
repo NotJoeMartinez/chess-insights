@@ -82,7 +82,11 @@ function graphElo(timeClass="rapid")  {
         if (parsedGameNode.timeClass == timeClass){
           let rating = parsedGameNode.userRating;
           let link = parsedGameNode.gameUrl;
+
           let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
+          // let unixTimeStamp = parsedGameNode.unixTimeStamp;
+          // console.log(unixTimeStamp)
+
           allData.push({ date: `${safeDate}`, game: {elo: rating, link: `${link}`} });
         }
 
@@ -93,7 +97,7 @@ function graphElo(timeClass="rapid")  {
    
 
     const ctx = document.getElementById('eloOverTime');
-    // let timeFormat = "MM/DD/YYYY HH:mm";
+    let timeFormat = "YYYY-MM-DD HH:mm";
     const eloChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -108,42 +112,62 @@ function graphElo(timeClass="rapid")  {
         },
         options: {
           responsive: true,
-
+          // actions: {
+          //   name: 'Toggle zoom',
+          //   handler(chart) {
+          //     zoomOptions.zoom.wheel.enabled = !zoomOptions.zoom.wheel.enabled;
+          //     zoomOptions.zoom.pinch.enabled = !zoomOptions.zoom.pinch.enabled;
+          //     chart.update();
+          //   }
+          // },
           parsing: {
             yAxisKey: 'game.elo',
             xAxisKey: 'date'
           },
-          xAxes: [
-            {
-              type: "time",
-              // time: {
-                // parser: timeFormat
-                // unit: "minute",
-                // displayFormats: {
-                  // minute: "YYYY-MM-DD:hh:mm"
-                  // second: "MM/DD/YYYY HH:mm"
-                // }
-              // }
-            }
-          ],
+
+          scales: {
+            xAxes: {
+                type: "timeseries",
+                unit: "minute",
+                grid: {
+                  display: true 
+                },
+                ticks: {
+                  display: true,
+                  offset: false
+                  // autoSkip: true,
+                  // autoSkipPadding: 50,
+                  // maxRotation: 0
+                },
+                time: {
+                  displayFormats: {
+                    hour: 'HH:mm',
+                    minute: 'HH:mm',
+                  }
+                }
+             
+              },
+        },
+
+          
           plugins: {
             zoom: {
               zoom: {
                 wheel: {
-                  enabled: false,
+                  enabled: false
                 },
-                // pan: {
-                //   enabled: true
-                // },
-                // drag: {
-                //   enabled: true
-                // },
+                pan: {
+                  enabled: true
+                },
+                drag: {
+                  enabled: true
+                },
                 limits: {
                     y: {min: 100, max: 1000},
                     x: {min: 100, max: 1000}
                   },
-                mode: 'xy',
-                sensitivity: 1
+                mode: 'x',
+                // sensitivity: 1
               }
             }
           }
@@ -160,6 +184,8 @@ function graphElo(timeClass="rapid")  {
         }
       }
       ctx.onclick = clickHandler;
+
+
 
       // ctx.register(zoomPlugin);
  }
@@ -256,7 +282,6 @@ function graphElo(timeClass="rapid")  {
     }
     }
   }
-
   });
 
  }

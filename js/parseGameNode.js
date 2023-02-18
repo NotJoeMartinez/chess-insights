@@ -25,6 +25,7 @@ function parseGameNode(gameNode) {
     let parsedGameNode = {};
 
     // easy ones
+    parsedGameNode["unixTimeStamp"] = gameNode.end_time;   
     parsedGameNode["timeClass"] = gameNode.time_class;   
     parsedGameNode["gameUrl"] = gameNode.url;   
     parsedGameNode["fen"] = gameNode.fen;  
