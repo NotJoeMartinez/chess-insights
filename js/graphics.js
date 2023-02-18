@@ -128,23 +128,30 @@ function graphElo(timeClass="rapid")  {
           scales: {
             xAxes: {
                 type: "timeseries",
-                unit: "minute",
+                unit: "month",
                 grid: {
-                  display: true 
+                  display: false
                 },
                 ticks: {
-                  display: true,
-                  offset: false
-                  // autoSkip: true,
-                  // autoSkipPadding: 50,
-                  // maxRotation: 0
-                },
-                time: {
-                  displayFormats: {
-                    hour: 'HH:mm',
-                    minute: 'HH:mm',
+                  display: false,
+                  autoSkip: true,
+                  autoSkipPadding: 50,
+                  maxRotation: 45,
+                  major: {
+                    enabled: true
                   }
-                }
+                  // offset: true,
+                  // autoSkip: true,
+                  // // autoSkipPadding: 50,
+                  // maxRotation: 90
+                },
+                // time: {
+                  // displayFormats: {
+
+                    // hour: 'HH:mm',
+                    // minute: 'HH:mm',
+                  // }
+                // }
              
               },
         },

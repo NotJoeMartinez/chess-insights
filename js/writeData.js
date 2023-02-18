@@ -78,6 +78,7 @@ function eloOverTime(timeClass="rapid"){
       eloStr += "</div>";
 
 
+      // eloStr += "<button class='btn active ' onclick=eloOverTime('"++ "'</button>";
       eloStr += "<div class='card-body'>";
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
