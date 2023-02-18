@@ -1,5 +1,5 @@
 function getUserName(){
-    let userName = document.getElementById("username");
+    let userName = document.getElementById("inputUsername");
     return userName.value;
 }
 

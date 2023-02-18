@@ -1,4 +1,6 @@
 
+
+
 function toggleSpinner() {
   if (document.contains(document.getElementById("spinner-div"))) {
       document.getElementById("spinner-div").remove();
@@ -161,7 +163,7 @@ function graphElo(timeClass="rapid")  {
             zoom: {
               zoom: {
                 wheel: {
-                  enabled: false
+                  enabled: false 
                 },
                 pan: {
                   enabled: true

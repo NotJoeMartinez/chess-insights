@@ -3,7 +3,6 @@ async function getAllUserData() {
 
     clearData();
     writeInsightsDiv();
-
     let userName = getUserName();
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
@@ -40,11 +39,16 @@ async function getAllUserData() {
               totalGames++;
           }
         }
-
         let prog = Math.ceil((i/ archiveUrls.length) * 100);
         progressBar(prog,totalGames);
     }
-    progressBar("remove")
+    if (archivedGames.length < 1) {
+      alert("No games found under that user")
+      return; 
+    }
+    else {
+      progressBar("remove");
+    }
 
     window.localStorage.setItem("userName", userName);
     try {
@@ -70,7 +74,6 @@ async function getAllUserData() {
     writeOpenings();
     writeWon();
     writeLoss();
-
     toggleSpinner();
     // writeGameStats();
     // writePlayerStats();

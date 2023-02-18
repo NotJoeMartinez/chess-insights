@@ -68,27 +68,27 @@
                     <h1>Free Chess.com Insights</h1>
                     <p style="text-align:center">Enter your chess.com username to generate a full export of your games</p>
                     <div class="input-group input-group-lg input-group--username">
-                 
-
                         <input type="text" placeholder="Username"
-                            id="username"
+                            list="gmsList"
+                            id="inputUsername"
                             aria-describedby="u-addon" 
                             autocapitalize="none" 
                             autocorrect="off"
-                            class="form-control username-input"> 
+                            class="form-control username-input"
+                            > 
                         <span class="input-group-prepend">
-                        <button type="button"
-                                class="btn btn-secondary"
-                                id="button"
-                                onclick="getAllUserData()">
-                                Get Insights 
-                        </button>
-                        </span>
+                          <button type="button"
+                                  class="btn btn-secondary"
+                                  id="button"
+                                  onclick="getAllUserData()">
+                                  Get Insights 
+                          </button>
+                      </span>
 
                     </div>
                 </div>
             </header>
-
+            
             </div>
         </div>
     </div>
@@ -151,7 +151,10 @@
     </div>
   </div>
 </div>
+<datalist id="gmsList">
+</datalist>
 
+<script src="js/suggestUsers.js"></script>
 
 
   </div>
