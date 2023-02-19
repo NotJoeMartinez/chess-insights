@@ -3,6 +3,8 @@ async function getAllUserData() {
 
     clearData();
     writeInsightsDiv();
+    toggleSpinner();
+
     let userName = getUserName();
 
     playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
@@ -10,9 +12,11 @@ async function getAllUserData() {
     var playerStats = await playerStatsRes.json();
 
     if (playerStatsRes.status != 404) {
+      toggleSpinner();
       window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
     } 
     else {
+      toggleSpinner();
       alert("User Not found");
       return;
     }
@@ -66,7 +70,6 @@ async function getAllUserData() {
 
 
     writeExportButton();
-    toggleSpinner();
 
 
 
