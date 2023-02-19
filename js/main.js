@@ -77,7 +77,6 @@ async function getAllUserData() {
     writeOpenings();
     writeWon();
     writeLoss();
-    toggleSpinner();
     // writeGameStats();
     // writePlayerStats();
     // writeAllGamesTable();
