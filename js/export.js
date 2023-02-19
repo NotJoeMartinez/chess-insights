@@ -51,7 +51,7 @@ function exportData(option) {
 
     let headers = ["userAccuracy", "opponentAccuracy", "gameUrl", "gameId", 
                     "timeClass", "fen", "userColor", "userRating", 
-                    "opponent", "opponentRating", "opponentUrl", "result", 
+                    "opponent", "opponentRating", "opponentUrl", "result","wonBy", 
                     "date", "openingUrl", "opening", "startTime", "endTime","pgn"];
 
     let archivedGames = getArchivedGames();
@@ -79,6 +79,7 @@ function exportData(option) {
             row.push(parsedGameNode.opponentRating);
             row.push(parsedGameNode.opponentUrl);
             row.push(parsedGameNode.result);
+            row.push(parsedGameNode.wonBy);
             row.push(parsedGameNode.date);
             row.push(parsedGameNode.openingUrl);
             row.push(parsedGameNode.opening);

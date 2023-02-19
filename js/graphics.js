@@ -301,13 +301,12 @@ function graphWinLoss(canvasId, inputResult) {
   userName = window.localStorage.getItem("userName");
   ctx = document.getElementById(canvasId);
   labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
-  // let data = [];
 
   if (inputResult=="loss"){
-    lAbandoned = 0;
-    lCheckmated = 0;
-    lResignation = 0;
-    lTimeOut = 0;
+    let lAbandoned = 0;
+    let lCheckmated = 0;
+    let lResignation = 0;
+    let lTimeOut = 0;
 
     for (var i=0; i<archivedGames.length; i++) {
       parsedGameNode = parseGameNode(archivedGames[i]);
@@ -315,45 +314,56 @@ function graphWinLoss(canvasId, inputResult) {
       switch (result) {
         case "abandoned":
           lAbandoned++;
+          break;
         case "checkmated":
           lCheckmated++;
+          break;
         case "resigned":
           lResignation++;
+          break;
         case "timeout":
           lTimeOut++;
-
+          break;
+        default:
+          break;
       }
-      
       data = [lAbandoned,lCheckmated,lResignation,lTimeOut];
     }
   }
 
   if (inputResult == "win") {
-    wAbandoned = 0;
-    wCheckmated = 0;
-    wResignation = 0;
-    wTimeOut = 0;
+    let wAbandoned = 0;
+    let wCheckmated = 0;
+    let wResignation = 0;
+    let wTimeOut = 0;
 
     for (var i=0; i<archivedGames.length; i++) {
       parsedGameNode = parseGameNode(archivedGames[i]);
       let wonBy = parsedGameNode.wonBy;
 
       if (wonBy != "") {
+        console.log(`wonBy after check: ${wonBy}`);
         switch (wonBy) {
           case "abandoned":
             wAbandoned++;
+            break;
           case "checkmated":
             wCheckmated++;
+            break;
           case "resigned":
             wResignation++;
+            break;
           case "timeout":
             wTimeOut++;
-
-        }
-        data = [wAbandoned,wCheckmated,wResignation,wTimeOut];
+            break;
+          default:
+            break;
+          }
+        } 
       }
+
+      data = [wAbandoned,wCheckmated,wResignation,wTimeOut];
     }
-  }
 
   var myChart = new Chart(ctx, {
     type: "pie",
