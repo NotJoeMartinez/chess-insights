@@ -83,7 +83,7 @@ function eloOverTime(timeClass="rapid"){
 
       eloStr += "<canvas id='eloOverTime'></canvas>"
 
-      let btnList = ["blitz", "rapid", "daily","bullet"];
+      let btnList = ["bullet","blitz", "rapid", "daily"];
       for (var i=0; i<btnList.length; i++){
             
           if (btnList[i] == timeClass){
@@ -166,7 +166,7 @@ function writeOpenings(timeClass="all"){
       divStr += "<canvas id='openings'></canvas>";
   
   
-      let btnList = ["all", "blitz", "rapid", "daily","bullet"];
+      let btnList = ["all", "bullet", "blitz", "rapid", "daily"];
       for (var i=0; i<btnList.length; i++){
             
           if (btnList[i] == timeClass){
