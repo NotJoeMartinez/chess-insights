@@ -342,7 +342,6 @@ function graphWinLoss(canvasId, inputResult) {
       let wonBy = parsedGameNode.wonBy;
 
       if (wonBy != "") {
-        console.log(`wonBy after check: ${wonBy}`);
         switch (wonBy) {
           case "abandoned":
             wAbandoned++;

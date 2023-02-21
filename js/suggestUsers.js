@@ -26,6 +26,23 @@ function tabDown(e) {
     }
 }
 
+input.addEventListener('keydown', tabDown);
+
+function enterDown(e) {
+    if (e.key == "Enter"){
+        getAllUserData();
+    }
+}
+
+input.addEventListener('keydown', enterDown);
+
+
+
+function clearPlaceHolder(){
+    input.removeAttribute("placeholder");
+}
+
+
 function checkInput(){
     if (input.value !=""){
         return true;
@@ -35,12 +52,6 @@ function checkInput(){
     }
 
 } 
-
-function clearPlaceHolder(){
-    input.removeAttribute("placeholder");
-}
-
-input.addEventListener('keydown', tabDown);
 
 async function suggestInput() {
       while (true) {
