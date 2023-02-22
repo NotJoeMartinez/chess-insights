@@ -1,23 +1,5 @@
 
 
-// verify that this game is actually chess
-function verifyLiveChess(gameNode){
-    try {
-        let ogPgn = gameNode.pgn;
-        let pgnList = gameNode.pgn.split('\n')
-        if ((gameNode.rules == "chess")){
-            return true;
-        }
-        else {
-            return false;
-        }
-        
-    }
-    catch (error){
-        return false
-    }
-
-}
 
 function parseGameNode(gameNode) {
     uname = window.localStorage.getItem("userName");
@@ -90,9 +72,17 @@ function parseGameNode(gameNode) {
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
-    parsedGameNode["openingUrl"] = pgn[10].replace(/\\|\[|\]|\"|ECOUrl/g,''); // sometimes returns utc timestamp
 
-    let tmp_opening = pgn[10].replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
+    // find opening url. The fact we have to do this means something is broken
+    let openingUrl = "";
+    for (let i = 0; i < pgn.length; i++){
+        if (pgn[i].startsWith("[ECOUrl")){
+            openingUrl = pgn[i];
+            break;
+        }
+    }
+    parsedGameNode["openingUrl"] = openingUrl.replace(/\\|\[|\]|\"|ECOUrl/g,''); 
+    let tmp_opening = openingUrl.replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
     parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
 
     let mainLine = parsedGameNode["opening"].match(/^(\D*)(?=\d)/);

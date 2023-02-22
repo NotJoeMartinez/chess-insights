@@ -89,9 +89,26 @@ function makeDiv(classNames=[], id="", customAtters=[]){
 
 }
 
-
-
-
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+}
+
+
+// verify that this game is actually chess
+function verifyLiveChess(gameNode){
+    try {
+        let ogPgn = gameNode.pgn;
+        let pgnList = gameNode.pgn.split('\n')
+        if ((gameNode.rules == "chess")){
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+    }
+    catch (error){
+        return false
+    }
+
 }
