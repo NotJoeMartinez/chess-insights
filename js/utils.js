@@ -112,3 +112,42 @@ function verifyLiveChess(gameNode){
     }
 
 }
+
+function getLargestTimeClass(){
+
+    let timeClassCount = {}
+    let playerStats = getPlayerStats()
+
+    if (playerStats.hasOwnProperty("chess_bullet")) {
+        let record = playerStats.chess_bullet.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["bullet"] = total
+    }
+    if (playerStats.hasOwnProperty("chess_blitz")) {
+        let record = playerStats.chess_blitz.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["blitz"] = total 
+    }
+    if (playerStats.hasOwnProperty("chess_rapid")) {
+        let record = playerStats.chess_rapid.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["rapid"] = total 
+    }
+    if (playerStats.hasOwnProperty("chess_daily")) {
+        let record = playerStats.chess_daily.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["daily"] = total 
+    }
+
+    let max = 0;
+    let maxClass="rapid";
+
+    for (let timeClass in timeClassCount) {
+        const count = timeClassCount[timeClass];
+        if (count > max) {
+            maxClass = timeClass
+            max = count
+        }
+    }
+    return maxClass
+}

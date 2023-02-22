@@ -70,16 +70,12 @@ async function getAllUserData() {
 
 
     writeExportButton();
-
-
-
-    eloOverTime();
-    writeOpenings();
+   
+    let largestTimeClass = getLargestTimeClass()
+    eloOverTime(timeClass=largestTimeClass);
+    writeOpenings(timeClass=largestTimeClass);
     writeWon();
     writeLoss();
-    // writeGameStats();
-    // writePlayerStats();
-    // writeAllGamesTable();
-    
+
 }
 
