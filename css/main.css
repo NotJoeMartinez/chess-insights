@@ -311,7 +311,7 @@ p small {
   margin-top: -0.5rem;
 }
 
-.navbar {
+#topNav {
   /* box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4); */
   position: relative;
   background-color: #312e2b;
@@ -319,7 +319,9 @@ p small {
 
 }
 
-
+#footer {
+  margin-top: 10px;
+}
 
 @media (min-width: 992px) {
 section.summary {

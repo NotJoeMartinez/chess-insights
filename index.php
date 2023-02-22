@@ -91,7 +91,7 @@
             
             </div>
         </div>
-    </div>
+  </div>
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="export modal" aria-hidden="true">
   <div class="modal-dialog">
