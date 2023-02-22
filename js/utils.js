@@ -4,14 +4,6 @@ function getUserName(){
 }
 
 function utcToHuman(unixTimestamp) {
-    // const date = new Date(unix_timestamp* 1000); 
-    // const year = date.getUTCFullYear();
-    // const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
-    // const day = date.getUTCDate().toString().padStart(2, "0");
-    // const hour = date.getUTCHours().toString().padStart(2, "0");
-    // const minute = date.getUTCMinutes().toString().padStart(2, "0");
-
-    // return `${year}-${month}-${day} ${hour}:${minute}`;
     const dateObject = new Date(unixTimestamp * 1000);
     const year = dateObject.getFullYear();
     const month = ('0' + (dateObject.getMonth() + 1)).slice(-2);
@@ -75,7 +67,6 @@ function makeDiv(classNames=[], id="", customAtters=[]){
   
     if (classNames.length != 0) {
         classNames.forEach(className => node.classList.add(className));
-        // node.classList.add(classNames);
     }
 
     if (id != ""){

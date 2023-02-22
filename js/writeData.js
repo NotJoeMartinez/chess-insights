@@ -48,58 +48,67 @@ function eloOverTime(timeClass="rapid"){
       }
 
       archivedGames = getArchivedGames();
-      let insightsDiv = document.getElementById("insights");
-      let eloDiv = document.createElement("div");
-      eloDiv.classList.add("container", "eloOverTime");
-      eloDiv.setAttribute("id", "eloGraph");
-      eloDiv.setAttribute("timeClass", timeClass);
-
-      eloStr = "";
 
 
-      eloStr += `<h2> ELO Over Time </h2>`;
-      eloStr += "<div class='row'>";
-      eloStr += "<div class='card'>";
+      // make elo div
+      let eloDiv = makeDiv(["div","container","eloOverTime"], "eloGraph",[{"timeClass":timeClass}]);
 
-      eloStr += `<p class="card-text"> Click data points to open game in another window <p>`;
-      eloStr += `<p class="card-text"> Click and drag to zoom in on specific area<p>`;
-      eloStr += "<p class='card-text'>"; 
-
-      eloStr += "<div class='row'>";
-      eloStr += `<div class='col'> <h3><b>${percentWins}%</b></h3> ${numWins} Won</div>`;
-      eloStr += `<div class='col'> <h3><b>${percentDraws}%</b></h3> ${numDraws} Drawn</div>`;
-      eloStr += `<div class='col'> <h3><b>${percentLosses}%</b></h3> ${numLosses} Lost</div>`;
-      eloStr += "</div>";
-
-      eloStr += "<div class='progress'>";
-          eloStr += "<div class='progress-bar' id='progWinds' role='progressbar' style='width: 49%; background-color: #85a94e;' aria-valuenow='49' aria-valuemin='0' aria-valuemax='100'>Wins</div>";
-          eloStr += "<div class='progress-bar ' id='progDraws' role='progressbar' style='width: 3.9%; background-color: #8b8987;' aria-valuenow='3.9' aria-valuemin='0' aria-valuemax='100'>Draws</div>";
-          eloStr += "<div class='progress-bar ' id='progLoss' role='progressbar' style='width: 47.1%; background-color: #b23330;' aria-valuenow='47.1' aria-valuemin='0' aria-valuemax='100'>Losses</div>"
-      eloStr += "</div>";
+      // write title
+      let eloTitle = document.createElement("h2")
+      eloTitle.innerText = "ELO Over Time"
+      eloDiv.appendChild(eloTitle)
 
 
-      // eloStr += "<button class='btn active ' onclick=eloOverTime('"++ "'</button>";
-      eloStr += "<div class='card-body'>";
+      //  write card text
+      let eloCard = makeDiv(classNames=["card"], id="eloCard")
+      eloCard.innerHTML += `<p class="card-text"> Click data points to open game in another window </p>`;
+      eloCard.innerHTML += `<p class="card-text"> Click and drag to zoom in on specific area </p>`;
 
-      eloStr += "<canvas id='eloOverTime'></canvas>"
 
-      let btnList = ["bullet","blitz", "rapid", "daily"];
+      // write win loss draw percentages
+      let winLossDrawRow = makeDiv(classNames=["row"], id="winLossRow")
+        winLossDrawRow.innerHTML += `<div class='col'> <h3><b>${percentWins}%</b></h3> ${numWins} Won</div>`;
+        winLossDrawRow.innerHTML += `<div class='col'> <h3><b>${percentDraws}%</b></h3> ${numDraws} Drawn</div>`;
+        winLossDrawRow.innerHTML += `<div class='col'> <h3><b>${percentLosses}%</b></h3> ${numLosses} Lost</div>`;
+      eloCard.appendChild(winLossDrawRow)
+
+
+      // write win loss draw graph 
+      let winLossDrawGraph = makeDiv(classNames=["progress"], id="winLossDrawGraph")
+          winLossDrawGraph.innerHTML += "<div class='progress-bar' id='progWinds' role='progressbar' style='width: 49%; background-color: #85a94e;' aria-valuenow='49' aria-valuemin='0' aria-valuemax='100'>Wins</div>";
+          winLossDrawGraph.innerHTML += "<div class='progress-bar ' id='progDraws' role='progressbar' style='width: 3.9%; background-color: #8b8987;' aria-valuenow='3.9' aria-valuemin='0' aria-valuemax='100'>Draws</div>";
+          winLossDrawGraph.innerHTML += "<div class='progress-bar ' id='progLoss' role='progressbar' style='width: 47.1%; background-color: #b23330;' aria-valuenow='47.1' aria-valuemin='0' aria-valuemax='100'>Losses</div>"
+      eloCard.appendChild(winLossDrawGraph)
+
+
+      // write card body
+      let cardBody = makeDiv(classNames=["card-body"], id="eloCardBody")
+      let cardBodyStr = "";
+      cardBodyStr += "<canvas id='eloOverTime'></canvas>"
+
+      let btnList = ["bullet","blitz", "rapid", "daily",];
       for (var i=0; i<btnList.length; i++){
             
           if (btnList[i] == timeClass){
-            eloStr += "<button class='btn active ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            cardBodyStr += "<button class='btn active ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
           else {
-            eloStr += "<button class='btn btn-primary ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            cardBodyStr += "<button class='btn btn-primary ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
-
       }
-      eloStr += "</div>";
-      eloStr += "</div>";
-      eloStr += "</div>";
+      cardBody.innerHTML += cardBodyStr 
+      eloCard.appendChild(cardBody)
 
-      eloDiv.innerHTML += eloStr;
-      // insightsDiv.prepend(eloDiv);
+
+      // make a row and append eloCard 
+      let eloRow = makeDiv(classNames=["row"], id="eloCardRow")
+      eloRow.appendChild(eloCard)
+
+      // append eloRow to elo Div
+      eloDiv.appendChild(eloRow)
+
+      // append everything to insights div
+      let insightsDiv = document.getElementById("insights");
       insightsDiv.insertBefore(eloDiv, insightsDiv.children[1]);
     
       graphElo(timeClass);
