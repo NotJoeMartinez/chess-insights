@@ -310,22 +310,47 @@ function graphWinLoss(canvasId, inputResult, timeClass="all") {
     for (var i=0; i<archivedGames.length; i++) {
       parsedGameNode = parseGameNode(archivedGames[i]);
       let result = parsedGameNode.result;
-      switch (result) {
-        case "abandoned":
-          lAbandoned++;
-          break;
-        case "checkmated":
-          lCheckmated++;
-          break;
-        case "resigned":
-          lResignation++;
-          break;
-        case "timeout":
-          lTimeOut++;
-          break;
-        default:
-          break;
+      let nodeTimeClass = parsedGameNode.timeClass;
+
+      if (timeClass != "all" && nodeTimeClass == timeClass) {
+        switch (result) {
+          case "abandoned":
+            lAbandoned++;
+            break;
+          case "checkmated":
+            lCheckmated++;
+            break;
+          case "resigned":
+            lResignation++;
+            break;
+          case "timeout":
+            lTimeOut++;
+            break;
+          default:
+            break;
+        }
       }
+
+      if (timeClass == "all") {
+        switch (result) {
+          case "abandoned":
+            lAbandoned++;
+            break;
+          case "checkmated":
+            lCheckmated++;
+            break;
+          case "resigned":
+            lResignation++;
+            break;
+          case "timeout":
+            lTimeOut++;
+            break;
+          default:
+            break;
+        }
+      }
+
+
       data = [lAbandoned,lCheckmated,lResignation,lTimeOut];
     }
   }

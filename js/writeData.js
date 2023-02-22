@@ -200,45 +200,72 @@ function writeOpenings(timeClass="all"){
   }
 }
 
+function writeLoss(timeClass="all") {
+ 
+  testNode = document.getElementById("lossContainer");
+  if (( testNode == null ) || (testNode.timeClass != timeClass)) {
 
-function writeLoss() {
+      if (testNode != null)  {
+        document.getElementById("lossContainer").remove(); 
+        console.log("removing container")
+      }
+      
+      // write card body
+      let cardBody = makeDiv(["card-body"]);
 
-  let mainDiv = document.getElementById("main");
-  let insightsDiv = document.getElementById("insights");
+      // write card text
+      let cardText = makeDiv(["card-text"]);
+      cardBody.appendChild(cardText);
 
-  let container = makeDiv(["container","loss-by"], id="lossContainer");
-  let row = makeDiv(["row", "loss-by"]);
-  let card = makeDiv(["card", "loss-by"]);
-  let cardText = makeDiv(["card-text"]);
-  let cardTitle = makeDiv(["card-title"]);
-  cardTitle.innerHTML += "<h2> Games You Lost By</h2>";
+      // write card title 
+      let cardTitle = makeDiv(["card-title"]);
+      cardTitle.innerHTML += "<h2> Games You lost By</h2>";
+      cardBody.appendChild(cardTitle);
 
-  // write card body
-  let cardBody = makeDiv(["card-body"]);
-  let canvas = document.createElement("canvas");
-  canvas.setAttribute("id","GamesLostBy");
+      // write canvas
+      let canvas = document.createElement("canvas");
+      canvas.setAttribute("id","gamesLostBy");
+      cardBody.appendChild(canvas)
+
+      // write buttons
+      let slicerStr = "";
+      let btnList = ["all","bullet", "blitz", "rapid", "daily"];
+      for (var i=0; i<btnList.length; i++){
+            
+          if (btnList[i] == timeClass){
+            slicerStr += "<button class='btn btn-primary active slicer' onclick=writeLoss('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+          else {
+            slicerStr += "<button class='btn btn-primary slicer' onclick=writeLoss('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+          }
+
+      }
+      cardBody.innerHTML += slicerStr
 
 
+      let card = makeDiv(["card", "lost-by"]);
+      card.appendChild(cardBody);
+
+      let row = makeDiv(["row", "lost-by"]);
+      row.appendChild(card);
+
+      let wonByDiv = makeDiv(["container","lost-by"], id="lossContainer", [{"timeClass":timeClass}] );
+      wonByDiv.appendChild(row)
 
 
-  // append the things
-  cardBody.appendChild(cardTitle);
-  cardBody.appendChild(cardText);
-  cardBody.appendChild(canvas);
-  card.appendChild(cardBody);
-  row.appendChild(card);
-  container.appendChild(row)
-  insightsDiv.appendChild(container)
-  // insert the lost Container into the main div
-  mainDiv.appendChild(insightsDiv)
+      let openingsDiv = document.getElementById("wonContainer");
+      insertAfter(wonByDiv, openingsDiv)
 
-  graphWinLoss("GamesLostBy", "loss");
+      graphWinLoss("gamesLostBy", "loss", timeClass);
+    }
+    else {
+      console.log("I already exist")
+    }
 }
 
 
 function writeWon(timeClass="all") {
 
- 
   testNode = document.getElementById("wonContainer");
   if (( testNode == null ) || (testNode.timeClass != timeClass)) {
 
