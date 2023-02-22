@@ -113,14 +113,14 @@ function graphElo(timeClass="rapid")  {
         },
         options: {
           responsive: true,
-          // actions: {
-          //   name: 'Toggle zoom',
-          //   handler(chart) {
-          //     zoomOptions.zoom.wheel.enabled = !zoomOptions.zoom.wheel.enabled;
-          //     zoomOptions.zoom.pinch.enabled = !zoomOptions.zoom.pinch.enabled;
-          //     chart.update();
-          //   }
-          // },
+          hover: {
+            intersect: false,
+            mode: 'index'
+          },
+          interactions:  {
+            intersect: false,
+            mode: 'index'
+          },
           parsing: {
             yAxisKey: 'game.elo',
             xAxisKey: 'date'
@@ -131,7 +131,7 @@ function graphElo(timeClass="rapid")  {
                 type: "timeseries",
                 unit: "month",
                 grid: {
-                  display: false
+                  display:false 
                 },
                 ticks: {
                   display: false,
@@ -159,6 +159,13 @@ function graphElo(timeClass="rapid")  {
 
           
           plugins: {
+            tooltip: {
+              enabled: true,
+              intersect: false,
+              mode: 'index',
+              borderColor: 'rgba(127, 166, 80, 0.5)',
+              borderWidth: 1
+            },
             zoom: {
               zoom: {
                 wheel: {
