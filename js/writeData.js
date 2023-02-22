@@ -90,10 +90,10 @@ function eloOverTime(timeClass="rapid"){
       for (var i=0; i<btnList.length; i++){
             
           if (btnList[i] == timeClass){
-            cardBodyStr += "<button class='btn active ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            cardBodyStr += "<button class='btn active slicer' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
           else {
-            cardBodyStr += "<button class='btn btn-primary ' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            cardBodyStr += "<button class='btn btn-primary slicer' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
       }
       cardBody.innerHTML += cardBodyStr 
@@ -179,10 +179,10 @@ function writeOpenings(timeClass="all"){
       for (var i=0; i<btnList.length; i++){
             
           if (btnList[i] == timeClass){
-            divStr+= "<button class='btn btn-primary active' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            divStr+= "<button class='btn btn-primary active slicer' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
           else {
-            divStr+= "<button class='btn btn-primary' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
+            divStr+= "<button class='btn btn-primary slicer' onclick=writeOpenings('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
   
       }
