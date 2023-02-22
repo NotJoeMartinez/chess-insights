@@ -1,6 +1,5 @@
 
 
-
 function toggleSpinner() {
   if (document.contains(document.getElementById("spinner-div"))) {
       document.getElementById("spinner-div").remove();
@@ -295,7 +294,7 @@ function graphElo(timeClass="rapid")  {
 
  }
 
-function graphWinLoss(canvasId, inputResult) {
+function graphWinLoss(canvasId, inputResult, timeClass="all") {
 
   archivedGames = getArchivedGames();
   userName = window.localStorage.getItem("userName");
@@ -340,8 +339,10 @@ function graphWinLoss(canvasId, inputResult) {
     for (var i=0; i<archivedGames.length; i++) {
       parsedGameNode = parseGameNode(archivedGames[i]);
       let wonBy = parsedGameNode.wonBy;
+      let nodeTimeClass = parsedGameNode.timeClass;
 
-      if (wonBy != "") {
+      // specific time class
+      if (wonBy != "" && timeClass != "all" && nodeTimeClass == timeClass) {
         switch (wonBy) {
           case "abandoned":
             wAbandoned++;
@@ -359,8 +360,29 @@ function graphWinLoss(canvasId, inputResult) {
             break;
           }
         } 
-      }
 
+      // all time class
+      if (wonBy != "" && timeClass == "all") {
+        switch (wonBy) {
+          case "abandoned":
+            wAbandoned++;
+            break;
+          case "checkmated":
+            wCheckmated++;
+            break;
+          case "resigned":
+            wResignation++;
+            break;
+          case "timeout":
+            wTimeOut++;
+            break;
+          default:
+            break;
+
+          }
+
+        } 
+      }
       data = [wAbandoned,wCheckmated,wResignation,wTimeOut];
     }
 
