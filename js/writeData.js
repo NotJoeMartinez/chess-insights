@@ -96,6 +96,8 @@ function eloOverTime(timeClass="rapid"){
             cardBodyStr += "<button class='btn btn-primary slicer' onclick=eloOverTime('"+btnList[i]+"')>"+btnList[i].toUpperCase()+"</button>";
           }
       }
+
+      cardBodyStr += "<button class='btn btn-secondary' id='eloZoomReset' onclick=eloOverTime('"+timeClass+"')>Reset Zoom</button>"
       cardBody.innerHTML += cardBodyStr 
       eloCard.appendChild(cardBody)
 
