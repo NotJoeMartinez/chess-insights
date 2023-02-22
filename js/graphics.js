@@ -113,10 +113,6 @@ function graphElo(timeClass="rapid")  {
         },
         options: {
           responsive: true,
-          hover: {
-            intersect: false,
-            mode: 'index'
-          },
           interactions:  {
             intersect: false,
             mode: 'index'
