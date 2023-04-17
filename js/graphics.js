@@ -159,7 +159,6 @@ function graphElo(timeClass="rapid")  {
               enabled: true,
               intersect: false,
               mode: 'index',
-              borderColor: 'rgba(127, 166, 80, 0.5)',
               borderWidth: 1
             },
             zoom: {

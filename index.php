@@ -58,7 +58,7 @@
   <body>
 
   <div id="app">
-        <div id="main">
+  <div id="main">
           <?php require('nav.php'); ?>
             <header>
                 <div class="container header-section">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </header>
-            
+ 
             </div>
         </div>
   </div>
@@ -151,13 +151,11 @@
     </div>
   </div>
 </div>
+
 <datalist id="gmsList">
 </datalist>
-
 <script src="js/suggestUsers.js"></script>
-
-
-  </div>
+</div>
 
 
   </body>

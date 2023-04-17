@@ -26,3 +26,4 @@ js/chart.js
 node_modules/
 node_modules
 *.xlsx
+*.csv
