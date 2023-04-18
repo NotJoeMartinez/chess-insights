@@ -1,0 +1,456 @@
+
+/* animations */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  
+  /* input form */
+  #inputUsername[placeholder] {
+    animation: fadeIn .75s;
+  }
+  
+  body {
+    font-family: "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    background-color: #312e2b;
+  }
+  
+  #app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #cad6e6;
+  }
+  th {
+    text-align: center;
+    color: #cad6e6;
+  }
+  
+  tr {
+    color: #cad6e6; 
+  }
+  
+  a {
+    color: #85a35a;
+  }
+  /* a:hover, a:focus {
+      color: #ffffff;
+  } */
+  .section-illustration {
+    max-width: 100%;
+    width: 250px;
+  }
+  .center {
+    text-align: center;
+  }
+  header {
+    position: relative;
+    background: #312e2b;
+    /* background: radial-gradient(circle at 50% 1%, #474ebd, #371c84); */
+    padding: 2rem 0 2rem;
+    margin-bottom: 3rem;
+    /* box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4); */
+    -webkit-box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.42);
+    -moz-box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.42);
+    box-shadow: -3px 31px 50px -2px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+  .header-section {
+    z-index: -1;
+  }
+  header::before {
+      display: inline-block;
+      opacity: 0.8;
+      /* content: ""; */
+      height: 800px;
+      width: 200%;
+      /* background: url(data:image/svg+xml;base64,overlyimg) no-repeat; */
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+              transform: translateX(-50%);
+      top: 100px;
+      position: absolute;
+      background-position: center;
+      background-size: contain;
+  }
+  h1 {
+    font-weight: 300;
+    margin-bottom: 2rem;
+    color: white;
+  }
+  .input-group--username {
+    position: relative;
+  }
+  .username-input {
+    font-size: 1.1rem !important;
+    padding: 0.8rem 1rem !important;
+    position: relative;
+    background: rgba(0, 10, 25, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+    font-weight: 300;
+    color: #cfd9e6;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .username-input:hover {
+      box-shadow: 0 10px 30px -2px rgba(0, 0, 0, 0.3);
+      z-index: 0;
+  }
+  .username-input:focus {
+      z-index: 0;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+  }
+  
+  .input-group-addon {
+    padding: 0 1rem;
+  }
+  .btn {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 17px !important;
+    cursor: pointer;
+    z-index: 1;
+    padding: 1rem !important;
+    font-size: 0.9rem !important;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+  }
+  .btn {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 17px !important;
+    cursor: pointer;
+    z-index: 1;
+    padding: 1rem !important;
+    font-size: 0.9rem !important;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+  }
+  .btn:disabled {
+      background-color: rgba(255, 255, 255, 0.1);
+  }
+  .btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      z-index: 1;
+  }
+  .btn:active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+  }
+  
+  .btn.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  .btn:focus {
+      box-shadow: 0 0 0 2px rgba(153, 236, 167, 0.5);
+  }
+  
+  .header-section {
+    max-width: 900px;
+  }
+  
+  
+  .input-group {
+    background: rgba(0, 10, 25, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-left: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  
+  #progWins {
+    background-color: #85a94e !important;
+  }
+  #progDraws {
+    background-color: #8b8987 !important;
+  }
+  
+  #progLosses {
+    background-color: #b23330 !important;
+  }
+  
+  @media (min-width: 576px) {
+  .username-input {
+      font-size: 1.25rem !important;
+      padding: 0.75rem 1.5rem !important;
+    }
+  }
+  
+  
+  
+  
+  input[type="range"] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+    background: transparent;
+  }
+  input[type="range"]:active::-webkit-slider-thumb {
+      opacity: 1;
+      transition: -webkit-transform 0.2s ease;
+      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+      -webkit-transform: scale(1.5);
+              transform: scale(1.5);
+  }
+  input[type="range"]:active::-moz-range-thumb {
+      opacity: 1;
+      transition: -webkit-transform 0.2s ease;
+      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+      transform: scale(1.5);
+  }
+  
+  
+  input[type="range"]:focus {
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 12.8px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    background: linear-gradient(135deg, #00bec7, #0073e8);
+    border-radius: 25px;
+    border: 0px solid #000101;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid #000000;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background: white;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    opacity: 0.85;
+  }
+  input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: linear-gradient(135deg, #00bec7, #0073e8);
+  }
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 12.8px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    background: linear-gradient(135deg, #00bec7, #0073e8);
+    border-radius: 25px;
+    border: 0px solid #000101;
+  }
+  input[type="range"]::-moz-range-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid #000000;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background: white;
+    cursor: pointer;
+    opacity: 0.85;
+  }
+  
+  /* ul {
+    list-style-type: none;
+    padding: 0;
+  } */
+  hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+  }
+  
+  
+  a {
+    transition: all 0.2s ease;
+  }
+  
+  /* ul li:first-child {
+    font-weight: 600;
+    box-shadow: 0 5px 60px -2px rgba(0, 50, 150, 0.25);
+    background: #0073e8;
+    background: linear-gradient(135deg, #00bec7, #0073e8);
+    color: white;
+  }
+  ul li:first-child a {
+      display: inline-block;
+      color: white;
+  }
+  ul a {
+    color: #cad6e6;
+    padding: 0.4rem 0.8rem;
+  } */
+  /* p {
+    text-align: center;
+    color: #cad6e6;
+    margin: 0 0 2rem;
+  }
+  p small {
+      opacity: 0.8;
+  } */
+  .gradient-uppercase {
+    font-size: 1.75rem;
+    text-transform: uppercase;
+    color: #96efff !important;
+    background: -webkit-linear-gradient(115deg, #108aff, #96efff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-radius: 30px;
+    border: 1px solid #108aff;
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: -0.5rem;
+  }
+  
+  #topNav {
+    /* box-shadow: 0 10px 80px -2px rgba(0, 0, 0, 0.4); */
+    position: relative;
+    background-color: #312e2b;
+    z-index: 1;
+  
+  }
+  
+  #footer {
+    margin-top: 10px;
+  }
+  
+  @media (min-width: 992px) {
+  section.summary {
+      padding: 5rem;
+  }
+  }
+  
+  
+  label {
+    margin-bottom: 0;
+  }
+  
+  
+  /* p {
+    font-size: 17px;
+    color: #f2f3f6;
+  } */
+  a {
+    transition: all 0.2s ease;
+  }
+  
+  .graphics {
+    width: 100%;
+  }
+  
+  
+  #progBar {
+    background-color: #85a35a;
+  }
+  .btn.btn-primary.export-option {
+    background-color:#7fa650; 
+    color: #ffffff;
+    z-index: 1; 
+  }
+  
+  #eloZoomReset {
+    background-color: #504f4c;
+    color: #cececd;
+    margin-left: 10px;
+  }
+  
+  #eloZoomReset:hover {
+    background-color: #323230;
+    color: #fffffd;
+  }
+  .btn.btn-primary.export-option:hover {
+    background-color:#95bb4a76; 
+    color: #ffffff;
+    z-index: 1; 
+  }
+  .modal-content {
+    background-color: #312e2b;
+    color: #ffffff;
+  }
+  
+  .card {
+  width: 100%; 
+  height: 100%; 
+  margin: auto;  
+  background-color: rgba(255, 255, 255, 0.0) !important;
+  }
+  
+  #lossContainer, #wonContainer{
+    max-width: 600px !important;
+    /* max-height: 500px !important;  */
+  }
+  
+  /* X-Small devices (portrait phones, less than 576px) */
+  @media (max-width: 575.98px) { 
+    /* #eloGraph {
+      height: 100% !important;
+    } */
+    #chesslogo {
+      width: 200px !important;
+    }
+  
+    /* .row {
+      height: auto;
+    } */
+    /* h2 {
+      font-size: 2rem !important ;
+    } */
+    /* #eloGraph {
+      height: 350px !important;
+    }
+  
+    #openingsGraph {
+      margin-top: 50px;
+      height: 350px !important;
+    } */
+    .btn.slicer {
+      background-color: #85a35a;
+      padding: 10px !important;
+      font-size: 12px !important;
+  
+    }
+  
+    #eloZoomReset {
+      display: none;
+    }
+  
+      .btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        z-index: 1;
+    }
+    .btn:active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+  
+    .btn.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+  }
+  
+  /* Small devices (landscape phones, less than 768px) */
+  /* @media (max-width: 767.98px) { ... } */
+  /* 
+  // Medium devices (tablets, less than 992px)
+  @media (max-width: 991.98px) { ... }
+  
+  // Large devices (desktops, less than 1200px)
+  @media (max-width: 1199.98px) { ... }
+  
+  // X-Large devices (large desktops, less than 1400px)
+  @media (max-width: 1399.98px) { ... }
+  
+  // XX-Large devices (larger desktops)
+  // No media query since the xxl breakpoint has no upper bound on its width */
+  

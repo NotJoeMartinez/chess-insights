@@ -1,8 +1,45 @@
 
+export function getArchivedGames() {
+    
+    // console.log(window.localStorage.getItem("archivedGames"));
+    if (window.localStorage.getItem("archivedGames") != null){
+        let archive = window.localStorage.getItem("archivedGames");
+        return JSON.parse(archive);
+    }
+    else {
+        let inlineDiv = document.getElementById("inlineStorage");
+        let archive = inlineDiv.textContent;
+        return JSON.parse(archive);
+    }
+
+}
 
 
-function parseGameNode(gameNode) {
-    uname = window.localStorage.getItem("userName");
+export function getPlayerStats() {
+    let playerStats = window.localStorage.getItem("playerStats");
+    return JSON.parse(playerStats);
+}
+
+export function getUserName(){
+    let userName = document.getElementById("uname");
+    return userName.value;
+}
+
+export function utcToHuman(unixTimestamp) {
+    const dateObject = new Date(unixTimestamp * 1000);
+    const year = dateObject.getFullYear();
+    const month = ('0' + (dateObject.getMonth() + 1)).slice(-2);
+    const day = ('0' + dateObject.getDate()).slice(-2);
+    const hours = ('0' + dateObject.getHours()).slice(-2);
+    const minutes = ('0' + dateObject.getMinutes()).slice(-2);
+    const seconds = ('0' + dateObject.getSeconds()).slice(-2);
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+}
+
+export function parseGameNode(gameNode) {
+    let uname = window.localStorage.getItem("userName");
 
     let parsedGameNode = {};
 
@@ -29,6 +66,7 @@ function parseGameNode(gameNode) {
         parsedGameNode["opponentRating"] = gameNode.black.rating;
         parsedGameNode["userRating"] = gameNode.white.rating;
 
+        // eslint-disable-next-line no-prototype-builtins
         if (gameNode.hasOwnProperty("accuracies")) {
             parsedGameNode["userAccuracy"] = gameNode.accuracies.white;
             parsedGameNode["opponentAccuracy"] = gameNode.accuracies.black;
@@ -48,6 +86,7 @@ function parseGameNode(gameNode) {
         parsedGameNode["opponentRating"] = gameNode.white.rating;
         parsedGameNode["userRating"] = gameNode.black.rating;
 
+        // eslint-disable-next-line no-prototype-builtins
         if (gameNode.hasOwnProperty("accuracies")) {
             parsedGameNode["userAccuracy"] = gameNode.accuracies.black;
             parsedGameNode["opponentAccuracy"] = gameNode.accuracies.white;
@@ -71,6 +110,7 @@ function parseGameNode(gameNode) {
 
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
+    // eslint-disable-next-line no-useless-escape
     parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
 
     // find opening url. The fact we have to do this means something is broken
@@ -81,7 +121,9 @@ function parseGameNode(gameNode) {
             break;
         }
     }
+    // eslint-disable-next-line no-useless-escape
     parsedGameNode["openingUrl"] = openingUrl.replace(/\\|\[|\]|\"|ECOUrl/g,''); 
+    // eslint-disable-next-line no-useless-escape
     let tmp_opening = openingUrl.replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
     parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
 
@@ -93,7 +135,9 @@ function parseGameNode(gameNode) {
         parsedGameNode["mainLineOpening"] = parsedGameNode["opening"]; 
     }
 
+    // eslint-disable-next-line no-useless-escape
     parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g,'');
+    // eslint-disable-next-line no-useless-escape
     parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g,'');
 
     // ugly  
@@ -102,6 +146,72 @@ function parseGameNode(gameNode) {
 
     // main line openings 
     
-
     return parsedGameNode;
 } 
+
+export function verifyLiveChess(gameNode){
+    try {
+        if ((gameNode.rules == "chess")){
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+    }
+    catch (error){
+        return false
+    }
+}
+
+
+export function getLargestTimeClass(){
+
+    let timeClassCount = {}
+    let playerStats = getPlayerStats()
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (playerStats.hasOwnProperty("chess_bullet")) {
+        let record = playerStats.chess_bullet.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["bullet"] = total
+    }
+    // eslint-disable-next-line no-prototype-builtins
+    if (playerStats.hasOwnProperty("chess_blitz")) {
+        let record = playerStats.chess_blitz.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["blitz"] = total 
+    }
+    // eslint-disable-next-line no-prototype-builtins
+    if (playerStats.hasOwnProperty("chess_rapid")) {
+        let record = playerStats.chess_rapid.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["rapid"] = total 
+    }
+    // eslint-disable-next-line no-prototype-builtins
+    if (playerStats.hasOwnProperty("chess_daily")) {
+        let record = playerStats.chess_daily.record
+        let total = (record.win + record.loss + record.draw)
+        timeClassCount["daily"] = total 
+    }
+
+    let max = 0;
+    let maxClass="rapid";
+
+    for (let timeClass in timeClassCount) {
+        const count = timeClassCount[timeClass];
+        if (count > max) {
+            maxClass = timeClass
+            max = count
+        }
+    }
+    return maxClass
+}
+
+
+export function isTop90Percentile(number, numbers) {
+    numbers.sort((a, b) => a - b); 
+    const index = Math.ceil(numbers.length * 0.9) - 1; 
+    const percentileValue = numbers[index]; 
+    return number >= percentileValue; 
+}
