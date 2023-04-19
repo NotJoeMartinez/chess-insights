@@ -30,7 +30,7 @@ export function graphElo(timeClass="rapid")  {
 
    
 
-   
+    console.log('allData: ', allData);
 
     console.log("ctx: ", ctx);
     

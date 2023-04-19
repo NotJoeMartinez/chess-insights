@@ -12,40 +12,45 @@ Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale
 import { getArchivedGames, parseGameNode, isTop90Percentile } from './utils.js';
 
 export function graphOpenings(timeClass="all") {
-    console.log(`graph Openings: ${timeClass}`)
 
     const ctx = document.getElementById("openings");
     const chartInstance = Chart.getChart(ctx);
 
     let allData = getOpeningsData(timeClass);
+    
+    let labels = allData.map(entry => entry.title);
+    let values = allData.map(entry => entry.value);
+
 
     if (chartInstance) {
-      chartInstance.data.datasets[0].data = allData.values;
-      chartInstance.data.labels = allData.titles;
+      chartInstance.data.datasets[0].data = values;
+      chartInstance.data.labels = labels;
       chartInstance.update();
-      console.log("chart updated");
       return;
     }
-
-    let sortedTitles = allData.titles;
-    let sortedValues = allData.values;
   
-    console.log(`ctx: ${ctx}`);
     var openingChart = new Chart(ctx, {
       type: "bar",
       label: "openings",
       data: {
-      labels: sortedTitles,
+      labels: labels,
       datasets: [
         {
         label: "times used",
-        data: sortedValues,
+        data: values,
         borderWidth: 1
       }
       ]
     },
     options: {
       responsive: true,
+      onClick: function (event, elements) {
+        if (elements.length) {
+          const dataIndex = elements[0].index;
+          const url = allData[dataIndex].url;
+          window.open(url, "_blank");
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
@@ -99,7 +104,6 @@ function getOpeningsData(timeClass){
 
   /* eslint-disable no-unused-vars */
   for (const [key, value] of Object.entries(openingData)) {
-    // console.log(`${value}/${total} = ` + value/total );
     if (isTop90Percentile(value, allNumbers)) {
         titles.push(key);
         values.push(value);
@@ -126,9 +130,15 @@ function getOpeningsData(timeClass){
     sortedValues.push(d.data);
   })
 
-  let res = {
-    titles: sortedTitles,
-    values: sortedValues
+  let res = []
+  for (let i = 0; i < sortedTitles.length; i++) {
+    let urlPath = sortedTitles[i];
+    if (urlPath[0] == " ") {
+      urlPath = urlPath.slice(1);
+    }
+    let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+
+    res.push({title: sortedTitles[i], value: sortedValues[i], url: openingUrl})
   }
 
   return res;
