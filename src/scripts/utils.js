@@ -212,24 +212,23 @@ export function isTop90Percentile(number, numbers) {
 
 export function getWinsByOpenings(timeClass, opening) {
 
-    let archivedGames = getArchivedGames()
+    let parsedArchivedGames = getParsedArchivedGames()
     let winCount = 0;
-    // let lossCount = 0;
 
     if (timeClass == "all") {
-        for (let i = 0; i < archivedGames.length; i++) {
-            let gameNode = parseGameNode(archivedGames[i])
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i] 
             if (gameNode.opening == opening && gameNode.result == "win") {
                 winCount++;
             }
-            
+
         }
         return winCount;
 
     } else {
 
-        for (let i = 0; i < archivedGames.length; i++) {
-            let gameNode = parseGameNode(archivedGames[i])
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i]
             if (gameNode.opening == opening && gameNode.result == "win" && gameNode.timeClass == timeClass) {
                 winCount++;
             }
@@ -240,29 +239,67 @@ export function getWinsByOpenings(timeClass, opening) {
 }
 
 
-export function getLossByOpenings(timeClass, opening){
-    
-        let archivedGames = getArchivedGames()
-        let lossCount = 0;
-    
-        if (timeClass == "all") {
-            for (let i = 0; i < archivedGames.length; i++) {
-                let gameNode = parseGameNode(archivedGames[i])
-                if (gameNode.opening == opening && gameNode.result == "loss") {
-                    lossCount++;
-                }
-                
+export function getLossByOpenings(timeClass, opening) {
+
+    let parsedArchivedGames = getParsedArchivedGames()
+    let lossCount = 0;
+
+    if (timeClass == "all") {
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i]
+            if (gameNode.opening == opening && gameNode.result == "loss") {
+                lossCount++;
             }
-            return lossCount;
-    
-        } else {
-            for (let i = 0; i < archivedGames.length; i++) {
-                let gameNode = parseGameNode(archivedGames[i])
-                if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
-                    lossCount++;
-                }
-            }
-            return lossCount
-    
+
         }
+        return lossCount;
+
+    } else {
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i]
+            if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
+                lossCount++;
+            }
+        }
+        return lossCount
+
+    }
+}
+
+export function parseAndSaveArchivedGames() {
+    let parsedArchivedGames = []
+    let archivedGames = getArchivedGames()
+    for (let i = 0; i < archivedGames.length; i++) {
+        let gameNode = parseGameNode(archivedGames[i])
+        parsedArchivedGames.push(gameNode)
+
+    }
+    console.log(`parsedArchivedGames: ${parsedArchivedGames.length}`)
+    try {
+        window.localStorage.setItem("parsedArchiveGames", JSON.stringify(parsedArchivedGames));
+        console.log("parsedArchiveGames saved to local storage")
+      }
+      catch(err) {
+        let inlineStorage = document.createElement("div");
+        let appDiv = document.getElementById("app");
+        inlineStorage.setAttribute("id", "parsedInlineStorage");
+        inlineStorage.setAttribute("hidden", "hidden");
+        inlineStorage.textContent = JSON.stringify(parsedArchivedGames);
+        appDiv.appendChild(inlineStorage);
+        console.log("parsedArchiveGames saved to inline storage")
+      }
+
+}
+
+export function getParsedArchivedGames() {
+
+    if (window.localStorage.getItem("parsedArchiveGames") != null) {
+        let parsedArchive = window.localStorage.getItem("parsedArchiveGames");
+        return JSON.parse(parsedArchive);
+    } else {
+        let inlineDiv = document.getElementById("parsedInlineStorage");
+        let parsedArchive = inlineDiv.textContent;
+        return JSON.parse(parsedArchive);
+    }
+
 }
