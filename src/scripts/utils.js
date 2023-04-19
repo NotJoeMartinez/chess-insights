@@ -303,3 +303,107 @@ export function getParsedArchivedGames() {
     }
 
 }
+
+export function saveOpeningsData(){
+    // let timeClasses = ["all", "bullet", "blitz", "rapid", "daily"]
+    let openingsData = {
+        all: calculateOpening("all"),
+        bullet: calculateOpening("bullet"),
+        blitz: calculateOpening("blitz"),
+        rapid: calculateOpening("rapid"),
+        daily: calculateOpening("daily")
+    }
+    try {
+        window.localStorage.setItem("openings", JSON.stringify(openingsData));
+      }
+      catch(err) {
+        let inlineStorage = document.createElement("div");
+        let appDiv = document.getElementById("app");
+        inlineStorage.setAttribute("id", "openingsInlineStorage");
+        inlineStorage.setAttribute("hidden", "hidden");
+        inlineStorage.textContent = JSON.stringify(openingsData);
+        appDiv.appendChild(inlineStorage);
+      }
+}
+
+export function calculateOpening(timeClass) {
+
+    let parsedArchivedGames = getParsedArchivedGames();
+    // let uname = getUserName();
+  
+    const openingData = {};
+    if (timeClass=="all"){
+      for (let i = 0; i < parsedArchivedGames.length; i++) {
+        let gameNode =  parsedArchivedGames[i];
+        const string = gameNode.opening;
+        openingData[string] = (openingData[string] || 0) + 1;
+      }
+    } else {
+      for (let i = 0; i < parsedArchivedGames.length; i++) {
+        let gameNode = parsedArchivedGames[i];
+        if (gameNode.timeClass == timeClass) {
+          const string = gameNode.opening;
+          openingData[string] = (openingData[string] || 0) + 1;
+        }
+      }
+    }
+  
+    
+  
+    let allNumbers = []
+  /* eslint-disable no-unused-vars */
+    for (const [key, value] of Object.entries(openingData)) {
+      allNumbers.push(value)
+    }
+  
+    let titles = []
+    let values = []
+  
+    /* eslint-disable no-unused-vars */
+    for (const [key, value] of Object.entries(openingData)) {
+      if (isTop90Percentile(value, allNumbers)) {
+          titles.push(key);
+          values.push(value);
+      }
+    }
+  
+  
+    let arrayOfObj = titles.map(function(d, i) {
+      return {
+        label: d,
+        data: values[i] || 0
+      };
+    });
+  
+    let sortedArrayOfObj = arrayOfObj.sort(function(a, b) {
+      return b.data>a.data;
+    });
+  
+    let sortedTitles = [];
+    let sortedValues = [];
+  
+    sortedArrayOfObj.forEach(function(d){
+      sortedTitles.push(d.label);
+      sortedValues.push(d.data);
+    })
+  
+    let res = []
+    for (let i = 0; i < sortedTitles.length; i++) {
+      let urlPath = sortedTitles[i];
+      if (urlPath[0] == " ") {
+        urlPath = urlPath.slice(1);
+      }
+  
+  
+      let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+      let opening = sortedTitles[i];
+      let openingCount = sortedValues[i];
+  
+      let winCount = getWinsByOpenings(timeClass, opening);
+      let lossCount = getLossByOpenings(timeClass, opening) 
+  
+      res.push({title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount})
+    }
+  
+    return res;
+  }

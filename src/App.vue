@@ -59,7 +59,7 @@ import LossChart from './components/LossChart.vue'
 import ExportData from './components/ExportData.vue'
 
 // scripts
-import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames } from './scripts/utils.js'
+import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData } from './scripts/utils.js'
 
 export default {
   name: 'App',
@@ -149,6 +149,7 @@ export default {
         }
 
         parseAndSaveArchivedGames();
+        saveOpeningsData();
         
         let largestTimeClass = getLargestTimeClass(playerStats);
 
