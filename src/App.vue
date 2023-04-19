@@ -4,15 +4,18 @@
 
   <NavBar/>
   <InputForm @get-all-user-data="getAllUserData"/>
-  <div>
+
     <div v-if="showSpinner" class="container">
-      <div class="spinner-border"></div>
-      <ProgBar
+      <div class="spinner-border">
+      </div>
+        {{ spinnerText }}
+    </div>
+
+    <ProgBar
+      v-if="showProg"
       :progress="progress"
       :games-found="gamesFound"
       />
-    </div>
-  </div>
 
   <div v-if="showCharts">
     <ExportData/>
@@ -20,6 +23,7 @@
     <EloOverTime
     @update="writeEloOverTime($event)"
      :timeClass="eloTimeClass"
+     :totalUserGames="totalUserGames"
      :winPercentage="winPercentage"
      :winCount="winCount"
      :drawPercentage="drawPercentage"
@@ -77,9 +81,12 @@ export default {
   data() {
     return {
       showSpinner: false,
+      spinnerText: "Loading...",
+      showProg: false,
       showCharts: false,
       gamesFound: 0,
       progress: 0,
+      totalUserGames: 0,
       eloTimeClass: '',
       openingsTimeClass: '',
       lossTimeClass: '',
@@ -92,6 +99,8 @@ export default {
       console.log(userName)
 
       this.showSpinner = true;
+      this.spinnerText = "Fetching user data...";
+      this.showProg = true;
 
       let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
       var playerStatsRes = await fetch(playerStatsUrl);
@@ -128,13 +137,14 @@ export default {
         this.gamesFound = totalGames;
         this.progress = prog;
       }
+      this.totalUserGames = totalGames;
+      this.showProg = false;
       if (archivedGames.length < 1) {
-        this.showSpinner = false;
+        this.showProg = false;
         alert("No games found under that user")
         return; 
       }
-
-      // console.log(archivedGames);
+      this.spinnerText = "saving data...";
       window.localStorage.setItem("userName", userName);
       try {
           window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));

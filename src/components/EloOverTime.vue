@@ -1,29 +1,36 @@
 <template>
-    <div class="div container eloOverTime" id="eloGraph" :timeClass="{timeClass}">
-      <h2>ELO Over Time</h2>
+        <div class="div container eloOverTime" id="eloGraph" :timeClass="{timeClass}">
       <div class="row" id="eloCardRow">
         <div class="card" id="eloCard">
-          <p class="card-text"> Click data points to open game in another window </p>
-          <p class="card-text"> Click and drag to zoom in on specific area </p>
+        <h2 class="card-title">
+          ELO Over Time for <b>{{ timeClass }}</b> games   
+        </h2>
+
+          <p class="card-text"> Click data points to open game in another window. Click and drag to zoom in on specific area </p>
+          <div class="row" id="totalRow">
+            <h3>
+              {{ Number(winCount) + Number(drawCount) + Number(lossCount) }} Games
+            </h3>
+          </div>
           <div class="row" id="winLossRow">
             <div class="col">
-              <h3><b>{{ winPercentage }}%</b></h3>
+              <!-- <h3><b>{{ winPercentage }}%</b></h3> -->
               {{ winCount }} Won
             </div>
             <div class="col">
-              <h3><b>{{ drawPercentage }}%</b></h3>
+              <!-- <h3><b>{{ drawPercentage }}%</b></h3> -->
               {{ drawCount }} Drawn
             </div>
             <div class="col">
-              <h3><b>{{ lossPercentage }}%</b></h3>
+              <!-- <h3><b>{{ lossPercentage }}%</b></h3> -->
               {{ lossCount }} Lost
             </div>
           </div>
 
         <div class="progress" id="winLossDrawGraph">
-          <div class="progress-bar" id="progWinds" role="progressbar" :style="{ width: winPercentage + '%' }" :aria-valuenow="winPercentage" aria-valuemin="0" aria-valuemax="100">Wins</div>
-          <div class="progress-bar " id="progDraws" role="progressbar" :style="{ width: drawPercentage + '%'}" :aria-valuenow="drawPercentage" aria-valuemin="0" aria-valuemax="100">Draws</div>
-          <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: lossPercentage + '%'}" :aria-valuenow="lossPercentage" aria-valuemin="0" aria-valuemax="100">Losses</div>
+          <div class="progress-bar" id="progWinds" role="progressbar" :style="{ width: winPercentage + '%' }" :aria-valuenow="winPercentage" aria-valuemin="0" aria-valuemax="100">{{ winPercentage }}%</div>
+          <div class="progress-bar " id="progDraws" role="progressbar" :style="{ width: drawPercentage + '%'}" :aria-valuenow="drawPercentage" aria-valuemin="0" aria-valuemax="100">{{ drawPercentage }}%</div>
+          <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: lossPercentage + '%'}" :aria-valuenow="lossPercentage" aria-valuemin="0" aria-valuemax="100">{{ lossPercentage }}%</div>
         </div>
 
         <div class="card-body" id="eloCardBody">
@@ -54,9 +61,9 @@
         winPercentage: String,
         drawPercentage: String,
         lossPercentage: String,
-        winCount: String,
-        drawCount: String,
-        lossCount: String,
+        winCount: Number,
+        drawCount: Number,
+        lossCount: Number,
       },
       methods : {
         updateElo(timeClass) {

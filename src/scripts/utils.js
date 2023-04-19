@@ -210,61 +210,81 @@ export function isTop90Percentile(number, numbers) {
 }
 
 
-export function getWinsByOpenings(timeClass, opening) {
+// export function getWinsByOpenings(timeClass, opening) {
 
-    let parsedArchivedGames = getParsedArchivedGames()
+//     let parsedArchivedGames = getParsedArchivedGames()
+//     let winCount = 0;
+
+//     if (timeClass == "all") {
+//         for (let i = 0; i < parsedArchivedGames.length; i++) {
+//             let gameNode = parsedArchivedGames[i] 
+//             if (gameNode.opening == opening && gameNode.result == "win") {
+//                 winCount++;
+//             }
+
+//         }
+//         return winCount;
+
+//     } else {
+
+//         for (let i = 0; i < parsedArchivedGames.length; i++) {
+//             let gameNode = parsedArchivedGames[i]
+//             if (gameNode.opening == opening && gameNode.result == "win" && gameNode.timeClass == timeClass) {
+//                 winCount++;
+//             }
+//         }
+//         return winCount
+
+//     }
+// }
+
+
+// export function getLossByOpenings(timeClass, opening) {
+
+//     let parsedArchivedGames = getParsedArchivedGames()
+//     let lossCount = 0;
+
+//     if (timeClass == "all") {
+//         for (let i = 0; i < parsedArchivedGames.length; i++) {
+//             let gameNode = parsedArchivedGames[i]
+//             if (gameNode.opening == opening && gameNode.result == "loss") {
+//                 lossCount++;
+//             }
+
+//         }
+//         return lossCount;
+
+//     } else {
+//         for (let i = 0; i < parsedArchivedGames.length; i++) {
+//             let gameNode = parsedArchivedGames[i]
+//             if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
+//                 lossCount++;
+//             }
+//         }
+//         return lossCount
+
+//     }
+// }
+
+export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames) {
     let winCount = 0;
-
-    if (timeClass == "all") {
-        for (let i = 0; i < parsedArchivedGames.length; i++) {
-            let gameNode = parsedArchivedGames[i] 
-            if (gameNode.opening == opening && gameNode.result == "win") {
-                winCount++;
-            }
-
-        }
-        return winCount;
-
-    } else {
-
-        for (let i = 0; i < parsedArchivedGames.length; i++) {
-            let gameNode = parsedArchivedGames[i]
-            if (gameNode.opening == opening && gameNode.result == "win" && gameNode.timeClass == timeClass) {
-                winCount++;
-            }
-        }
-        return winCount
-
-    }
-}
-
-
-export function getLossByOpenings(timeClass, opening) {
-
-    let parsedArchivedGames = getParsedArchivedGames()
     let lossCount = 0;
 
-    if (timeClass == "all") {
-        for (let i = 0; i < parsedArchivedGames.length; i++) {
-            let gameNode = parsedArchivedGames[i]
-            if (gameNode.opening == opening && gameNode.result == "loss") {
-                lossCount++;
-            }
+    for (let i = 0; i < parsedArchivedGames.length; i++) {
+        let gameNode = parsedArchivedGames[i];
 
-        }
-        return lossCount;
-
-    } else {
-        for (let i = 0; i < parsedArchivedGames.length; i++) {
-            let gameNode = parsedArchivedGames[i]
-            if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
+        if (gameNode.opening === opening && gameNode.timeClass === timeClass) {
+            if (gameNode.result === "win") {
+                winCount++;
+            } else if (gameNode.result === "resigned" || gameNode.result === "timeout" || gameNode.result === "checkmated" || gameNode.result == "abandoned") {
                 lossCount++;
             }
         }
-        return lossCount
-
     }
+
+    return { winCount, lossCount };
 }
+
 
 export function parseAndSaveArchivedGames() {
     let parsedArchivedGames = []
@@ -386,24 +406,42 @@ export function calculateOpening(timeClass) {
       sortedTitles.push(d.label);
       sortedValues.push(d.data);
     })
-  
-    let res = []
+
+    let res = [];
     for (let i = 0; i < sortedTitles.length; i++) {
-      let urlPath = sortedTitles[i];
-      if (urlPath[0] == " ") {
-        urlPath = urlPath.slice(1);
-      }
-  
-  
-      let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
-      let opening = sortedTitles[i];
-      let openingCount = sortedValues[i];
-  
-      let winCount = getWinsByOpenings(timeClass, opening);
-      let lossCount = getLossByOpenings(timeClass, opening) 
-  
-      res.push({title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount})
+        let urlPath = sortedTitles[i];
+        if (urlPath[0] == " ") {
+            urlPath = urlPath.slice(1);
+        }
+
+        let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+        let opening = sortedTitles[i];
+        let openingCount = sortedValues[i];
+
+        let { winCount, lossCount } = getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames);
+
+        res.push({ title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount });
     }
+    return res
+}
   
-    return res;
-  }
+    // let res = []
+    // for (let i = 0; i < sortedTitles.length; i++) {
+    //   let urlPath = sortedTitles[i];
+    //   if (urlPath[0] == " ") {
+    //     urlPath = urlPath.slice(1);
+    //   }
+  
+  
+    //   let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+    //   let opening = sortedTitles[i];
+    //   let openingCount = sortedValues[i];
+  
+    //   let winCount = getWinsByOpenings(timeClass, opening);
+    //   let lossCount = getLossByOpenings(timeClass, opening) 
+  
+    //   res.push({title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount})
+    // }
+  
+    // return res;
+//   }
