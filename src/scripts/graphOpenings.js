@@ -9,10 +9,9 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { getArchivedGames, parseGameNode, isTop90Percentile } from './utils.js';
+import { getArchivedGames, parseGameNode, isTop90Percentile, getWinsByOpenings, getLossByOpenings} from './utils.js';
 
 export function graphOpenings(timeClass="all") {
-
     const ctx = document.getElementById("openings");
     const chartInstance = Chart.getChart(ctx);
 
@@ -21,13 +20,14 @@ export function graphOpenings(timeClass="all") {
     let labels = allData.map(entry => entry.title);
     let values = allData.map(entry => entry.value);
 
-
     if (chartInstance) {
       chartInstance.data.datasets[0].data = values;
       chartInstance.data.labels = labels;
+      updateTooltipData(chartInstance, allData); 
       chartInstance.update();
       return;
     }
+
   
     var openingChart = new Chart(ctx, {
       type: "bar",
@@ -44,6 +44,23 @@ export function graphOpenings(timeClass="all") {
     },
     options: {
       responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            title: function (context) {
+              return context[0].label;
+            },
+            label: function (context) {
+              const winCount = allData[context.dataIndex].winCount;
+              const lossCount = allData[context.dataIndex].lossCount;
+              return [
+                `Wins: ${winCount}`,
+                `Losses: ${lossCount}`,
+              ];
+            },
+          },
+        },
+      },
       onClick: function (event, elements) {
         if (elements.length) {
           const dataIndex = elements[0].index;
@@ -136,10 +153,28 @@ function getOpeningsData(timeClass){
     if (urlPath[0] == " ") {
       urlPath = urlPath.slice(1);
     }
-    let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
 
-    res.push({title: sortedTitles[i], value: sortedValues[i], url: openingUrl})
+
+    let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+    let opening = sortedTitles[i];
+    let openingCount = sortedValues[i];
+
+    let winCount = getWinsByOpenings(timeClass, opening);
+    let lossCount = getLossByOpenings(timeClass, opening) 
+
+    res.push({title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount})
   }
 
   return res;
+}
+
+function updateTooltipData(chartInstance, allData) {
+  chartInstance.options.plugins.tooltip.callbacks.label = function (context) {
+    const winCount = allData[context.dataIndex].winCount;
+    const lossCount = allData[context.dataIndex].lossCount;
+    return [
+      `Wins: ${winCount}`,
+      `Losses: ${lossCount}`,
+    ];
+  };
 }

@@ -13,7 +13,6 @@ import { getArchivedGames, getUserName, parseGameNode } from './utils.js';
 
 export function graphElo(timeClass="rapid")  {
 
-    // console.log("graphElo called");
   
     const ctx = document.getElementById('eloOverTime');
     const chartInstance = Chart.getChart(ctx);
@@ -23,16 +22,13 @@ export function graphElo(timeClass="rapid")  {
     if (chartInstance) {
       chartInstance.data.datasets[0].data = allData; 
       chartInstance.update();
-      console.log("chart updated")
       return;
     }
 
 
    
 
-    console.log('allData: ', allData);
 
-    console.log("ctx: ", ctx);
     
     // let timeFormat = "YYYY-MM-DD HH:mm";
     const eloChart = new Chart(ctx, {
@@ -130,7 +126,6 @@ export function graphElo(timeClass="rapid")  {
         }
       }
       ctx.onclick = clickHandler;
-      // console.log("here");
       eloChart.update();
 
       return eloChart;
@@ -138,7 +133,6 @@ export function graphElo(timeClass="rapid")  {
 
 
  function getChartData(timeClass) {
-  console.log("getChartData called")
 
   let archivedGames = getArchivedGames();
   let uname = getUserName();
@@ -163,7 +157,6 @@ export function graphElo(timeClass="rapid")  {
  }
 
 export function resetChartZoom(timeClass) {
-  console.log("resetChartZoom called")
 
   const ctx = document.getElementById('eloOverTime');
   const chartInstance = Chart.getChart(ctx);
@@ -174,7 +167,6 @@ export function resetChartZoom(timeClass) {
     chartInstance.data.datasets[0].data = allData; 
     chartInstance.resetZoom();
     chartInstance.update();
-    console.log("chart updated")
     return;
   }
 

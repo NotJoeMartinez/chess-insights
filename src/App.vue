@@ -173,15 +173,11 @@ export default {
       let numDraws = 0;
 
 
-      // if ( Object.prototype.hasOwnProperty.call(userStats, apiTimeClass)){
       // eslint-disable-next-line no-prototype-builtins
       if (userStats.hasOwnProperty(apiTimeClass)){
         numWins = userStats[apiTimeClass].record.win;
         numLosses = userStats[apiTimeClass].record.loss;
         numDraws = userStats[apiTimeClass].record.draw;
-        // console.log(`numWins: ${numWins}`);
-        // console.log(`numLosses: ${numLosses}`);
-        // console.log(`numDraws: ${numDraws}`); 
       }
 
       let totalGames = numWins + numDraws + numLosses;

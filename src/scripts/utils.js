@@ -1,12 +1,10 @@
-
 export function getArchivedGames() {
-    
+
     // console.log(window.localStorage.getItem("archivedGames"));
-    if (window.localStorage.getItem("archivedGames") != null){
+    if (window.localStorage.getItem("archivedGames") != null) {
         let archive = window.localStorage.getItem("archivedGames");
         return JSON.parse(archive);
-    }
-    else {
+    } else {
         let inlineDiv = document.getElementById("inlineStorage");
         let archive = inlineDiv.textContent;
         return JSON.parse(archive);
@@ -20,7 +18,7 @@ export function getPlayerStats() {
     return JSON.parse(playerStats);
 }
 
-export function getUserName(){
+export function getUserName() {
     let userName = document.getElementById("uname");
     return userName.value;
 }
@@ -44,24 +42,24 @@ export function parseGameNode(gameNode) {
     let parsedGameNode = {};
 
     // easy ones
-    parsedGameNode["unixTimeStamp"] = gameNode.end_time;   
-    parsedGameNode["timeClass"] = gameNode.time_class;   
-    parsedGameNode["gameUrl"] = gameNode.url;   
-    parsedGameNode["fen"] = gameNode.fen;  
+    parsedGameNode["unixTimeStamp"] = gameNode.end_time;
+    parsedGameNode["timeClass"] = gameNode.time_class;
+    parsedGameNode["gameUrl"] = gameNode.url;
+    parsedGameNode["fen"] = gameNode.fen;
     parsedGameNode["timeStamp"] = utcToHuman(gameNode.end_time);
-    
-    let ogPgn = gameNode.pgn;
-    let stripedPgn = ogPgn.replace(/(\r\n|\r|\n)/g,''); 
-    parsedGameNode["pgn"] = stripedPgn;  
 
-    parsedGameNode["ogPgn"] = gameNode.pgn;  
+    let ogPgn = gameNode.pgn;
+    let stripedPgn = ogPgn.replace(/(\r\n|\r|\n)/g, '');
+    parsedGameNode["pgn"] = stripedPgn;
+
+    parsedGameNode["ogPgn"] = gameNode.pgn;
 
     // find game color
-    if(gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
+    if (gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
         parsedGameNode["userColor"] = "white";
         parsedGameNode["result"] = gameNode.white.result;
-        parsedGameNode["opponent"] = gameNode.black.username; 
-        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.black.username}`; 
+        parsedGameNode["opponent"] = gameNode.black.username;
+        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.black.username}`;
 
         parsedGameNode["opponentRating"] = gameNode.black.rating;
         parsedGameNode["userRating"] = gameNode.white.rating;
@@ -70,18 +68,16 @@ export function parseGameNode(gameNode) {
         if (gameNode.hasOwnProperty("accuracies")) {
             parsedGameNode["userAccuracy"] = gameNode.accuracies.white;
             parsedGameNode["opponentAccuracy"] = gameNode.accuracies.black;
-        }
-        else {
-            parsedGameNode["userAccuracy"] = "" ;
-            parsedGameNode["opponentAccuracy"] = ""; 
+        } else {
+            parsedGameNode["userAccuracy"] = "";
+            parsedGameNode["opponentAccuracy"] = "";
         }
 
-    }
-    else {
+    } else {
         parsedGameNode["userColor"] = "black";
         parsedGameNode["result"] = gameNode.black.result;
-        parsedGameNode["opponent"] = gameNode.white.username; 
-        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white.username}`; 
+        parsedGameNode["opponent"] = gameNode.white.username;
+        parsedGameNode["opponentUrl"] = `https://www.chess.com/member/${gameNode.white.username}`;
 
         parsedGameNode["opponentRating"] = gameNode.white.rating;
         parsedGameNode["userRating"] = gameNode.black.rating;
@@ -90,10 +86,9 @@ export function parseGameNode(gameNode) {
         if (gameNode.hasOwnProperty("accuracies")) {
             parsedGameNode["userAccuracy"] = gameNode.accuracies.black;
             parsedGameNode["opponentAccuracy"] = gameNode.accuracies.white;
-        }
-        else {
-            parsedGameNode["userAccuracy"] = "" ;
-            parsedGameNode["opponentAccuracy"] = ""; 
+        } else {
+            parsedGameNode["userAccuracy"] = "";
+            parsedGameNode["opponentAccuracy"] = "";
         }
 
     }
@@ -111,61 +106,59 @@ export function parseGameNode(gameNode) {
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
     // eslint-disable-next-line no-useless-escape
-    parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g,'');
+    parsedGameNode["date"] = pgn[2].replace(/\\|\[|\]|\"|Date/g, '');
 
     // find opening url. The fact we have to do this means something is broken
     let openingUrl = "";
-    for (let i = 0; i < pgn.length; i++){
-        if (pgn[i].startsWith("[ECOUrl")){
+    for (let i = 0; i < pgn.length; i++) {
+        if (pgn[i].startsWith("[ECOUrl")) {
             openingUrl = pgn[i];
             break;
         }
     }
     // eslint-disable-next-line no-useless-escape
-    parsedGameNode["openingUrl"] = openingUrl.replace(/\\|\[|\]|\"|ECOUrl/g,''); 
+    parsedGameNode["openingUrl"] = openingUrl.replace(/\\|\[|\]|\"|ECOUrl/g, '');
     // eslint-disable-next-line no-useless-escape
-    let tmp_opening = openingUrl.replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g,'');
-    parsedGameNode["opening"] = tmp_opening.replace(/-/g," ");
+    let tmp_opening = openingUrl.replace(/\\|\[|\]|\"|ECOUrl|https:\/\/www.chess.com\/openings\//g, '');
+    parsedGameNode["opening"] = tmp_opening.replace(/-/g, " ");
+    parsedGameNode["opening"] = parsedGameNode["opening"].trimStart();
 
     let mainLine = parsedGameNode["opening"].match(/^(\D*)(?=\d)/);
-    if (mainLine){
+    if (mainLine) {
         parsedGameNode["mainLineOpening"] = mainLine[1];
-    }
-    else {
-        parsedGameNode["mainLineOpening"] = parsedGameNode["opening"]; 
+    } else {
+        parsedGameNode["mainLineOpening"] = parsedGameNode["opening"];
     }
 
     // eslint-disable-next-line no-useless-escape
-    parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g,'');
+    parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g, '');
     // eslint-disable-next-line no-useless-escape
-    parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g,'');
+    parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
 
 
     // main line openings 
-    
-    return parsedGameNode;
-} 
 
-export function verifyLiveChess(gameNode){
+    return parsedGameNode;
+}
+
+export function verifyLiveChess(gameNode) {
     try {
-        if ((gameNode.rules == "chess")){
+        if ((gameNode.rules == "chess")) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
-        
-    }
-    catch (error){
+
+    } catch (error) {
         return false
     }
 }
 
 
-export function getLargestTimeClass(){
+export function getLargestTimeClass() {
 
     let timeClassCount = {}
     let playerStats = getPlayerStats()
@@ -180,23 +173,23 @@ export function getLargestTimeClass(){
     if (playerStats.hasOwnProperty("chess_blitz")) {
         let record = playerStats.chess_blitz.record
         let total = (record.win + record.loss + record.draw)
-        timeClassCount["blitz"] = total 
+        timeClassCount["blitz"] = total
     }
     // eslint-disable-next-line no-prototype-builtins
     if (playerStats.hasOwnProperty("chess_rapid")) {
         let record = playerStats.chess_rapid.record
         let total = (record.win + record.loss + record.draw)
-        timeClassCount["rapid"] = total 
+        timeClassCount["rapid"] = total
     }
     // eslint-disable-next-line no-prototype-builtins
     if (playerStats.hasOwnProperty("chess_daily")) {
         let record = playerStats.chess_daily.record
         let total = (record.win + record.loss + record.draw)
-        timeClassCount["daily"] = total 
+        timeClassCount["daily"] = total
     }
 
     let max = 0;
-    let maxClass="rapid";
+    let maxClass = "rapid";
 
     for (let timeClass in timeClassCount) {
         const count = timeClassCount[timeClass];
@@ -210,8 +203,66 @@ export function getLargestTimeClass(){
 
 
 export function isTop90Percentile(number, numbers) {
-    numbers.sort((a, b) => a - b); 
-    const index = Math.ceil(numbers.length * 0.9) - 1; 
-    const percentileValue = numbers[index]; 
-    return number >= percentileValue; 
+    numbers.sort((a, b) => a - b);
+    const index = Math.ceil(numbers.length * 0.9) - 1;
+    const percentileValue = numbers[index];
+    return number >= percentileValue;
+}
+
+
+export function getWinsByOpenings(timeClass, opening) {
+
+    let archivedGames = getArchivedGames()
+    let winCount = 0;
+    // let lossCount = 0;
+
+    if (timeClass == "all") {
+        for (let i = 0; i < archivedGames.length; i++) {
+            let gameNode = parseGameNode(archivedGames[i])
+            if (gameNode.opening == opening && gameNode.result == "win") {
+                winCount++;
+            }
+            
+        }
+        return winCount;
+
+    } else {
+
+        for (let i = 0; i < archivedGames.length; i++) {
+            let gameNode = parseGameNode(archivedGames[i])
+            if (gameNode.opening == opening && gameNode.result == "win" && gameNode.timeClass == timeClass) {
+                winCount++;
+            }
+        }
+        return winCount
+
+    }
+}
+
+
+export function getLossByOpenings(timeClass, opening){
+    
+        let archivedGames = getArchivedGames()
+        let lossCount = 0;
+    
+        if (timeClass == "all") {
+            for (let i = 0; i < archivedGames.length; i++) {
+                let gameNode = parseGameNode(archivedGames[i])
+                if (gameNode.opening == opening && gameNode.result == "loss") {
+                    lossCount++;
+                }
+                
+            }
+            return lossCount;
+    
+        } else {
+            for (let i = 0; i < archivedGames.length; i++) {
+                let gameNode = parseGameNode(archivedGames[i])
+                if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
+                    lossCount++;
+                }
+            }
+            return lossCount
+    
+        }
 }

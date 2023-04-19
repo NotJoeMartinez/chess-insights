@@ -12,7 +12,6 @@ Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale
 import { getArchivedGames, parseGameNode} from './utils.js';
 
 export function graphWinLoss(inputResult, timeClass="all") {
-    console.log(`graphWinLoss(${inputResult}, ${timeClass})`)
 
     let ctx = '';
     let data = [];
