@@ -4,7 +4,7 @@
         <h2 id="openingsTitle" class="card-title">
         Top openings for <b> {{ timeClass }}</b> games
         </h2>
-        <p class="card-text">top 90% percentile</p>
+        <p class="card-text">Click to view the chess.com wiki of the opening</p>
         
         <div class="card-body">
 
