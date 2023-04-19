@@ -3,10 +3,9 @@
       <div class="row" id="eloCardRow">
         <div class="card" id="eloCard">
         <h2 class="card-title">
-          ELO Over Time for <b>{{ timeClass }}</b> games   
+          ELO Over Time: <b>{{ timeClass }}</b> 
         </h2>
 
-          <p class="card-text"> Click data points to open game in another window. Click and drag to zoom in on specific area </p>
           <div class="row" id="totalRow">
             <h3>
               {{ Number(winCount) + Number(drawCount) + Number(lossCount) }} Games
@@ -33,6 +32,7 @@
           <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: lossPercentage + '%'}" :aria-valuenow="lossPercentage" aria-valuemin="0" aria-valuemax="100">{{ lossPercentage }}%</div>
         </div>
 
+        <p class="card-text"> Click data points to open game in another window. Click and drag to zoom in on specific area </p>
         <div class="card-body" id="eloCardBody">
           <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
           <canvas id="eloOverTime"></canvas> 
@@ -84,6 +84,10 @@
   </script>
 
 <style scoped>
+.eloOverTime {
+  max-width: 70%;
+  max-height: 50%;
+}
 #progWinds {
   background-color: #85a94e;
 }

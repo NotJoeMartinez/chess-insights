@@ -1,3 +1,17 @@
+
+
+export function clearLocalStorage() {
+    localStorage.clear();
+    const inlineStorage = document.querySelector('#inlineStorage');
+    const parsedInlineStorage = document.querySelector('#parsedInlineStorage');
+    if (inlineStorage) {
+        inlineStorage.remove()
+    }     
+    if (parsedInlineStorage) {
+        parsedInlineStorage.remove()
+    }
+}
+
 export function getArchivedGames() {
 
     // console.log(window.localStorage.getItem("archivedGames"));
@@ -145,8 +159,9 @@ export function parseGameNode(gameNode) {
 }
 
 export function verifyLiveChess(gameNode) {
+
     try {
-        if ((gameNode.rules == "chess")) {
+        if ((gameNode.rules == "chess" || gameNode.rules == "chess960")) {
             return true;
         } else {
             return false;
@@ -425,23 +440,3 @@ export function calculateOpening(timeClass) {
     return res
 }
   
-    // let res = []
-    // for (let i = 0; i < sortedTitles.length; i++) {
-    //   let urlPath = sortedTitles[i];
-    //   if (urlPath[0] == " ") {
-    //     urlPath = urlPath.slice(1);
-    //   }
-  
-  
-    //   let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
-    //   let opening = sortedTitles[i];
-    //   let openingCount = sortedValues[i];
-  
-    //   let winCount = getWinsByOpenings(timeClass, opening);
-    //   let lossCount = getLossByOpenings(timeClass, opening) 
-  
-    //   res.push({title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount})
-    // }
-  
-    // return res;
-//   }

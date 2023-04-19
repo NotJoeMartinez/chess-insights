@@ -63,7 +63,7 @@ import LossChart from './components/LossChart.vue'
 import ExportData from './components/ExportData.vue'
 
 // scripts
-import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData } from './scripts/utils.js'
+import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData, clearLocalStorage } from './scripts/utils.js'
 
 export default {
   name: 'App',
@@ -96,6 +96,7 @@ export default {
   methods: {
 
     async getAllUserData(userName) {
+      clearLocalStorage();
       console.log(userName)
 
       this.showSpinner = true;

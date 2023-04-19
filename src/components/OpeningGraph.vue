@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container" id="openingsContainer">
         <div class="card" id="openingsCard">
         <h2 id="openingsTitle" class="card-title">
-        Top openings for <b> {{ timeClass }}</b> games
+        Top openings: <b>{{ timeClass }}</b> 
         </h2>
         <p class="card-text">Click to view the chess.com wiki of the opening</p>
         
@@ -53,3 +53,10 @@ export default {
 }
 
 </script>
+
+<style scoped>
+#openingsContainer {
+    max-width: 70%;
+    max-height: 50%;
+}
+</style>
