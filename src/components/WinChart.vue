@@ -8,7 +8,7 @@
                     <div class="card-title ">
                         <h2> 
                             <strong>
-                                Games You Won By
+                                Games Won By
                             </strong>
                         </h2>
                     </div>

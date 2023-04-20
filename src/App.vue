@@ -191,7 +191,7 @@ export default {
         this.winTimeClass = largestTimeClass;
         this.lossTimeClass = largestTimeClass;
 
-        this.updateOverview(largestTimeClass)
+        this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
 
         this.showSpinner = false;
@@ -255,8 +255,17 @@ export default {
       let decLosses = (numLosses * 100) / totalGames;
       let percentLosses = parseFloat(decLosses.toFixed(1))
 
-  
 
+      if (isNaN(percentWins)) {
+        percentWins = 0;
+      }
+      if (isNaN(percentDraws)) {
+        percentDraws = 0;
+      }
+      if (isNaN(percentLosses)) {
+        percentLosses = 0;
+      } 
+  
       this.ovTimeClass = timeClass;
 
       this.ovTotalGames = totalGames.toString();

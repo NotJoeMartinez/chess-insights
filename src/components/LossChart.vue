@@ -10,7 +10,7 @@
                     <div class="card-title">
                         <h2> 
                             <strong>
-                            Games You lost By
+                            Games Lost By
                             </strong>
                         </h2>
                     </div>
