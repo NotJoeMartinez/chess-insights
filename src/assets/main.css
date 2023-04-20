@@ -356,6 +356,11 @@
     max-width: 50%;
     max-height: 50%;
   }
+
+.pieChartContainer {
+  max-width: 75%;
+}
+
 .card {
   /* max-width: 50%;  */
   /* max-height: 60vh;  */
@@ -375,6 +380,9 @@
       font-size:small;
     }
     .chart{
+      max-width: 100%;
+    }
+    .pieChartContainer {
       max-width: 100%;
     }
 

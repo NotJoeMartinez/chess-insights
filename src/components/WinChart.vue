@@ -12,7 +12,9 @@
                             </strong>
                         </h2>
                     </div>
-                    <canvas id="gamesWonBy"> </canvas>
+                    <div class="container pieChartContainer">
+                        <canvas id="gamesWonBy"> </canvas>
+                    </div>
 
                     <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateWin('all')">ALL</button>
                     <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateWin('bullet')">BULLET</button>
