@@ -1,8 +1,10 @@
 <template>
-    <div class="container chart" id="openingsContainer">
+    <div class="container chart pt-3 pb-3" id="openingsContainer">
         <div class="card" id="openingsCard">
-        <h2 id="openingsTitle" class="card-title">
-        Top openings: <b>{{ timeClass }}</b> 
+        <h2 id="openingsTitle" class="card-title mt-2">
+            <strong>
+                Top Openings 
+            </strong>
         </h2>
         <p class="card-text">Click to view the chess.com wiki of the opening</p>
         
@@ -55,8 +57,8 @@ export default {
 </script>
 
 <style scoped>
-#openingsContainer {
+/* #openingsContainer {
     max-width: 70%;
     max-height: 50%;
-}
+} */
 </style>

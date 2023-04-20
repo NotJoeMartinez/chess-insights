@@ -1,12 +1,16 @@
 
 <template>
-    <div class="container chart" id="wonContainer" :timeClass="{winTimeClass}">
+    <div class="container chart pt-3 pb-3" id="wonContainer" :timeClass="{winTimeClass}">
         <div class="row won-by">
             <div class="card won-by">
                 <div class="card-body">
                     <div class="card-text"></div>
-                    <div class="card-title">
-                        <h2> Games You Won By</h2>
+                    <div class="card-title ">
+                        <h2> 
+                            <strong>
+                                Games You Won By
+                            </strong>
+                        </h2>
                     </div>
                     <canvas id="gamesWonBy"> </canvas>
 

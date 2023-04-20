@@ -230,61 +230,7 @@ export function isTop90Percentile(number, numbers) {
 }
 
 
-// export function getWinsByOpenings(timeClass, opening) {
 
-//     let parsedArchivedGames = getParsedArchivedGames()
-//     let winCount = 0;
-
-//     if (timeClass == "all") {
-//         for (let i = 0; i < parsedArchivedGames.length; i++) {
-//             let gameNode = parsedArchivedGames[i] 
-//             if (gameNode.opening == opening && gameNode.result == "win") {
-//                 winCount++;
-//             }
-
-//         }
-//         return winCount;
-
-//     } else {
-
-//         for (let i = 0; i < parsedArchivedGames.length; i++) {
-//             let gameNode = parsedArchivedGames[i]
-//             if (gameNode.opening == opening && gameNode.result == "win" && gameNode.timeClass == timeClass) {
-//                 winCount++;
-//             }
-//         }
-//         return winCount
-
-//     }
-// }
-
-
-// export function getLossByOpenings(timeClass, opening) {
-
-//     let parsedArchivedGames = getParsedArchivedGames()
-//     let lossCount = 0;
-
-//     if (timeClass == "all") {
-//         for (let i = 0; i < parsedArchivedGames.length; i++) {
-//             let gameNode = parsedArchivedGames[i]
-//             if (gameNode.opening == opening && gameNode.result == "loss") {
-//                 lossCount++;
-//             }
-
-//         }
-//         return lossCount;
-
-//     } else {
-//         for (let i = 0; i < parsedArchivedGames.length; i++) {
-//             let gameNode = parsedArchivedGames[i]
-//             if (gameNode.opening == opening && gameNode.result != "win" && gameNode.timeClass == timeClass) {
-//                 lossCount++;
-//             }
-//         }
-//         return lossCount
-
-//     }
-// }
 
 export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames) {
     let winCount = 0;

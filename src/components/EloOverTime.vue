@@ -1,37 +1,12 @@
 <template>
-        <div class="div container eloOverTime chart" id="eloGraph" :timeClass="{timeClass}">
+        <div class="div container eloOverTime chart pt-3 pb-3" id="eloGraph" :timeClass="{timeClass}">
       <div class="row" id="eloCardRow">
         <div class="card" id="eloCard">
-        <h2 class="card-title">
-          ELO Over Time: <b>{{ timeClass }}</b> 
+        <h2 class="card-title  mt-2">
+          <strong>
+            ELO Over Time 
+          </strong>
         </h2>
-
-          <div class="row" id="totalRow">
-            <h3>
-              {{ Number(winCount) + Number(drawCount) + Number(lossCount) }} Games
-            </h3>
-          </div>
-          <div class="row" id="winLossRow">
-            <div class="col">
-              <!-- <h3><b>{{ winPercentage }}%</b></h3> -->
-              {{ winCount }} Won
-            </div>
-            <div class="col">
-              <!-- <h3><b>{{ drawPercentage }}%</b></h3> -->
-              {{ drawCount }} Drawn
-            </div>
-            <div class="col">
-              <!-- <h3><b>{{ lossPercentage }}%</b></h3> -->
-              {{ lossCount }} Lost
-            </div>
-          </div>
-
-        <div class="progress" id="winLossDrawGraph">
-          <div class="progress-bar" id="progWinds" role="progressbar" :style="{ width: winPercentage + '%' }" :aria-valuenow="winPercentage" aria-valuemin="0" aria-valuemax="100">{{ winPercentage }}%</div>
-          <div class="progress-bar " id="progDraws" role="progressbar" :style="{ width: drawPercentage + '%'}" :aria-valuenow="drawPercentage" aria-valuemin="0" aria-valuemax="100">{{ drawPercentage }}%</div>
-          <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: lossPercentage + '%'}" :aria-valuenow="lossPercentage" aria-valuemin="0" aria-valuemax="100">{{ lossPercentage }}%</div>
-        </div>
-
         <p class="card-text"> Click data points to open game in another window. Click and drag to zoom in on specific area </p>
         <div class="card-body" id="eloCardBody">
           <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
@@ -58,12 +33,6 @@
       },
       props: {
         timeClass: String,
-        winPercentage: String,
-        drawPercentage: String,
-        lossPercentage: String,
-        winCount: Number,
-        drawCount: Number,
-        lossCount: Number,
       },
       methods : {
         updateElo(timeClass) {
@@ -84,17 +53,8 @@
   </script>
 
 <style scoped>
-.eloOverTime {
+/* .eloOverTime {
   max-width: 70%;
   max-height: 50%;
-}
-#progWinds {
-  background-color: #85a94e;
-}
-#progDraws {
-  background-color: #8b8987;
-}
-#progLoss {
-  background-color: #b23330;
-}
+} */
 </style>

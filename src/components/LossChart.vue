@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container chart" id="lossContainer" :timeClass="{lossTimeClass}">
+    <div class="container chart pt-3 pb-3 " id="lossContainer" :timeClass="{lossTimeClass}">
         <div class="row lost-by">
             <div class="card lost-by">
                 <div class="card-body">
@@ -8,7 +8,11 @@
 
                     </div>
                     <div class="card-title">
-                        <h2> Games You lost By</h2>
+                        <h2> 
+                            <strong>
+                            Games You lost By
+                            </strong>
+                        </h2>
                     </div>
 
                     <canvas id="gamesLostBy"> </canvas>
@@ -45,3 +49,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+/* canvas {
+    max-width: 50%;
+} */
+</style>

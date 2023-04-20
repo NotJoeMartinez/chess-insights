@@ -20,16 +20,22 @@
   <div v-if="showCharts">
     <ExportData/>
 
+    <UserOverview
+    @update-user-overview="updateOverview($event)"
+    :ovUserName="ovUserName"
+    :ovTimeClass="ovTimeClass"
+    :ovTotalGames="ovTotalGames"
+    :ovWinPercentage="ovWinPercentage"
+    :ovWinCount="ovWinCount"
+    :ovDrawPercentage="ovDrawPercentage"
+    :ovDrawCount="ovDrawCount"
+    :ovLossPercentage="ovLossPercentage"
+    :ovLossCount="ovLossCount"
+    />
+
     <EloOverTime
     @update="writeEloOverTime($event)"
      :timeClass="eloTimeClass"
-     :totalUserGames="totalUserGames"
-     :winPercentage="winPercentage"
-     :winCount="winCount"
-     :drawPercentage="drawPercentage"
-     :drawCount="drawCount"
-     :lossPercentage="lossPercentage"
-     :lossCount="lossCount"
     />
 
     <OpeningGraph
@@ -55,6 +61,7 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import InputForm from './components/InputForm.vue'
+import UserOverview from './components/UserOverview.vue'
 import EloOverTime from './components/EloOverTime.vue'
 import ProgBar from './components/ProgBar.vue'
 import OpeningGraph from './components/OpeningGraph.vue'
@@ -72,6 +79,7 @@ export default {
 
     NavBar,
     InputForm,
+    UserOverview,
     EloOverTime, 
     ProgBar,
     OpeningGraph,
@@ -92,6 +100,17 @@ export default {
       openingsTimeClass: '',
       lossTimeClass: '',
       winTimeClass: '',
+      // overview
+      ovUserName: '',
+      ovTimeClass: '',
+      ovUserGames: 0,
+      ovWinPercentage: 0,
+      ovWinCount: 0,
+      ovDrawCount: 0,
+      ovDrawPercentage: 0,
+      ovLossCount: 0,
+      ovLossPercentage: 0,
+      ovTotalGames: 0,
     }
   },
   methods: {
@@ -100,6 +119,7 @@ export default {
       this.showCharts = false;           
       clearLocalStorage();
 
+      this.ovUserName = userName;
       this.showSpinner = true;
       this.spinnerText = "Fetching user data...";
       this.showProg = true;
@@ -165,11 +185,16 @@ export default {
         
         let largestTimeClass = getLargestTimeClass(playerStats);
 
+        this.ovTimeClass = largestTimeClass;
+
         this.openingsTimeClass = largestTimeClass;
         this.winTimeClass = largestTimeClass;
         this.lossTimeClass = largestTimeClass;
 
+        this.updateOverview(largestTimeClass)
         this.writeEloOverTime(largestTimeClass);
+
+        this.showSpinner = false;
         this.showCharts = true;
         
     },
@@ -177,9 +202,15 @@ export default {
     // writeEloOverTime
     writeEloOverTime(timeClass="rapid"){
 
-      // if (this.showCharts == true ) {
-      //   this.showCharts = false;
-      // }
+
+
+      this.eloTimeClass = timeClass;
+      this.showCharts = true;
+
+    },
+
+    updateOverview(timeClass) {
+        
       let userStats = window.localStorage.getItem("playerStats");
       userStats = JSON.parse(userStats);
       let apiTimeClass = "chess_" + timeClass;
@@ -188,39 +219,54 @@ export default {
       let numDraws = 0;
 
 
-      // eslint-disable-next-line no-prototype-builtins
-      if (userStats.hasOwnProperty(apiTimeClass)){
-        numWins = userStats[apiTimeClass].record.win;
-        numLosses = userStats[apiTimeClass].record.loss;
-        numDraws = userStats[apiTimeClass].record.draw;
+      if (timeClass == "all"){
+        let validTimeClasses = ["blitz", "rapid", "bullet", "daily"];
+        for (let i = 0; i<validTimeClasses.length; i++) {
+          apiTimeClass = "chess_" + validTimeClasses[i];
+            if (userStats.hasOwnProperty(apiTimeClass)){
+              numWins += userStats[apiTimeClass].record.win;
+              numLosses += userStats[apiTimeClass].record.loss;
+              numDraws += userStats[apiTimeClass].record.draw;
+            }
+          }
+
+      } 
+      else {
+
+        // eslint-disable-next-line no-prototype-builtins
+        if (userStats.hasOwnProperty(apiTimeClass)){
+          numWins = userStats[apiTimeClass].record.win;
+          numLosses = userStats[apiTimeClass].record.loss;
+          numDraws = userStats[apiTimeClass].record.draw;
+        }
       }
+
+      
 
       let totalGames = numWins + numDraws + numLosses;
 
-      let decWins = (numWins * 100)/totalGames;
-      let percentWins = Math.round(decWins * 100 ) / 100;
 
-      let decDraws = (numDraws * 100)/totalGames;
-      let percentDraws = Math.round(decDraws * 100)/100;
+      let decWins = (numWins * 100) / totalGames;
+      let percentWins = parseFloat(decWins.toFixed(1));
 
-      let decLosses = (numLosses * 100)/totalGames;
-      let percentLosses = Math.round(decLosses * 100)/100;
+      let decDraws = (numDraws * 100) / totalGames;
+      let percentDraws = parseFloat(decDraws.toFixed(1));
+
+      let decLosses = (numLosses * 100) / totalGames;
+      let percentLosses = parseFloat(decLosses.toFixed(1))
 
   
 
-      this.showSpinner = false;
+      this.ovTimeClass = timeClass;
 
-      this.winPercentage = percentWins.toString();
-      this.winCount = numWins.toString();
-      this.drawPercentage = percentDraws.toString();
-      this.drawCount = numDraws.toString();
-      this.lossPercentage = percentLosses.toString();
-      this.lossCount = numLosses.toString();
-      this.eloTimeClass = timeClass;
+      this.ovTotalGames = totalGames.toString();
+      this.ovWinPercentage = percentWins.toString();
+      this.ovWinCount = numWins.toString();
+      this.ovDrawPercentage = percentDraws.toString();
+      this.ovDrawCount = numDraws.toString();
+      this.ovLossPercentage = percentLosses.toString();
+      this.ovLossCount = numLosses.toString();
 
-      this.showCharts = true;
-
-      // graphElo(timeClass);
 
       },
 

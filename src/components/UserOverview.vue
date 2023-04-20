@@ -1,10 +1,91 @@
 <template>
+    <div class="div container userOverview chart  pt-3 pb-3" id="userOverview" :ovTimeClass="{ovTimeClass}">
+      <div class="row" >
+        <div class="card" id="eloCard">
+
+        <h2 class="card-title font-weight-bold m-1">
+          <strong>
+            {{ ovUserName }}
+          </strong>
+        </h2>
+
+          <div class="row" id="totalRow">
+            <h3>
+              {{ ovTotalGames }} games
+            </h3>
+          </div>
+
+          <div class="container" id="winLossBar">
+
+          <div class="row" id="winLossRow">
+            <div class="col">
+              <h3><b>{{ ovWinPercentage }}%</b></h3>
+              {{ ovWinCount }} Won
+            </div>
+            <div class="col">
+              <h3><b>{{ ovDrawPercentage }}%</b></h3>
+              {{ ovDrawCount }} Drawn
+            </div>
+            <div class="col">
+              <h3><b>{{ ovLossPercentage }}%</b></h3>
+              {{ ovLossCount }} Lost
+            </div>
+          </div>
+
+        <div class="progress">
+          <div class="progress-bar" id="progWinds" role="progressbar" :style="{ width: ovWinPercentage + '%' }" :aria-valuenow="ovWinPercentage" aria-valuemin="0" aria-valuemax="100"> </div>
+          <div class="progress-bar " id="progDraws" role="progressbar" :style="{ width: ovDrawPercentage + '%'}" :aria-valuenow="ovDrawPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: ovLossPercentage + '%'}" :aria-valuenow="ovLossPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        </div>
+        <div class="card-body" id="eloCardBody">
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'all' }" v-on:click="updateOverview('all')">All</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'bullet' }" v-on:click="updateOverview('bullet')">BULLET</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'blitz' }" v-on:click="updateOverview('blitz')">BLITZ</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'rapid' }" v-on:click="updateOverview('rapid')">RAPID</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'daily' }" v-on:click="updateOverview('daily')">DAILY</button>
+        </div>
+      </div>
+      </div>
+    </div>
     
 
 </template>
 
 <script>
 export default {
-    name: "UserOverview"
+    name: "UserOverview",
+    props: {
+        ovTimeClass: String,
+        ovUserName: String,
+        ovWinCount: Number,
+        ovDrawCount: Number,
+        ovLossCount: Number,
+        ovWinPercentage: Number,
+        ovDrawPercentage: Number,
+        ovLossPercentage: Number,
+        ovTotalGames: Number,
+    },
+    methods: {
+        updateOverview(newovTimeClass) {
+            this.$emit('update-user-overview', newovTimeClass);
+        },
+    }
 }
 </script>
+
+<style>
+#winLossBar{
+  max-width: 60%;
+}
+#progWinds {
+  background-color: #85a94e;
+}
+#progDraws {
+  background-color: #8b8987;
+}
+#progLoss {
+  background-color: #b23330;
+}
+</style>
