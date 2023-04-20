@@ -1,5 +1,5 @@
 <template>
-        <div class="div container eloOverTime" id="eloGraph" :timeClass="{timeClass}">
+        <div class="div container eloOverTime chart" id="eloGraph" :timeClass="{timeClass}">
       <div class="row" id="eloCardRow">
         <div class="card" id="eloCard">
         <h2 class="card-title">

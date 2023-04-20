@@ -6,7 +6,7 @@
                     <div class="col">
                         <div class="col ">
                             <button type="button" id="exportButton" class="btn" data-bs-toggle="modal" data-bs-target="#exportModal">
-                                Export your data
+                                Export data
                             </button>
                         </div>
                         <div class="col">

@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container" id="wonContainer" :timeClass="{winTimeClass}">
+    <div class="container chart" id="wonContainer" :timeClass="{winTimeClass}">
         <div class="row won-by">
             <div class="card won-by">
                 <div class="card-body">

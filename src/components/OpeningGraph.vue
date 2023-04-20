@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="openingsContainer">
+    <div class="container chart" id="openingsContainer">
         <div class="card" id="openingsCard">
         <h2 id="openingsTitle" class="card-title">
         Top openings: <b>{{ timeClass }}</b> 

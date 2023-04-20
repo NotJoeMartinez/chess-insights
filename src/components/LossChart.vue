@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container" id="lossContainer" :timeClass="{lossTimeClass}">
+    <div class="container chart" id="lossContainer" :timeClass="{lossTimeClass}">
         <div class="row lost-by">
             <div class="card lost-by">
                 <div class="card-body">

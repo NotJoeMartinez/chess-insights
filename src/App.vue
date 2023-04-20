@@ -63,7 +63,8 @@ import LossChart from './components/LossChart.vue'
 import ExportData from './components/ExportData.vue'
 
 // scripts
-import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData, clearLocalStorage } from './scripts/utils.js'
+import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData, 
+  clearLocalStorage, clearCharts } from './scripts/utils.js'
 
 export default {
   name: 'App',
@@ -81,7 +82,7 @@ export default {
   data() {
     return {
       showSpinner: false,
-      spinnerText: "Loading...",
+      spinnerText: "",
       showProg: false,
       showCharts: false,
       gamesFound: 0,
@@ -96,8 +97,8 @@ export default {
   methods: {
 
     async getAllUserData(userName) {
+      this.showCharts = false;           
       clearLocalStorage();
-      console.log(userName)
 
       this.showSpinner = true;
       this.spinnerText = "Fetching user data...";
@@ -222,6 +223,7 @@ export default {
       // graphElo(timeClass);
 
       },
+
 
     }
       

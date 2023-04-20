@@ -1,4 +1,9 @@
-
+export function clearCharts() {
+    const graphs = document.querySelectorAll('.chart');
+    graphs.forEach(graph => {
+        graph.remove();
+    });
+}
 
 export function clearLocalStorage() {
     localStorage.clear();
