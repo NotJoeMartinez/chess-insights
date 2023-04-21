@@ -1,7 +1,6 @@
 <template>
  
-    <div class="table-responsive">
-
+    <div class="table-responsive"> 
         <table v-if="filteredData.length" class="table ">
             <thead>
                 <tr>
@@ -20,10 +19,10 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> 
 
-        <p v-else>No matches found.</p>
-    </div>
+         <p v-else>No matches found.</p>
+     </div> 
 </template>
 
 
@@ -32,7 +31,7 @@
     export default {
         name: 'ExploreGrid',
         props: {
-            gridData: Array,
+            data: Array,
             columns: Array,
             filterKey: String
         },
@@ -41,10 +40,6 @@
                 sortKey: '',
                 sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {})
             }
-        },
-        created(){
-            console.log(this.columns)
-            console.log('Received data:', this.gridData);
         },
         computed: {
             filteredData() {
@@ -77,7 +72,11 @@
             capitalize(str) {
                 return str.charAt(0).toUpperCase() + str.slice(1)
             }
-        }
+        },
+        mounted: function() {
+            console.log(`ExploreGrid mounted with data: `)
+            console.log(this.data[0])
+    }
     }
 </script>
 
