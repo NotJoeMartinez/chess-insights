@@ -59,15 +59,15 @@
 import { verifyLiveChess, getLargestTimeClass, parseAndSaveArchivedGames, saveOpeningsData, 
   clearLocalStorage} from '@/scripts/utils.js'
 
-import NavBar from "./NavBar.vue";
-import InputForm from "./InputForm.vue";
-import ProgBar from "./ProgBar.vue";
-import UserOverview from "./UserOverview.vue";
-import EloOverTime from "./EloOverTime.vue";
-import OpeningGraph from "./OpeningGraph.vue";
-import WinChart from "./WinChart.vue";
-import LossChart from "./LossChart.vue";
-import ExportData from "./ExportData.vue";
+import NavBar from "@/components/NavBar.vue";
+import InputForm from "@/components/InputForm.vue";
+import ProgBar from "@/components/ProgBar.vue";
+import UserOverview from "@/components/UserOverview.vue";
+import EloOverTime from "@/components/EloOverTime.vue";
+import OpeningGraph from "@/components/OpeningGraph.vue";
+import WinChart from "@/components/WinChart.vue";
+import LossChart from "@/components/LossChart.vue";
+import ExportData from "@/components/ExportData.vue";
 
 export default {
   name: "HomePage",
