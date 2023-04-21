@@ -114,7 +114,7 @@
         } else {
           this.showSpinner = false;
           alert("User Not found");
-          return;
+          return "error";
         }
         let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
         var response = await fetch(archiveUrl);
@@ -181,9 +181,17 @@
         this.spinnerText = "Fetching user data...";
         this.showProg = true;
 
-        await this.fetchUserData(userName);
+        let fetchStatus = await this.fetchUserData(userName);
+
+        if (fetchStatus == "error") {
+          this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
+          return;
+        }
 
         this.showSpinner = false;
+
         this.showCharts = true;
 
         const element = document.getElementById('uname');

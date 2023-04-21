@@ -35,7 +35,7 @@
 
 <script>
 
-import { graphOpenings } from '../scripts/graphOpenings.js';
+import { graphOpenings } from '@/scripts/graphOpenings.js';
 
 export default {
     name: "OpeningGraph",
