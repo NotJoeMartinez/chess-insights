@@ -41,10 +41,10 @@
         </div>
         <div class="card-body" id="eloCardBody">
           <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'all' }" v-on:click="updateOverview('all')">All</button>
-          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'bullet' }" v-on:click="updateOverview('bullet')">BULLET</button>
-          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'blitz' }" v-on:click="updateOverview('blitz')">BLITZ</button>
-          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'rapid' }" v-on:click="updateOverview('rapid')">RAPID</button>
-          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'daily' }" v-on:click="updateOverview('daily')">DAILY</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'bullet' }" v-on:click="updateOverview('bullet')">Bullet</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'blitz' }" v-on:click="updateOverview('blitz')">Blitz</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'rapid' }" v-on:click="updateOverview('rapid')">Rapid</button>
+          <button  class="btn btn-primary slicer" :class="{ active: ovTimeClass === 'daily' }" v-on:click="updateOverview('daily')">Daily</button>
         </div>
       </div>
       </div>

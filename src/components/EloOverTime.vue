@@ -11,11 +11,11 @@
         <div class="card-body" id="eloCardBody">
           <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
           <canvas id="eloOverTime"></canvas> 
-          <button id="eotBullet" class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateElo('bullet')">BULLET</button>
-          <button id="eotBlitz" class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateElo('blitz')">BLITZ</button>
-          <button id="eotRapid" class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateElo('rapid')">RAPID</button>
-          <button id="eotDaily" class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateElo('daily')">DAILY</button>
-          <button class="btn btn-secondary" id="eloZoomReset" v-on:click="resetZoom">Reset Zoom</button>
+          <button id="eotBullet" class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateElo('bullet')">Bullet</button>
+          <button id="eotBlitz" class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateElo('blitz')">Blitz</button>
+          <button id="eotRapid" class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateElo('rapid')">Rapid</button>
+          <button id="eotDaily" class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateElo('daily')">Daily</button>
+          <button class="btn btn-secondary slicer" id="eloZoomReset" v-on:click="resetZoom">Reset Zoom</button>
         </div>
       </div>
       </div>

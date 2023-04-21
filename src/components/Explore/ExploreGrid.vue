@@ -1,24 +1,28 @@
 <template>
-    <table v-if="filteredData.length" class="table table-bordered table-dark">
-        <thead>
-            <tr>
-                <th v-for="(key, index) in columns" :key="'header-' + index" @click="sortBy(key)"
-                    :class="{ active: sortKey == key }">
-                    {{ capitalize(key) }}
-                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-                    </span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(entry, rowIndex) in filteredData" :key="'row-' + rowIndex">
-                <td v-for="(key, colIndex) in columns" :key="'cell-' + rowIndex + '-' + colIndex">
-                    {{ entry[key] }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p v-else>No matches found.</p>
+    <div class="table-responsive">
+
+        <table v-if="filteredData.length" class="table ">
+            <thead>
+                <tr>
+                    <th v-for="(key, index) in columns" :key="'header-' + index" @click="sortBy(key)"
+                        :class="{ active: sortKey == key }">
+                        {{ capitalize(key) }}
+                        <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(entry, rowIndex) in filteredData" :key="'row-' + rowIndex">
+                    <td v-for="(key, colIndex) in columns" :key="'cell-' + rowIndex + '-' + colIndex">
+                        {{ entry[key] }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p v-else>No matches found.</p>
+    </div>
 </template>
 
 
@@ -75,30 +79,32 @@
 
 <style>
     table {
-        border: 2px solid #42b983;
-        border-radius: 3px;
-        background-color: #fff;
+        background-color: #272522;
+
+    }
+
+    thead {
+        background-color: #1f1e1b;
     }
 
     th {
-        background-color: #42b983;
-        color: rgba(255, 255, 255, 0.66);
-        cursor: pointer;
+        background-color: #1f1e1b;
         user-select: none;
     }
 
     td {
-        background-color: #f9f9f9;
+        background-color: #272522;
+    }
+    table tr {
+    /* border-bottom: solid 1px #312e2b; */
+    border-bottom: 2px solid #312e2b;
     }
 
     th,
     td {
+
         min-width: 120px;
         padding: 10px 20px;
-    }
-
-    th.active {
-        color: #fff;
     }
 
     th.active .arrow {
@@ -124,5 +130,8 @@
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
         border-top: 4px solid #fff;
+    }
+    table tr:hover {
+        background-color: #1f1e1b; 
     }
 </style>
