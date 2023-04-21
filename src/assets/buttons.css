@@ -1,0 +1,67 @@
+.btn.btn-primary.export-option {
+    background-color: #7fa650;
+    color: #ffffff;
+    z-index: 1;
+}
+
+.btn.btn-primary.export-option:hover {
+    background-color: #95bb4a76;
+    color: #ffffff;
+    z-index: 1;
+}
+
+.btn.slicer {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1;
+    padding: .5rem;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+#unameBtn {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1;
+    padding: 1rem;;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+
+
+#exportBtn,
+#exploreBtn {
+    background-color: #85a35a;
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+
+.btn:hover, #exportBtn:hover, #exploreBtn:hover, #unameBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    z-index: 1;
+}
+
+.btn:disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.btn.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 2px rgba(153, 236, 167, 0.5);
+}
