@@ -1,4 +1,5 @@
 <template>
+ 
     <div class="table-responsive">
 
         <table v-if="filteredData.length" class="table ">
@@ -31,7 +32,7 @@
     export default {
         name: 'ExploreGrid',
         props: {
-            data: Array,
+            gridData: Array,
             columns: Array,
             filterKey: String
         },
@@ -40,6 +41,10 @@
                 sortKey: '',
                 sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {})
             }
+        },
+        created(){
+            console.log(this.columns)
+            console.log('Received data:', this.gridData);
         },
         computed: {
             filteredData() {
