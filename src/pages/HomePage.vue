@@ -164,18 +164,18 @@
         window.localStorage.setItem("userName", userName);
 
         // move this somewhere
-        try {
-          window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
-        } catch (err) {
-          let inlineStorage = document.createElement("div");
-          let appDiv = document.getElementById("app");
-          inlineStorage.setAttribute("id", "inlineStorage");
-          inlineStorage.setAttribute("hidden", "hidden");
-          inlineStorage.textContent = JSON.stringify(archivedGames);
-          appDiv.appendChild(inlineStorage);
-        }
+        // try {
+        //   window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+        // } catch (err) {
+        //   let inlineStorage = document.createElement("div");
+        //   let appDiv = document.getElementById("app");
+        //   inlineStorage.setAttribute("id", "inlineStorage");
+        //   inlineStorage.setAttribute("hidden", "hidden");
+        //   inlineStorage.textContent = JSON.stringify(archivedGames);
+        //   appDiv.appendChild(inlineStorage);
+        // }
 
-        parseAndSaveArchivedGames();
+        parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
 
         let largestTimeClass = getLargestTimeClass();

@@ -74,6 +74,9 @@ export function parseGameNode(gameNode) {
 
     parsedGameNode["ogPgn"] = gameNode.pgn;
 
+    // console.log(gameNode)
+    // console.log(`gameNode.white: ${gameNode.white}`)
+
     // find game color
     if (gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
         parsedGameNode["userColor"] = "white";
@@ -273,9 +276,12 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
 }
 
 
-export function parseAndSaveArchivedGames() {
+export function parseAndSaveArchivedGames(archivedGames) {
+
+    
+
     let parsedArchivedGames = []
-    let archivedGames = getArchivedGames()
+
     for (let i = 0; i < archivedGames.length; i++) {
         let gameNode = parseGameNode(archivedGames[i])
         parsedArchivedGames.push(gameNode)

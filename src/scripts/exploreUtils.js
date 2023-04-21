@@ -59,12 +59,12 @@ export async function exploreFromAPI(  userName ) {
       alert("No games found under that user")
       return;
     }
-    let inlineStorage = document.createElement("div");
-    let appDiv = document.getElementById("app");
-    inlineStorage.setAttribute("id", "inlineStorage");
-    inlineStorage.setAttribute("hidden", "hidden");
-    inlineStorage.textContent = JSON.stringify(archivedGames);
-    appDiv.appendChild(inlineStorage);
-    parseAndSaveArchivedGames();
+    // let inlineStorage = document.createElement("div");
+    // let appDiv = document.getElementById("app");
+    // inlineStorage.setAttribute("id", "inlineStorage");
+    // inlineStorage.setAttribute("hidden", "hidden");
+    // inlineStorage.textContent = JSON.stringify(archivedGames);
+    // appDiv.appendChild(inlineStorage);
+    parseAndSaveArchivedGames(archivedGames);
 
 }
