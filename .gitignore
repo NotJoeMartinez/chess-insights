@@ -52,3 +52,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+testusers.ods
+testusers.csv
+*.ods#

@@ -152,13 +152,18 @@
         }
         this.totalUserGames = totalGames;
         this.showProg = false;
+
         if (archivedGames.length < 1) {
           this.showProg = false;
-          alert("No games found under that user")
+          alert("No games found under that user");
           return;
         }
+
         this.spinnerText = "saving data...";
+
         window.localStorage.setItem("userName", userName);
+
+        // move this somewhere
         try {
           window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
         } catch (err) {
