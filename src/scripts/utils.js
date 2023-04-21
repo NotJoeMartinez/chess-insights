@@ -39,6 +39,7 @@ export function getPlayerStats() {
 
 export function getUserName() {
     let userName = document.getElementById("uname");
+
     return userName.value;
 }
 
@@ -391,3 +392,4 @@ export function calculateOpening(timeClass) {
     return res
 }
   
+
