@@ -15,6 +15,7 @@ export function exploreAll() {
         result: games[i].result,
         date : games[i].date,
         rating: games[i].userRating,
+        gameUrl: games[i].gameUrl,
         }
         gridData.push(row)
     }
