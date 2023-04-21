@@ -11,7 +11,7 @@ export function clearLocalStorage() {
     const parsedInlineStorage = document.querySelector('#parsedInlineStorage');
     if (inlineStorage) {
         inlineStorage.remove()
-    }     
+    }
     if (parsedInlineStorage) {
         parsedInlineStorage.remove()
     }
@@ -237,9 +237,26 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
     let winCount = 0;
     let lossCount = 0;
 
+    if (timeClass === "all") {
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i];
+            if (gameNode.opening === opening ) {
+                if (gameNode.result === "win") {
+                    winCount++;
+                } else if (gameNode.result === "resigned" || gameNode.result === "timeout" || gameNode.result === "checkmated" || gameNode.result == "abandoned") {
+                    lossCount++;
+                }
+            }
+        }
+        return {
+            winCount,
+            lossCount
+        };
+    }
+
+
     for (let i = 0; i < parsedArchivedGames.length; i++) {
         let gameNode = parsedArchivedGames[i];
-
         if (gameNode.opening === opening && gameNode.timeClass === timeClass) {
             if (gameNode.result === "win") {
                 winCount++;
@@ -249,7 +266,10 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
         }
     }
 
-    return { winCount, lossCount };
+    return {
+        winCount,
+        lossCount
+    };
 }
 
 
@@ -265,8 +285,7 @@ export function parseAndSaveArchivedGames() {
     try {
         window.localStorage.setItem("parsedArchiveGames", JSON.stringify(parsedArchivedGames));
         console.log("parsedArchiveGames saved to local storage")
-      }
-      catch(err) {
+    } catch (err) {
         let inlineStorage = document.createElement("div");
         let appDiv = document.getElementById("app");
         inlineStorage.setAttribute("id", "parsedInlineStorage");
@@ -274,7 +293,7 @@ export function parseAndSaveArchivedGames() {
         inlineStorage.textContent = JSON.stringify(parsedArchivedGames);
         appDiv.appendChild(inlineStorage);
         console.log("parsedArchiveGames saved to inline storage")
-      }
+    }
 
 }
 
@@ -291,7 +310,7 @@ export function getParsedArchivedGames() {
 
 }
 
-export function saveOpeningsData(){
+export function saveOpeningsData() {
     // let timeClasses = ["all", "bullet", "blitz", "rapid", "daily"]
     let openingsData = {
         all: calculateOpening("all"),
@@ -302,76 +321,75 @@ export function saveOpeningsData(){
     }
     try {
         window.localStorage.setItem("openings", JSON.stringify(openingsData));
-      }
-      catch(err) {
+    } catch (err) {
         let inlineStorage = document.createElement("div");
         let appDiv = document.getElementById("app");
         inlineStorage.setAttribute("id", "openingsInlineStorage");
         inlineStorage.setAttribute("hidden", "hidden");
         inlineStorage.textContent = JSON.stringify(openingsData);
         appDiv.appendChild(inlineStorage);
-      }
+    }
 }
 
 export function calculateOpening(timeClass) {
 
     let parsedArchivedGames = getParsedArchivedGames();
     // let uname = getUserName();
-  
+
     const openingData = {};
-    if (timeClass=="all"){
-      for (let i = 0; i < parsedArchivedGames.length; i++) {
-        let gameNode =  parsedArchivedGames[i];
-        const string = gameNode.opening;
-        openingData[string] = (openingData[string] || 0) + 1;
-      }
-    } else {
-      for (let i = 0; i < parsedArchivedGames.length; i++) {
-        let gameNode = parsedArchivedGames[i];
-        if (gameNode.timeClass == timeClass) {
-          const string = gameNode.opening;
-          openingData[string] = (openingData[string] || 0) + 1;
+    if (timeClass == "all") {
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i];
+            const string = gameNode.opening;
+            openingData[string] = (openingData[string] || 0) + 1;
         }
-      }
+    } else {
+        for (let i = 0; i < parsedArchivedGames.length; i++) {
+            let gameNode = parsedArchivedGames[i];
+            if (gameNode.timeClass == timeClass) {
+                const string = gameNode.opening;
+                openingData[string] = (openingData[string] || 0) + 1;
+            }
+        }
     }
-  
-    
-  
+
+
+
     let allNumbers = []
-  /* eslint-disable no-unused-vars */
-    for (const [key, value] of Object.entries(openingData)) {
-      allNumbers.push(value)
-    }
-  
-    let titles = []
-    let values = []
-  
     /* eslint-disable no-unused-vars */
     for (const [key, value] of Object.entries(openingData)) {
-      if (isTop90Percentile(value, allNumbers)) {
-          titles.push(key);
-          values.push(value);
-      }
+        allNumbers.push(value)
     }
-  
-  
-    let arrayOfObj = titles.map(function(d, i) {
-      return {
-        label: d,
-        data: values[i] || 0
-      };
+
+    let titles = []
+    let values = []
+
+    /* eslint-disable no-unused-vars */
+    for (const [key, value] of Object.entries(openingData)) {
+        if (isTop90Percentile(value, allNumbers)) {
+            titles.push(key);
+            values.push(value);
+        }
+    }
+
+
+    let arrayOfObj = titles.map(function (d, i) {
+        return {
+            label: d,
+            data: values[i] || 0
+        };
     });
-  
-    let sortedArrayOfObj = arrayOfObj.sort(function(a, b) {
-      return b.data>a.data;
+
+    let sortedArrayOfObj = arrayOfObj.sort(function (a, b) {
+        return b.data > a.data;
     });
-  
+
     let sortedTitles = [];
     let sortedValues = [];
-  
-    sortedArrayOfObj.forEach(function(d){
-      sortedTitles.push(d.label);
-      sortedValues.push(d.data);
+
+    sortedArrayOfObj.forEach(function (d) {
+        sortedTitles.push(d.label);
+        sortedValues.push(d.data);
     })
 
     let res = [];
@@ -385,11 +403,18 @@ export function calculateOpening(timeClass) {
         let opening = sortedTitles[i];
         let openingCount = sortedValues[i];
 
-        let { winCount, lossCount } = getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames);
+        let {
+            winCount,
+            lossCount
+        } = getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames);
 
-        res.push({ title: opening, value: openingCount, url: openingUrl, winCount: winCount, lossCount: lossCount });
+        res.push({
+            title: opening,
+            value: openingCount,
+            url: openingUrl,
+            winCount: winCount,
+            lossCount: lossCount
+        });
     }
     return res
 }
-  
-

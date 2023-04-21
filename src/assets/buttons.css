@@ -2,12 +2,14 @@
     background-color: #7fa650;
     color: #ffffff;
     z-index: 1;
+    border:none;
 }
 
 .btn.btn-primary.export-option:hover {
     background-color: #95bb4a76;
     color: #ffffff;
     z-index: 1;
+    border:none;
 }
 
 .btn.slicer {
