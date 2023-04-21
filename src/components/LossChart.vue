@@ -20,11 +20,11 @@
                         <canvas id="gamesLostBy"> </canvas>
                     </div>
 
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateLoss('all')">ALL</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateLoss('bullet')">BULLET</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateLoss('blitz')">BLITZ</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateLoss('rapid')">RAPID</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateLoss('daily')">DAILY</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateLoss('all')">All</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateLoss('bullet')">Bullet</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateLoss('blitz')">Blitz</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateLoss('rapid')">Rapid</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateLoss('daily')">Daily</button>
 
                 </div>
             </div>

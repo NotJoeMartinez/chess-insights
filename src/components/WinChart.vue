@@ -16,11 +16,11 @@
                         <canvas id="gamesWonBy"> </canvas>
                     </div>
 
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateWin('all')">ALL</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateWin('bullet')">BULLET</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateWin('blitz')">BLITZ</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateWin('rapid')">RAPID</button>
-                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateWin('daily')">DAILY</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateWin('all')">All</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateWin('bullet')">Bullet</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateWin('blitz')">Blitz</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateWin('rapid')">Rapid</button>
+                    <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateWin('daily')">Daily</button>
                 </div>
             </div>
         </div>

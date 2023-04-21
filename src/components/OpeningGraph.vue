@@ -13,19 +13,19 @@
             <canvas id="openings"></canvas> 
 
             <button class="btn btn-primary slicer" :class="{active:timeClass === 'all'}" v-on:click="updateOpenings('all')">
-            ALL
+            All
             </button>
             <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet'}" v-on:click="updateOpenings('bullet')">
-            BULLET
+            Bullet 
             </button>
             <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }"  v-on:click="updateOpenings('blitz')">
-            BLITZ
+            Blitz
             </button>
             <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateOpenings('rapid')">
-            RAPID
+            Rapid
             </button>
             <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateOpenings('daily')">
-            DAILY
+            Daily
             </button>
         </div>
     </div>
@@ -56,9 +56,3 @@ export default {
 
 </script>
 
-<style scoped>
-/* #openingsContainer {
-    max-width: 70%;
-    max-height: 50%;
-} */
-</style>
