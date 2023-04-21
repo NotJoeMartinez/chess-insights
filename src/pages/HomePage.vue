@@ -109,29 +109,32 @@
     methods: {
       async fetchUserData(userName){
 
-        let userStats = await fetchUserStats(userName);
-
-        if (userStats == "error") {
+        // get overall stats
+        let userStatsRes = await fetchUserStats(userName);
+        if (userStatsRes.status != 200){
           this.showSpinner = false;
-          alert("User Not found");
+          alert(`There was an error fetching the user's stats. code: ${userStatsRes.status}`);
           return "error";
         }
         else {
+          let userStats = await userStatsRes.json();
           window.localStorage.setItem("playerStats", JSON.stringify(userStats));
         }
 
-        let archiveUrls = await fetchArchiveUrls(userName);
 
-        if (archiveUrls == "error") {
+        // get archive urls list
+        let archiveUrlsRes = await fetchArchiveUrls(userName);
+        if (archiveUrlsRes.status != 200){
           this.showSpinner = false;
-          alert(`There was an error fetching the user's archives code: ${archiveUrls.status}`);
+          alert(`There was an error fetching the user's archives code: ${archiveUrlsRes.status}`);
           return "error";
         }
+        let archiveMonths = await archiveUrlsRes.json()
+        let archiveUrls = archiveMonths.archives;
 
          
 
         let totalGames = 0;
-
         let archivedGames = []
         for (var i = 0; i < archiveUrls.length; i++) {
           var archive = await fetch(archiveUrls[i]);
