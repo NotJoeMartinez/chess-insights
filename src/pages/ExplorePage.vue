@@ -23,25 +23,49 @@
         },
         data: () => ({
             searchQuery: '',
-            gridColumns: ['name', 'power'],
+            gridColumns: ['timeClass', 'opponent', 'result', 'rating', 'date'],
             gridData: [{
-                    name: 'Chuck Norris',
-                    power: Infinity
+                    timeClass: 'rapid',
+                    opponent: 'John',
+                    result: 'win',
+                    rating: 325,
+                    date: '2021.06.25',
                 },
                 {
-                    name: 'Bruce Lee',
-                    power: 9000
+                    timeClass: 'bullet',
+                    opponent: 'Jane',
+                    result: 'checkmated',
+                    rating: 542,
+                    date: '2022.01.15',
                 },
                 {
-                    name: 'Jackie Chan',
-                    power: 7000
+                    timeClass: 'blitz',
+                    opponent: 'Alice',
+                    result: 'resigned',
+                    rating: 715,
+                    date: '2021.11.28',
                 },
                 {
-                    name: 'Jet Li',
-                    power: 8000
-                }
+                    timeClass: 'daily',
+                    opponent: 'Bob',
+                    result: 'win',
+                    rating: 480,
+                    date: '2021.04.10',
+                },
             ]
         })
 
     }
 </script>
+
+<style>
+    .explorePage {
+        max-width: 60%;
+    }
+
+    @media (max-width: 575.98px) {
+        .explorePage {
+            max-width: 100%;
+        }
+    }
+</style>

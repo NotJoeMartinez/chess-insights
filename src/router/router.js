@@ -1,12 +1,20 @@
-
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+    createRouter,
+    createWebHistory
+} from 'vue-router';
 
 import HomePage from '@/pages/HomePage.vue'
 import ExplorePage from '@/pages/ExplorePage.vue'
 
-const routes = [
-    {'path': '/', component: HomePage},
-    {'path': '/explore', component: ExplorePage},
+const routes = [{
+        'path': '/',
+        component: HomePage
+    },
+    {
+        'path': '/explore',
+        'name': 'Explore',
+        component: ExplorePage
+    },
 ]
 
 const router = createRouter({
@@ -15,4 +23,3 @@ const router = createRouter({
 })
 
 export default router;
-
