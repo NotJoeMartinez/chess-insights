@@ -423,15 +423,16 @@ export function calculateOpening(timeClass) {
 export async function fetchUserStats(userName){
     let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     let playerStatsRes = await fetch(playerStatsUrl);
-    let playerStats = await playerStatsRes.json();
+    return playerStatsRes;
+    // let playerStats = await playerStatsRes.json();
 
-    if (playerStatsRes.status != 200 ) {
-        alert("User Not found");
-        return "error";
-        // window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
-    } else {
-        return playerStats;
-    }
+    // if (playerStatsRes.status != 200 ) {
+    //     alert("User Not found");
+    //     return "error";
+    //     // window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
+    // } else {
+    //     return playerStats;
+    // }
 
 }
 
@@ -439,15 +440,17 @@ export async function fetchUserStats(userName){
 export async function fetchArchiveUrls(userName) {
     let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
     let response = await fetch(archiveUrl);
-    let archiveMonths = await response.json();
 
-    if (response.status != 200 ) {
-        alert("User Not found");
-        return "error";
-    }
-    else {
+    return response; 
+    // let archiveMonths = await response.json();
 
-    return archiveMonths.archives
-    }
+    // if (response.status != 200 ) {
+    //     alert("User Not found");
+    //     return "error";
+    // }
+    // else {
+
+    // return archiveMonths.archives
+    // }
 
 }
