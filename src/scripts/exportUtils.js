@@ -1,8 +1,8 @@
 
-import { getArchivedGames, getUserName, parseGameNode } from './utils.js';
+import { getArchivedGames, getUserName, parseGameNode, getParsedArchivedGames } from '@/scripts/utils.js';
 
 
-export function rowsToCsv(csvData) {
+export function rowsToCsv(csvData,saveType) {
     csvData = csvData.join('\n');
     let csvFile = new Blob([csvData], {type: 'text/csv'})
 
@@ -12,7 +12,7 @@ export function rowsToCsv(csvData) {
 
     let today = new Date().toISOString().slice(0, 10)
     let uname = getUserName(); 
-    let fname = `chess_com_${uname}_${today.replace("-","_")}.csv`;
+    let fname = `${uname}_${saveType}_${today.replace("-","_")}.csv`;
 
     a.download = fname;
     document.body.appendChild(a);
@@ -29,7 +29,7 @@ export function exportChessData(option) {
                   "opponent", "opponentRating", "opponentUrl", "result","wonBy", 
                   "date", "openingUrl", "opening", "startTime", "endTime","pgn"];
 
-  let archivedGames = getArchivedGames();
+  let archivedGames = getParsedArchivedGames();
 
 
   let csvData = []
@@ -40,7 +40,7 @@ export function exportChessData(option) {
       for (var i=0; i<archivedGames.length; i++ ) {
           var row = [];
           let gameNode = archivedGames[i];
-          let parsedGameNode = parseGameNode(gameNode);
+          let parsedGameNode = gameNode;
   
           row.push(parsedGameNode.userAccuracy);
           row.push(parsedGameNode.opponentAccuracy);
@@ -63,14 +63,14 @@ export function exportChessData(option) {
           row.push(parsedGameNode.pgn);
           csvData.push(row);
       }
-      rowsToCsv(csvData);
+      rowsToCsv(csvData,"all");
   }
   else if(option == "simple") {
       csvData.push(["date", "timeClass", "result", "rating", "gameUrl"]);
       for (let i=0; i<archivedGames.length; i++ ) {
           let row = [];
           let gameNode = archivedGames[i];
-          let parsedGameNode = parseGameNode(gameNode);
+          let parsedGameNode = gameNode
   
           row.push(parsedGameNode.date);
           row.push(parsedGameNode.timeClass);
@@ -79,13 +79,13 @@ export function exportChessData(option) {
           row.push(parsedGameNode.gameUrl);
           csvData.push(row);
       }
-      rowsToCsv(csvData);  
+      rowsToCsv(csvData,"simple");  
   }
   else if (option == 'pgn'){
 
       let pgnData = "";
       for (let i=0; i<archivedGames.length; i++ ){
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+          let parsedGameNode = archivedGames[i];
           pgnData += parsedGameNode.ogPgn; 
 
       }
@@ -98,7 +98,7 @@ export function exportChessData(option) {
   
       let today = new Date().toISOString().slice(0, 10)
       let uname = getUserName(); 
-      let fname = `chess_com_${uname}_${today.replace("-","_")}.pgn`;
+      let fname = `${uname}_${today.replace("-","_")}.pgn`;
   
       a.download = fname;
       document.body.appendChild(a);
@@ -109,7 +109,7 @@ export function exportChessData(option) {
 
       let parsedGames = [];
       for (let i=0; i<archivedGames.length; i++ ){
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+          let parsedGameNode = archivedGames[i];
           parsedGames.push(parsedGameNode);
       }
 
@@ -122,7 +122,7 @@ export function exportChessData(option) {
   
       let today = new Date().toISOString().slice(0, 10)
       let uname = getUserName(); 
-      let fname = `chess_com_${uname}_${today.replace("-","_")}.json`;
+      let fname = `${uname}_${today.replace("-","_")}.json`;
   
       a.download = fname;
       document.body.appendChild(a);
@@ -167,7 +167,7 @@ export function makeCustomExport() {
   const checked = container.querySelectorAll("input[type='checkbox']:checked");
   headers = Array.from(checked).map(x => x.value)
 
-  let archivedGames = getArchivedGames();
+  let archivedGames = getParsedArchivedGames();
 
   let csvData = [] 
 
@@ -176,7 +176,7 @@ export function makeCustomExport() {
   for (var i=0; i<archivedGames.length; i++ ) {
       var row = [];
       let gameNode = archivedGames[i];
-      let parsedGameNode = parseGameNode(gameNode);
+      let parsedGameNode = gameNode;
 
       for (var j=0; j<headers.length; j++){
           row.push(parsedGameNode[headers[j]]);
@@ -185,5 +185,5 @@ export function makeCustomExport() {
       csvData.push(row);
   }
 
-  rowsToCsv(csvData);
+  rowsToCsv(csvData,"custom");
 }
