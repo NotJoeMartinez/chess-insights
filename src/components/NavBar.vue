@@ -13,6 +13,7 @@
                 <li class="nav-item">
                 <a class="nav-link" href="https://github.com/NotJoeMartinez/chess-insights" target="_blank">Source Code</a>
                 </li>
+
             </ul>
             </div>
         </div>
