@@ -13,6 +13,13 @@
                 <li class="nav-item">
                 <a class="nav-link" href="https://github.com/NotJoeMartinez/chess-insights" target="_blank">Source Code</a>
                 </li>
+
+                <li class="nav-item">
+                    <router-link to="/foo" class="nav-link" target="_blank">foo</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/bar" class="nav-link" target="_blank">bar</router-link>
+                </li>
             </ul>
             </div>
         </div>

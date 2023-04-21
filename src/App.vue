@@ -1,7 +1,4 @@
 <template>
-
-  
-
   <NavBar/>
   <InputForm @get-all-user-data="getAllUserData"/>
 
