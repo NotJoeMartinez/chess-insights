@@ -3,7 +3,7 @@
       <div class="row" >
         <div class="card" id="eloCard">
 
-        <h2 class="card-title font-weight-bold m-1">
+        <h2 class="card-title font-weight-bold m-1" >
           <strong>
             {{ ovUserName }}
           </strong>

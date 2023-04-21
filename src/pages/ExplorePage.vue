@@ -1,15 +1,28 @@
 <template>
   <NavBar />
-  <div v-if="showSpinner" class="container">
-    <div class="spinner-border">
+  <div class="container explorePage pt-3">
+    <div v-if="showSpinner" class="container">
+      <div class="spinner-border">
+      </div>
     </div>
-  </div>
-  <div class="container explorePage">
-    <form id="search">
-      Search <input name="query" v-model="searchQuery">
-    </form>
-    <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
-    </ExploreGrid>
+    <div class="container">
+      <form id="search">
+        <input type="text" placeholder="Search"
+                            id="exploreSearch"
+                            aria-describedby="u-addon" 
+                            autocapitalize="none" 
+                            autocorrect="off"
+                            class="form-control username-input"
+                            name="query"
+                            v-model="searchQuery"
+                            > 
+
+      </form>
+    </div>
+    <div class="container pt-3"> 
+      <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+      </ExploreGrid>
+    </div>
   </div>
 </template>
 

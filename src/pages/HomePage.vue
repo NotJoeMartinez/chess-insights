@@ -105,20 +105,10 @@
       }
     },
     methods: {
-
-      async getAllUserData(userName) {
-        this.showCharts = false;
-        clearLocalStorage();
-
-        this.ovUserName = userName;
-        this.showSpinner = true;
-        this.spinnerText = "Fetching user data...";
-        this.showProg = true;
-
+      async fetchUserData(userName){
         let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
         var playerStatsRes = await fetch(playerStatsUrl);
         var playerStats = await playerStatsRes.json();
-
         if (playerStatsRes.status != 404) {
           window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
         } else {
@@ -126,7 +116,6 @@
           alert("User Not found");
           return;
         }
-
         let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
         var response = await fetch(archiveUrl);
         var archiveMonths = await response.json();
@@ -182,8 +171,23 @@
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
 
+      },
+
+      async getAllUserData(userName) {
+        this.showCharts = false;
+        clearLocalStorage();
+        this.ovUserName = userName;
+        this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
+
+        await this.fetchUserData(userName);
+
         this.showSpinner = false;
         this.showCharts = true;
+
+        const element = document.getElementById('uname');
+        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
 
       },
 
