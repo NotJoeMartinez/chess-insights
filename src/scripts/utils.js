@@ -240,7 +240,7 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
     if (timeClass === "all") {
         for (let i = 0; i < parsedArchivedGames.length; i++) {
             let gameNode = parsedArchivedGames[i];
-            if (gameNode.opening === opening ) {
+            if (gameNode.opening === opening) {
                 if (gameNode.result === "win") {
                     winCount++;
                 } else if (gameNode.result === "resigned" || gameNode.result === "timeout" || gameNode.result === "checkmated" || gameNode.result == "abandoned") {
@@ -417,4 +417,37 @@ export function calculateOpening(timeClass) {
         });
     }
     return res
+}
+
+// gets overview of player stats
+export async function fetchUserStats(userName){
+    let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
+    let playerStatsRes = await fetch(playerStatsUrl);
+    let playerStats = await playerStatsRes.json();
+
+    if (playerStatsRes.status != 200 ) {
+        alert("User Not found");
+        return "error";
+        // window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
+    } else {
+        return playerStats;
+    }
+
+}
+
+// gets all games ever played by user
+export async function fetchArchiveUrls(userName) {
+    let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
+    let response = await fetch(archiveUrl);
+    let archiveMonths = await response.json();
+
+    if (response.status != 200 ) {
+        alert("User Not found");
+        return "error";
+    }
+    else {
+
+    return archiveMonths.archives
+    }
+
 }
