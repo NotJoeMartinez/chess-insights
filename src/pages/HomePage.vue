@@ -164,7 +164,7 @@
 
         this.ovTimeClass = largestTimeClass;
 
-        this.openingsTimeClass = largestTimeClass;
+        this.openingsTimeClass = "all";
         this.winTimeClass = largestTimeClass;
         this.lossTimeClass = largestTimeClass;
 

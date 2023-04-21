@@ -19,7 +19,10 @@
 
       </form>
     </div>
-    <div class="container pt-3"> 
+    <div class="container pt-3">
+      <p>Click on row to view game in a new window</p>
+    </div>
+    <div class="container pt-1"> 
       <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
       </ExploreGrid>
     </div>
@@ -85,7 +88,8 @@
 </script>
 
 
-<style>
+<style >
+
   .explorePage {
     max-width: 60%;
   }

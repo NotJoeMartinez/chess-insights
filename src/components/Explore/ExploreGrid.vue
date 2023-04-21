@@ -15,7 +15,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(entry, rowIndex) in filteredData" :key="'row-' + rowIndex">
+          <tr v-for="(entry, rowIndex) in filteredData" 
+            :key="'row-' + rowIndex"
+            @click="openGameUrl(entry.gameUrl)"
+            class="table-hover-row"
+            >
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
@@ -80,6 +84,10 @@
       capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
       },
+      openGameUrl(url) {
+        window.open(url, '_blank');
+        
+      },
     },
   };
   </script>
@@ -107,6 +115,14 @@
     /* border-bottom: solid 1px #312e2b; */
     border-bottom: 2px solid #312e2b;
     }
+    /* prevent changing tool tips */
+    .table-hover-row {
+    cursor: pointer;
+    }
+    .table-hover-row * {
+      cursor: pointer;
+    }
+
 
     th,
     td {
