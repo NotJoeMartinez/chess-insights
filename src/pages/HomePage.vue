@@ -48,7 +48,9 @@
     getLargestTimeClass,
     parseAndSaveArchivedGames,
     saveOpeningsData,
-    clearLocalStorage
+    clearLocalStorage,
+    fetchUserStats,
+    fetchArchiveUrls
   } from '@/scripts/utils.js'
 
   import NavBar from "@/components/NavBar.vue";
@@ -106,20 +108,28 @@
     },
     methods: {
       async fetchUserData(userName){
-        let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
-        var playerStatsRes = await fetch(playerStatsUrl);
-        var playerStats = await playerStatsRes.json();
-        if (playerStatsRes.status != 404) {
-          window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
-        } else {
+
+        let userStats = await fetchUserStats(userName);
+
+        if (userStats == "error") {
           this.showSpinner = false;
           alert("User Not found");
           return "error";
         }
-        let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
-        var response = await fetch(archiveUrl);
-        var archiveMonths = await response.json();
-        var archiveUrls = archiveMonths.archives
+        else {
+          window.localStorage.setItem("playerStats", JSON.stringify(userStats));
+        }
+
+        let archiveUrls = await fetchArchiveUrls(userName);
+
+        if (archiveUrls == "error") {
+          this.showSpinner = false;
+          alert(`There was an error fetching the user's archives code: ${archiveUrls.status}`);
+          return "error";
+        }
+
+         
+
         let totalGames = 0;
 
         let archivedGames = []
@@ -160,7 +170,7 @@
         parseAndSaveArchivedGames();
         saveOpeningsData();
 
-        let largestTimeClass = getLargestTimeClass(playerStats);
+        let largestTimeClass = getLargestTimeClass();
 
         this.ovTimeClass = largestTimeClass;
 
