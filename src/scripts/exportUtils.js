@@ -1,5 +1,6 @@
 
-import { getArchivedGames, getUserName, parseGameNode } from './utils.js';
+import { getUserName } from './utils.js';
+import { getArchivedGames, parseGameNode   } from '@/scripts/archiveUtils.js';
 
 
 export function rowsToCsv(csvData) {

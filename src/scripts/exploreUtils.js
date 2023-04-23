@@ -1,11 +1,12 @@
 
-import { getParsedArchivedGames } from "@/scripts/utils.js";
+// import { getParsedArchivedGames } from "@/scripts/utils.js";
 
 import { parseAndSaveArchivedGames, verifyLiveChess } from "@/scripts/utils.js";
+import { getArchivedGames } from "@/scripts/archiveUtils";
 
 export function exploreAll() {
 
-    let games = getParsedArchivedGames();
+    let games = getArchivedGames();
     let gridData = [];
 
     for (let i = 0; i < games.length; i++) {
@@ -65,6 +66,6 @@ export async function exploreFromAPI(  userName ) {
     inlineStorage.setAttribute("hidden", "hidden");
     inlineStorage.textContent = JSON.stringify(archivedGames);
     appDiv.appendChild(inlineStorage);
-    parseAndSaveArchivedGames();
+    parseAndSaveArchivedGames(archivedGames);
 
 }
