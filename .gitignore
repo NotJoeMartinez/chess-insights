@@ -54,3 +54,9 @@ pnpm-debug.log*
 testusers.ods
 testusers.csv
 *.ods#
+
+# configs
+.eslintrc.js
+jsconfig.json
+vue.config.js
+babel.config.js
