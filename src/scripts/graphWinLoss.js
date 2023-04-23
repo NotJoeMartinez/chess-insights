@@ -9,7 +9,7 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { getArchivedGames, parseGameNode} from './utils.js';
+import { getArchivedGames, getParsedArchivedGames, parseGameNode} from './utils.js';
 
 export function graphWinLoss(inputResult, timeClass="all") {
 
@@ -72,7 +72,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
   }
 
   function getLossData(timeClass) {
-        let archivedGames = getArchivedGames();
+        let parsedArchivedGames = getParsedArchivedGames();
 
         let lAbandoned = 0;
         let lCheckmated = 0;
@@ -80,8 +80,8 @@ export function graphWinLoss(inputResult, timeClass="all") {
         let lTimeOut = 0;
         let data = []
     
-        for (var i=0; i<archivedGames.length; i++) {
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+        for (var i=0; i<parsedArchivedGames.length; i++) {
+          let parsedGameNode = parsedArchivedGames[i] 
           let result = parsedGameNode.result;
           let nodeTimeClass = parsedGameNode.timeClass;
     
@@ -131,7 +131,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
   }
   
   function getWinData(timeClass) {
-        let archivedGames = getArchivedGames();
+        let parsedArchivedGames = getParsedArchivedGames();
         let data = []
   
         let wAbandoned = 0;
@@ -139,8 +139,8 @@ export function graphWinLoss(inputResult, timeClass="all") {
         let wResignation = 0;
         let wTimeOut = 0;
     
-        for (var i=0; i<archivedGames.length; i++) {
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+        for (var i=0; i<parsedArchivedGames.length; i++) {
+          let parsedGameNode = parsedArchivedGames[i] 
           let wonBy = parsedGameNode.wonBy;
           let nodeTimeClass = parsedGameNode.timeClass;
     

@@ -152,25 +152,30 @@
         }
         this.totalUserGames = totalGames;
         this.showProg = false;
+
         if (archivedGames.length < 1) {
           this.showProg = false;
-          alert("No games found under that user")
+          alert("No games found under that user");
           return;
         }
-        this.spinnerText = "saving data...";
-        window.localStorage.setItem("userName", userName);
-        try {
-          window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
-        } catch (err) {
-          let inlineStorage = document.createElement("div");
-          let appDiv = document.getElementById("app");
-          inlineStorage.setAttribute("id", "inlineStorage");
-          inlineStorage.setAttribute("hidden", "hidden");
-          inlineStorage.textContent = JSON.stringify(archivedGames);
-          appDiv.appendChild(inlineStorage);
-        }
 
-        parseAndSaveArchivedGames();
+        this.spinnerText = "saving data...";
+
+        window.localStorage.setItem("userName", userName);
+
+        // move this somewhere
+        // try {
+        //   window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+        // } catch (err) {
+        //   let inlineStorage = document.createElement("div");
+        //   let appDiv = document.getElementById("app");
+        //   inlineStorage.setAttribute("id", "inlineStorage");
+        //   inlineStorage.setAttribute("hidden", "hidden");
+        //   inlineStorage.textContent = JSON.stringify(archivedGames);
+        //   appDiv.appendChild(inlineStorage);
+        // }
+
+        parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
 
         let largestTimeClass = getLargestTimeClass();
