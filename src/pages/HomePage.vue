@@ -44,14 +44,14 @@
 
 <script>
   import {
-    verifyLiveChess,
     getLargestTimeClass,
-    parseAndSaveArchivedGames,
     saveOpeningsData,
     clearLocalStorage,
     fetchUserStats,
     fetchArchiveUrls
   } from '@/scripts/utils.js'
+
+  import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
 
   import NavBar from "@/components/NavBar.vue";
   import InputForm from "@/components/InputForm.vue";
@@ -108,7 +108,7 @@
     },
     methods: {
       async fetchUserData(userName){
-
+        clearLocalStorage();
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);
         if (userStatsRes.status != 200){
@@ -159,18 +159,18 @@
         }
         this.spinnerText = "saving data...";
         window.localStorage.setItem("userName", userName);
-        try {
-          window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
-        } catch (err) {
-          let inlineStorage = document.createElement("div");
-          let appDiv = document.getElementById("app");
-          inlineStorage.setAttribute("id", "inlineStorage");
-          inlineStorage.setAttribute("hidden", "hidden");
-          inlineStorage.textContent = JSON.stringify(archivedGames);
-          appDiv.appendChild(inlineStorage);
-        }
+        // try {
+        //   window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
+        // } catch (err) {
+        //   let inlineStorage = document.createElement("div");
+        //   let appDiv = document.getElementById("app");
+        //   inlineStorage.setAttribute("id", "inlineStorage");
+        //   inlineStorage.setAttribute("hidden", "hidden");
+        //   inlineStorage.textContent = JSON.stringify(archivedGames);
+        //   appDiv.appendChild(inlineStorage);
+        // }
 
-        parseAndSaveArchivedGames();
+        parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
 
         let largestTimeClass = getLargestTimeClass();

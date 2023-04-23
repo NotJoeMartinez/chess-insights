@@ -9,7 +9,8 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { getArchivedGames, parseGameNode} from './utils.js';
+import { parseGameNode} from '@/scripts/utils.js';
+import { getArchivedGames } from '@/scripts/archiveUtils.js';
 
 export function graphWinLoss(inputResult, timeClass="all") {
 
@@ -81,7 +82,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
         let data = []
     
         for (var i=0; i<archivedGames.length; i++) {
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+          let parsedGameNode = archivedGames[i];
           let result = parsedGameNode.result;
           let nodeTimeClass = parsedGameNode.timeClass;
     
@@ -140,7 +141,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
         let wTimeOut = 0;
     
         for (var i=0; i<archivedGames.length; i++) {
-          let parsedGameNode = parseGameNode(archivedGames[i]);
+          let parsedGameNode = archivedGames[i];
           let wonBy = parsedGameNode.wonBy;
           let nodeTimeClass = parsedGameNode.timeClass;
     
