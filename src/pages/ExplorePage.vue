@@ -75,7 +75,7 @@
 
 
 
-      if (window.localStorage.getItem("parsedArchiveGames") != null) {
+      if (window.localStorage.getItem("archivedGames") != null) {
         console.log("we have enough space")
         this.gridData = exploreAll()
       } else {

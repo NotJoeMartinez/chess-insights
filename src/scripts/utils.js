@@ -11,11 +11,17 @@ export function clearCharts() {
 export function clearLocalStorage() {
     localStorage.clear();
     console.log("local storage cleared")
-    let inlineStorage = document.querySelector('#archivedGames');
+    let inlineStorage = document.getElementById('archivedGames');
     if (inlineStorage) {
         inlineStorage.remove()
         console.log("inline storage cleared")
     }
+    let inlinePgnStorage = document.getElementById('pgnGames');
+    if (inlinePgnStorage) {
+        inlinePgnStorage.remove()
+        console.log("inline pgn storage cleared")
+    }
+
 }
 
 
