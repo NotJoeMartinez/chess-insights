@@ -44,14 +44,14 @@
 
 <script>
   import {
-    verifyLiveChess,
     getLargestTimeClass,
-    parseAndSaveArchivedGames,
     saveOpeningsData,
     clearLocalStorage,
     fetchUserStats,
     fetchArchiveUrls
   } from '@/scripts/utils.js'
+
+  import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
 
   import NavBar from "@/components/NavBar.vue";
   import InputForm from "@/components/InputForm.vue";
@@ -108,7 +108,7 @@
     },
     methods: {
       async fetchUserData(userName){
-
+        clearLocalStorage();
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);
         if (userStatsRes.status != 200){
@@ -158,12 +158,8 @@
           alert("No games found under that user");
           return;
         }
-
         this.spinnerText = "saving data...";
-
         window.localStorage.setItem("userName", userName);
-
-        // move this somewhere
         // try {
         //   window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
         // } catch (err) {

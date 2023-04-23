@@ -8,7 +8,8 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { getArchivedGames, getParsedArchivedGames, getUserName, parseGameNode } from './utils.js';
+import {  getUserName, } from '@/scripts/utils.js';
+import { getArchivedGames, parseGameNode } from '@/scripts/archiveUtils.js';
 
 
 export function graphElo(timeClass="rapid")  {
@@ -26,10 +27,6 @@ export function graphElo(timeClass="rapid")  {
     }
 
 
-   
-
-
-    
     // let timeFormat = "YYYY-MM-DD HH:mm";
     const eloChart = new Chart(ctx, {
         type: 'line',
@@ -141,8 +138,9 @@ export function graphElo(timeClass="rapid")  {
   // let parsedDates = [];
   let allData = [];
 
-  for (var i=0; i<parsedArchivedGames.length; i++) {
-      let parsedGameNode = parsedArchivedGames[i]
+  for (var i=0; i<archivedGames.length; i++) {
+      // let parsedGameNode = parseGameNode(archivedGames[i],uname);
+      let parsedGameNode = archivedGames[i]
       if (parsedGameNode.timeClass == timeClass){
         let rating = parsedGameNode.userRating;
         let link = parsedGameNode.gameUrl;

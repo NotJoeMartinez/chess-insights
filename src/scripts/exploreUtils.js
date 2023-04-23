@@ -1,11 +1,10 @@
 
-import { getParsedArchivedGames } from "@/scripts/utils.js";
 
-import { parseAndSaveArchivedGames, verifyLiveChess } from "@/scripts/utils.js";
+import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "@/scripts/archiveUtils.js";
 
 export function exploreAll() {
 
-    let games = getParsedArchivedGames();
+    let games = getArchivedGames();
     let gridData = [];
 
     for (let i = 0; i < games.length; i++) {
@@ -59,12 +58,12 @@ export async function exploreFromAPI(  userName ) {
       alert("No games found under that user")
       return;
     }
-    // let inlineStorage = document.createElement("div");
-    // let appDiv = document.getElementById("app");
-    // inlineStorage.setAttribute("id", "inlineStorage");
-    // inlineStorage.setAttribute("hidden", "hidden");
-    // inlineStorage.textContent = JSON.stringify(archivedGames);
-    // appDiv.appendChild(inlineStorage);
+    let inlineStorage = document.createElement("div");
+    let appDiv = document.getElementById("app");
+    inlineStorage.setAttribute("id", "inlineStorage");
+    inlineStorage.setAttribute("hidden", "hidden");
+    inlineStorage.textContent = JSON.stringify(archivedGames);
+    appDiv.appendChild(inlineStorage);
     parseAndSaveArchivedGames(archivedGames);
 
 }
