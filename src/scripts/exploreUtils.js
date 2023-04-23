@@ -1,8 +1,6 @@
 
-// import { getParsedArchivedGames } from "@/scripts/utils.js";
 
-import { parseAndSaveArchivedGames, verifyLiveChess } from "@/scripts/utils.js";
-import { getArchivedGames } from "@/scripts/archiveUtils";
+import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "@/scripts/archiveUtils.js";
 
 export function exploreAll() {
 

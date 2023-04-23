@@ -2,13 +2,19 @@ import { utcToHuman } from "@/scripts/utils.js";
 
 export function parseAndSaveArchivedGames(archivedGames) {
     let parsedArchivedGames = []
-    // let archivedGames = getArchivedGames()
+    let pgnGames = {}
+
     for (let i = 0; i < archivedGames.length; i++) {
         let gameNode = parseGameNode(archivedGames[i])
+        pgnGames[gameNode.gameId] = gameNode.ogPgn
+        delete gameNode.ogPgn
         parsedArchivedGames.push(gameNode)
 
     }
+
     console.log(`archivedGames: ${parsedArchivedGames.length}`)
+    savePgnGames(pgnGames)
+
     try {
         window.localStorage.setItem("archivedGames", JSON.stringify(parsedArchivedGames));
         console.log("archivedGames saved to local storage")
@@ -20,6 +26,7 @@ export function parseAndSaveArchivedGames(archivedGames) {
         inlineStorage.textContent = JSON.stringify(parsedArchivedGames);
         appDiv.appendChild(inlineStorage);
         console.log("archived games saved to inline storage")
+
     }
 
 }
@@ -140,24 +147,27 @@ export function parseGameNode(gameNode) {
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
 
-    delete parsedGameNode.ogPgn
+    delete parsedGameNode.pgn
     // main line openings 
     return parsedGameNode;
 }
 
 
-// export function getParsedArchivedGames() {
+export function savePgnGames(pgn){
+    let inlineStorage = document.createElement("div");
+    let appDiv = document.getElementById("app");
+    inlineStorage.setAttribute("id", "pgnGames");
+    inlineStorage.setAttribute("hidden", "hidden");
+    inlineStorage.textContent = JSON.stringify(pgn);
+    appDiv.appendChild(inlineStorage);
+    console.log("pgnGames saved");
+}
 
-//     if (window.localStorage.getItem("parsedArchiveGames") != null) {
-//         let parsedArchive = window.localStorage.getItem("parsedArchiveGames");
-//         return JSON.parse(parsedArchive);
-//     } else {
-//         let inlineDiv = document.getElementById("parsedInlineStorage");
-//         let parsedArchive = inlineDiv.textContent;
-//         return JSON.parse(parsedArchive);
-//     }
-
-// }
+export function getPgnGames(){
+        let inlineDiv = document.getElementById("pgnGames");
+        let archive = inlineDiv.textContent;
+        return JSON.parse(archive);
+}
 
 
 export function getArchivedGames() {
