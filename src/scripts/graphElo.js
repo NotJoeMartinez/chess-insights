@@ -131,7 +131,7 @@ export function graphElo(timeClass="rapid")  {
 
  function getChartData(timeClass) {
 
-  let parsedArchivedGames = getParsedArchivedGames();
+  let archivedGames = getArchivedGames();
   let uname = getUserName();
 
 

@@ -8,7 +8,7 @@ import {
 } from '@/scripts/archiveUtils.js';
 
 
-export function rowsToCsv(csvData,saveType) {
+export function rowsToCsv(csvData) {
     csvData = csvData.join('\n');
     let csvFile = new Blob([csvData], {
         type: 'text/csv'

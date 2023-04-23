@@ -73,7 +73,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
   }
 
   function getLossData(timeClass) {
-        let parsedArchivedGames = getParsedArchivedGames();
+        let archivedGames = getArchivedGames();
 
         let lAbandoned = 0;
         let lCheckmated = 0;
@@ -132,7 +132,7 @@ export function graphWinLoss(inputResult, timeClass="all") {
   }
   
   function getWinData(timeClass) {
-        let parsedArchivedGames = getParsedArchivedGames();
+        let archivedGames = getArchivedGames();
         let data = []
   
         let wAbandoned = 0;
