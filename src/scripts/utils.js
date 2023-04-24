@@ -233,7 +233,7 @@ export function calculateOpening(timeClass) {
             urlPath = urlPath.slice(1);
         }
 
-        let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-");
+        let openingUrl = "https://www.chess.com/openings/" + urlPath.replace(/ /g, "-") + "?ref_id=74104030";
         let opening = sortedTitles[i];
         let openingCount = sortedValues[i];
 

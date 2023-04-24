@@ -46,6 +46,7 @@ export function verifyLiveChess(gameNode) {
 }
 
 export function parseGameNode(gameNode) {
+    let refId = "?ref_id=74104030"
     let uname = window.localStorage.getItem("userName");
 
     let parsedGameNode = {};
@@ -53,7 +54,7 @@ export function parseGameNode(gameNode) {
     // easy ones
     parsedGameNode["unixTimeStamp"] = gameNode.end_time;
     parsedGameNode["timeClass"] = gameNode.time_class;
-    parsedGameNode["gameUrl"] = gameNode.url;
+    parsedGameNode["gameUrl"] = gameNode.url + refId;
     parsedGameNode["fen"] = gameNode.fen;
     parsedGameNode["timeStamp"] = utcToHuman(gameNode.end_time);
 
@@ -146,6 +147,7 @@ export function parseGameNode(gameNode) {
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
+    parsedGameNode.gameId = parsedGameNode.gameId.replace(/\?ref_id=74104030/, '');
 
     delete parsedGameNode.pgn
     // main line openings 
