@@ -44,10 +44,20 @@ export function utcToHuman(unixTimestamp) {
     const hours = ('0' + dateObject.getHours()).slice(-2);
     const minutes = ('0' + dateObject.getMinutes()).slice(-2);
     const seconds = ('0' + dateObject.getSeconds()).slice(-2);
-
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
 }
+
+export function getFormattedTimestamp() {
+    const now = new Date();
+    const fullYear = now.getFullYear();
+    const twoDigitYear = String(fullYear).slice(-2);
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    return `${twoDigitYear}${month}${day}${hour}${minute}`;
+}
+
 
 
 export function getLargestTimeClass() {

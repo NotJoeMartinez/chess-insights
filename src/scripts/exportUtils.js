@@ -1,5 +1,6 @@
 import {
-    getUserName
+    getUserName,
+    getFormattedTimestamp
 } from './utils.js';
 import {
     getArchivedGames,
@@ -8,7 +9,7 @@ import {
 } from '@/scripts/archiveUtils.js';
 
 
-export function rowsToCsv(csvData) {
+export function rowsToCsv(csvData, option) {
     csvData = csvData.join('\n');
     let csvFile = new Blob([csvData], {
         type: 'text/csv'
@@ -18,9 +19,9 @@ export function rowsToCsv(csvData) {
     a.href = window.URL.createObjectURL(csvFile);
 
 
-    let today = new Date().toISOString().slice(0, 10)
+    let timeStamp = getFormattedTimestamp(); 
     let uname = getUserName();
-    let fname = `chess_com_${uname}_${today.replace("-","_")}.csv`;
+    let fname = `${uname}_${option}_${timeStamp}.csv`;
 
     a.download = fname;
     document.body.appendChild(a);
@@ -75,7 +76,8 @@ export function exportChessData(option) {
             row.push(parsedGameNode.endTime);
             csvData.push(row);
         }
-        rowsToCsv(csvData);
+        rowsToCsv(csvData, "all");
+
     } else if (option == "simple") {
         csvData.push(["date", "timeClass", "result", "rating", "gameUrl"]);
         for (let i = 0; i < archivedGames.length; i++) {
@@ -89,7 +91,8 @@ export function exportChessData(option) {
             row.push(parsedGameNode.gameUrl);
             csvData.push(row);
         }
-        rowsToCsv(csvData);
+        rowsToCsv(csvData, "simple");
+
     } else if (option == 'pgn') {
 
         let pgnData = "";
@@ -105,14 +108,15 @@ export function exportChessData(option) {
         a.href = window.URL.createObjectURL(pgnFile);
 
 
-        let today = new Date().toISOString().slice(0, 10)
+        let timeStamp = getFormattedTimestamp(); 
         let uname = getUserName();
-        let fname = `chess_com_${uname}_${today.replace("-","_")}.pgn`;
+        let fname = `${uname}_${timeStamp}.pgn`;
 
         a.download = fname;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+
     } else if (option == 'json') {
 
         let parsedGames = [];
@@ -132,9 +136,9 @@ export function exportChessData(option) {
         a.href = window.URL.createObjectURL(jsonFile);
 
 
-        let today = new Date().toISOString().slice(0, 10)
+        let timeStamp = getFormattedTimestamp();
         let uname = getUserName();
-        let fname = `chess_com_${uname}_${today.replace("-","_")}.json`;
+        let fname = `${uname}_${timeStamp}.json`;
 
         a.download = fname;
         document.body.appendChild(a);
@@ -203,5 +207,5 @@ export function makeCustomExport() {
         csvData.push(row);
     }
 
-    rowsToCsv(csvData);
+    rowsToCsv(csvData, "custom");
 }
