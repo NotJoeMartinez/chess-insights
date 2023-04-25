@@ -140,10 +140,17 @@ export function parseGameNode(gameNode) {
         parsedGameNode["mainLineOpening"] = parsedGameNode["opening"];
     }
 
-    // eslint-disable-next-line no-useless-escape
-    parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g, '');
-    // eslint-disable-next-line no-useless-escape
-    parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
+    if (gameNode.hasOwnProperty("tournament")){
+        parsedGameNode["startTime"] = pgn[18].replace(/\s|\[StartTime|\]|\"/g, '');
+        parsedGameNode["endTime"] = pgn[20].replace(/\s|\[EndTime|\]|\"/g, '');
+    }   
+    else {
+        parsedGameNode["startTime"] = pgn[17].replace(/\s|\[StartTime|\]|\"/g, '');
+        parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
+    }
+
+
+
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
