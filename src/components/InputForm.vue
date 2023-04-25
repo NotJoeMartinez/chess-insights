@@ -53,16 +53,13 @@ export default {
     suggestUserInput() {
       const input = document.getElementById("uname");
       const gms = [
-        "lachesisq",
-        "magnuscarlsen",
-        "chefshouse",
-        "gmwso",
-        "fabianocaruana",
-        "sergeykarjakin",
-        "grischuk",
-        "sebastian",
-        "azerichess",
-        "lyonbeast"
+        "mastoblood",
+        "ajseventeen",
+        "slimshaneyyy",
+        "betterideas",
+        "SvenskaRullstolen",
+        "Dolols",
+        "micbear1"
       ];
 
       const randGms = gms
