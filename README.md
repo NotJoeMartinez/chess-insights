@@ -10,7 +10,9 @@ only be available to games you have analyzed and individual move evaluations
 such as `brilliant` or `blunder` are not made public. 
 
 ### Ignored game modes 
-The only game modes fetched from the api are `bullet`, `blitz`, `rapid`, and `daily`
+The only game modes fetched from the api are `bullet`, `blitz`, `rapid`, and `daily`.
+
+The following are ignored
 - `bughouse`
 - `crazyhouse`
 - `threecheck`

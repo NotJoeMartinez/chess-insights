@@ -38,6 +38,7 @@
         updateElo(timeClass) {
           this.$emit('update', timeClass)
           graphElo(timeClass);
+          resetChartZoom(timeClass)
           },
         resetZoom() {
               resetChartZoom(this.timeClass);
