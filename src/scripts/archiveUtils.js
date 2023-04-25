@@ -34,7 +34,7 @@ export function parseAndSaveArchivedGames(archivedGames) {
 export function verifyLiveChess(gameNode) {
 
     try {
-        if ((gameNode.rules == "chess" || gameNode.rules == "chess960")) {
+        if ((gameNode.rules == "chess" )) {
             return true;
         } else {
             return false;

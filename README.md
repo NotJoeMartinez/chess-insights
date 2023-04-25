@@ -9,6 +9,15 @@ or the API simply not publishing said data. For example game accuracy evaluation
 only be available to games you have analyzed and individual move evaluations 
 such as `brilliant` or `blunder` are not made public. 
 
+### Ignored game modes 
+The only game modes fetched from the api are `bullet`, `blitz`, `rapid`, and `daily`
+- `bughouse`
+- `crazyhouse`
+- `threecheck`
+- `chess960`
+- `kingofthehill`
+
+
 ### Available data
 These are the column names of the csv file export and some notes if about the 
 data contained

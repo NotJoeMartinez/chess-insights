@@ -108,6 +108,7 @@
     },
     methods: {
       async fetchUserData(userName){
+        console.clear();
         clearLocalStorage();
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);

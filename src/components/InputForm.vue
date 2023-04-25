@@ -59,7 +59,8 @@ export default {
         "betterideas",
         "SvenskaRullstolen",
         "Dolols",
-        "micbear1"
+        "micbear1",
+        "RedPanda1705",
       ];
 
       const randGms = gms
