@@ -115,21 +115,29 @@ export function isTop90Percentile(number, numbers) {
 export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames) {
     let winCount = 0;
     let lossCount = 0;
+    let drawCount = 0;
 
     if (timeClass === "all") {
         for (let i = 0; i < parsedArchivedGames.length; i++) {
             let gameNode = parsedArchivedGames[i];
             if (gameNode.opening === opening) {
-                if (gameNode.result === "win") {
+                let result = gameNode.result
+
+                if (result === "win") {
                     winCount++;
-                } else if (gameNode.result === "resigned" || gameNode.result === "timeout" || gameNode.result === "checkmated" || gameNode.result == "abandoned") {
+                } 
+                else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
                     lossCount++;
+                }
+                else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+                    drawCount++;
                 }
             }
         }
         return {
             winCount,
-            lossCount
+            lossCount,
+            drawCount
         };
     }
 
@@ -137,17 +145,22 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
     for (let i = 0; i < parsedArchivedGames.length; i++) {
         let gameNode = parsedArchivedGames[i];
         if (gameNode.opening === opening && gameNode.timeClass === timeClass) {
-            if (gameNode.result === "win") {
+            let result = gameNode.result
+            if (result === "win") {
                 winCount++;
-            } else if (gameNode.result === "resigned" || gameNode.result === "timeout" || gameNode.result === "checkmated" || gameNode.result == "abandoned") {
+            } else if (result === "resigned" || result === "timeout" || result === "checkmated" || result == "abandoned") {
                 lossCount++;
+            }
+            else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+                drawCount++;
             }
         }
     }
 
     return {
         winCount,
-        lossCount
+        lossCount,
+        drawCount
     };
 }
 
@@ -249,7 +262,8 @@ export function calculateOpening(timeClass) {
 
         let {
             winCount,
-            lossCount
+            lossCount,
+            drawCount
         } = getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames);
 
         res.push({
@@ -257,7 +271,8 @@ export function calculateOpening(timeClass) {
             value: openingCount,
             url: openingUrl,
             winCount: winCount,
-            lossCount: lossCount
+            lossCount: lossCount,
+            drawCount: drawCount
         });
     }
     return res
