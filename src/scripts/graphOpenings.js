@@ -80,8 +80,6 @@ export function graphOpenings(timeClass="all") {
       }
     }
     });
-
-    // openingChart.update();
     return openingChart;
 }
   
