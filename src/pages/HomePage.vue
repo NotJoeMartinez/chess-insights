@@ -184,9 +184,9 @@
         this.ovTimeClass = largestTimeClass;
 
         this.openingsTimeClass = "all";
-        this.winTimeClass = largestTimeClass;
-        this.lossTimeClass = largestTimeClass;
-        this.drawTimeClass = largestTimeClass;
+        this.winTimeClass = "all";
+        this.lossTimeClass = "all";
+        this.drawTimeClass = "all";
 
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
