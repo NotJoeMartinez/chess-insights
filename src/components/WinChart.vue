@@ -12,7 +12,7 @@
                             </strong>
                         </h2>
                     </div>
-                    <div class="container pieChartContainer">
+                    <div class="container pieChartContainer p-3">
                         <canvas id="gamesWonBy"> </canvas>
                     </div>
 

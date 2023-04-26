@@ -2,6 +2,7 @@
 // import { Chart } from 'chart.js';
 import Chart from 'chart.js/auto'
 import {LinearScale, PointElement, Tooltip, Legend, TimeScale} from "chart.js"; 
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
 // import moment from 'moment';
@@ -9,23 +10,33 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { parseGameNode} from '@/scripts/utils.js';
 import { getArchivedGames } from '@/scripts/archiveUtils.js';
 
 export function graphWinLoss(inputResult, timeClass="all") {
 
     let ctx = '';
     let data = [];
+    let labels = [];
 
     if (inputResult == "loss" ){
         ctx = document.getElementById("gamesLostBy");
         data = getLossData(timeClass)
+        labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
+
     }
     if (inputResult == "win"){
         ctx = document.getElementById("gamesWonBy");
         data = getWinData(timeClass)
+        labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
+        
+    }
+    if(inputResult == "draw"){
+        ctx = document.getElementById("gamesDrawnBy");
+        data = getDrawData(timeClass)
+        labels = ["Agreement", "Stalemate", "Repetition", "Insufficient Material"];
     }
     
+
 
     const chartInstance = Chart.getChart(ctx);
     if (chartInstance) {
@@ -36,12 +47,12 @@ export function graphWinLoss(inputResult, timeClass="all") {
     }
 
     
-    let labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
   
   
   
     var myChart = new Chart(ctx, {
-      type: "pie",
+      type: "doughnut",
+      plugins: [ChartDataLabels],
       data: {
         labels: labels,
         datasets: [
@@ -49,23 +60,42 @@ export function graphWinLoss(inputResult, timeClass="all") {
             label: "Number of games",
             data: data,
             backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
+              "rgba(91, 138, 99, 1)",
+              "rgba(138, 91, 121, 1)",
+              "rgba(136, 122, 91, 1)",
+              "rgba(91, 106, 138, 1)"
             ],
             borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
+              "rgba(91, 138, 99, 1)",
+              "rgba(138, 91, 121, 1)",
+              "rgba(136, 122, 91, 1)",
+              "rgba(91, 106, 138, 1)"
             ],
+            hoverBackgroundColor: [
+              "rgba(91, 138, 99, 0.8)",
+              "rgba(138, 91, 121, 0.8)",
+              "rgba(136, 122, 91, 0.8)",
+              "rgba(91, 106, 138, 0.8)"
+            ],
+
+            hoverOffset: 30,
             borderWidth: 1
           }
         ]
       },
       options: {
-        responsive: true
+        responsive: true,
+        plugins: {
+          datalabels: {
+            color: '#ffffff',
+            anchor: 'center',
+            display: 'auto',
+            formatter: (value,context) => {
+              const label = context.chart.data.labels[context.dataIndex];
+              return label;
+            }
+          }
+        }
       }
     });
   
@@ -192,4 +222,61 @@ export function graphWinLoss(inputResult, timeClass="all") {
     
   }
 
-  
+function getDrawData(timeClass) { 
+    let archivedGames = getArchivedGames();
+    let data = []
+
+    let agreed = 0;
+    let stalemate= 0;
+    let repetition = 0;
+    let m_insufficient = 0;
+
+    for (var i=0; i<archivedGames.length; i++) {
+      let parsedGameNode = archivedGames[i];
+      let nodeTimeClass = parsedGameNode.timeClass;
+      let result = parsedGameNode.result;
+
+      // specific time class
+      if (timeClass != "all" && nodeTimeClass == timeClass) {
+        switch (result) {
+          case "agreed":
+            agreed++;
+            break;
+          case "stalemate":
+            stalemate++;
+            break;
+          case "repetition":
+            repetition++;
+            break;
+          case "insufficient":
+            m_insufficient++;
+            break;
+          default:
+            break;
+          }
+        } 
+
+      // all time class
+      if (timeClass == "all") {
+        switch (result) {
+          case "agreed":
+            agreed++;
+            break;
+          case "stalemate":
+            stalemate++;
+            break;
+          case "repetition":
+            repetition++;
+            break;
+          case "insufficient":
+            m_insufficient++;
+            break;
+          default:
+            break;
+          }
+
+        } 
+      data = [agreed,stalemate,repetition,m_insufficient]
+      }
+      return data;
+}

@@ -304,8 +304,11 @@
   }
 
 .pieChartContainer {
-  max-width: 75%;
+  max-width: 70%;
 }
+/* #drawContainer {
+  max-width: 75%;
+} */
 
 .card {
   /* max-width: 50%;  */

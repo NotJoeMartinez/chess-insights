@@ -36,6 +36,8 @@
 
     <LossChart @updateLoss="lossTimeClass = $event" :timeClass="lossTimeClass" />
 
+    <DrawChart @updateDraw="drawTimeClass = $event" :timeClass="drawTimeClass" />
+
     <ExportPopup />
 
   </div>
@@ -61,6 +63,7 @@
   import OpeningGraph from "@/components/OpeningGraph.vue";
   import WinChart from "@/components/WinChart.vue";
   import LossChart from "@/components/LossChart.vue";
+  import DrawChart from "@/components/DrawChart.vue";
   import ExportBtn from "@/components/Buttons/ExportBtn.vue";
   import ExploreBtn from "@/components/Buttons/ExploreBtn.vue"
   import ExportPopup from "@/components/ExportPopup.vue"
@@ -76,6 +79,7 @@
       OpeningGraph,
       WinChart,
       LossChart,
+      DrawChart,
       ExportBtn,
       ExploreBtn,
       ExportPopup
@@ -93,6 +97,7 @@
         openingsTimeClass: '',
         lossTimeClass: '',
         winTimeClass: '',
+        drawTimeClass: '',
         // overview
         ovUserName: '',
         ovTimeClass: '',
@@ -181,6 +186,7 @@
         this.openingsTimeClass = "all";
         this.winTimeClass = largestTimeClass;
         this.lossTimeClass = largestTimeClass;
+        this.drawTimeClass = largestTimeClass;
 
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
