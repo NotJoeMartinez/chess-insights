@@ -9,8 +9,6 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-// import { parseGameNode, isTop90Percentile, getWinsByOpenings, getLossByOpenings} from './utils.js';
-
 export function graphOpenings(timeClass="all") {
     const ctx = document.getElementById("openings");
     const chartInstance = Chart.getChart(ctx);
@@ -53,9 +51,11 @@ export function graphOpenings(timeClass="all") {
             label: function (context) {
               const winCount = allData[context.dataIndex].winCount;
               const lossCount = allData[context.dataIndex].lossCount;
+              const drawCount = allData[context.dataIndex].drawCount;
               return [
                 `Wins: ${winCount}`,
                 `Losses: ${lossCount}`,
+                `Draws: ${drawCount}`
               ];
             },
           },
@@ -80,8 +80,6 @@ export function graphOpenings(timeClass="all") {
       }
     }
     });
-
-    // openingChart.update();
     return openingChart;
 }
   
@@ -103,9 +101,11 @@ function updateTooltipData(chartInstance, allData) {
   chartInstance.options.plugins.tooltip.callbacks.label = function (context) {
     const winCount = allData[context.dataIndex].winCount;
     const lossCount = allData[context.dataIndex].lossCount;
+    const drawCount = allData[context.dataIndex].drawCount;
     return [
       `Wins: ${winCount}`,
       `Losses: ${lossCount}`,
+      `Draws: ${drawCount}`
     ];
   };
 }
