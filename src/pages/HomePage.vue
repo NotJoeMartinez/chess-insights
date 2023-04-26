@@ -115,6 +115,8 @@
       async fetchUserData(userName){
         console.clear();
         clearLocalStorage();
+        this.gamesFound = 0;
+        this.progress = 0;
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);
         if (userStatsRes.status != 200){
