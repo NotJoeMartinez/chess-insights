@@ -71,3 +71,6 @@ https://api.chess.com/pub/player/{username}/games/{YYYY}/{MM}
 ![img](imgs/topOpenings.png)
 ![img](imgs/gamesWonBy.png)
 
+
+
+

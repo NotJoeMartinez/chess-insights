@@ -60,3 +60,7 @@ testusers.csv
 jsconfig.json
 vue.config.js
 babel.config.js
+
+
+# high secure (-_-) 
+.env

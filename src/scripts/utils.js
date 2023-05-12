@@ -294,3 +294,17 @@ export async function fetchArchiveUrls(userName) {
 
     return response; 
 }
+
+export function logAPIRequest(userName) {
+    const apiUri = process.env.VUE_APP_CHESS_API_URI;
+    fetch(`${apiUri}/api/logRequest`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({uname: userName}),
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}

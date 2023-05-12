@@ -47,16 +47,11 @@
       ExploreGrid,
       NavBar,
     },
-    // props: {
-    //   searchQuery: String,
-    //   gridColumns: Array,
-    //   gridData: Array,
-    // },
     data() {
       return {
         showSpinner: false,
         searchQuery: '',
-        gridColumns: ['timeClass', 'opponent', 'result', 'rating', 'date'],
+        gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
         gridData: []
 
       }

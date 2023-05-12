@@ -50,7 +50,8 @@
     saveOpeningsData,
     clearLocalStorage,
     fetchUserStats,
-    fetchArchiveUrls
+    fetchArchiveUrls,
+    logAPIRequest
   } from '@/scripts/utils.js'
 
   import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
@@ -117,6 +118,7 @@
         clearLocalStorage();
         this.gamesFound = 0;
         this.progress = 0;
+        logAPIRequest(userName);
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);
         if (userStatsRes.status != 200){
