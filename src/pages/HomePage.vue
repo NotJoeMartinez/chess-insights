@@ -32,6 +32,7 @@
     <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
 
 
+
     <WinChart @updateWin="winTimeClass = $event" :timeClass="winTimeClass" />
 
     <LossChart @updateLoss="lossTimeClass = $event" :timeClass="lossTimeClass" />
@@ -62,6 +63,7 @@
   import UserOverview from "@/components/UserOverview.vue";
   import EloOverTime from "@/components/EloOverTime.vue";
   import OpeningGraph from "@/components/OpeningGraph.vue";
+  // import ResByOpRating from "@/components/ResByOpRating.vue"
   import WinChart from "@/components/WinChart.vue";
   import LossChart from "@/components/LossChart.vue";
   import DrawChart from "@/components/DrawChart.vue";
@@ -78,6 +80,7 @@
       UserOverview,
       EloOverTime,
       OpeningGraph,
+      // ResByOpRating,
       WinChart,
       LossChart,
       DrawChart,
@@ -95,6 +98,7 @@
         progress: 0,
         totalUserGames: 0,
         eloTimeClass: '',
+        resByOpTimeClass: '',
         openingsTimeClass: '',
         lossTimeClass: '',
         winTimeClass: '',
@@ -200,6 +204,7 @@
       async getAllUserData(userName) {
         this.showCharts = false;
         clearLocalStorage();
+        userName = userName.replace(/^\s+|\s+$/g, "");
         this.ovUserName = userName;
         this.showSpinner = true;
         this.spinnerText = "Fetching user data...";
