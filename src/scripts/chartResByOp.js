@@ -13,23 +13,11 @@ export function chartResByOp(timeClass="all") {
     const ctx = document.getElementById("resByOpChart");
     const chartInstance = Chart.getChart(ctx);
 
-    let allData = getOpeningsData(timeClass);
     
-    let labels = allData.map(entry => entry.title);
-    let values = allData.map(entry => entry.value);
-
-    if (chartInstance) {
-      chartInstance.data.datasets[0].data = values;
-      chartInstance.data.labels = labels;
-      updateTooltipData(chartInstance, allData); 
-      chartInstance.update();
-      return;
-    }
-
   
-    var openingChart = new Chart(ctx, {
+    var resByOp = new Chart(ctx, {
       type: "bar",
-      label: "openings",
+      label: "Results",
       data: {
       labels: labels,
       datasets: [
@@ -83,29 +71,3 @@ export function chartResByOp(timeClass="all") {
     return openingChart;
 }
   
-function getOpeningsData(timeClass) {
-  if (window.localStorage.getItem("openings") != null) {
-    let localOpenings = window.localStorage.getItem("openings");
-    let openings = JSON.parse(localOpenings);
-    return openings[timeClass];
-} else {
-    let inlineDiv = document.getElementById("openingsInlineStorage");
-    let inlineOpenings = JSON.parse(inlineDiv.textContent);
-    return inlineOpenings[timeClass];
-}
-
-} 
-  
-
-function updateTooltipData(chartInstance, allData) {
-  chartInstance.options.plugins.tooltip.callbacks.label = function (context) {
-    const winCount = allData[context.dataIndex].winCount;
-    const lossCount = allData[context.dataIndex].lossCount;
-    const drawCount = allData[context.dataIndex].drawCount;
-    return [
-      `Wins: ${winCount}`,
-      `Losses: ${lossCount}`,
-      `Draws: ${drawCount}`
-    ];
-  };
-}
