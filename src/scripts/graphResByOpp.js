@@ -56,12 +56,6 @@ export function graphResByOpp(timeClass="all") {
         labels: rangeLabels,
         datasets: [
           {
-            label: 'Win',
-            data: wins,
-            borderWidth: 1,
-            backgroundColor: green, 
-          },
-          {
             label: 'Loss',
             data: losses,
             borderWidth: 1,
@@ -72,7 +66,13 @@ export function graphResByOpp(timeClass="all") {
             data: draws,
             borderWidth: 1,
             backgroundColor: grey, 
-          } 
+          },
+          {
+            label: 'Win',
+            data: wins,
+            borderWidth: 1,
+            backgroundColor: green, 
+          }
       ]
       },
       options: {
@@ -227,11 +227,18 @@ for (let i = 0; i < chartData.length; i++) {
       if (result == "win") {
         dataSets[ranges[j]]["win"] += 1;
       }
-      if (result == "resigned" || result == "checkmated" || result == "timeout") {
+      else if (result == "resigned" || result == "checkmated" || result == "timeout" || result == "abandoned") {
         dataSets[ranges[j]]["loss"] += 1;
       }
-      else {
+      else if (
+        result == "stalemate" || result == "agreed" || 
+        result == "repetition" || result == "insufficient" || 
+        result == "50mov" || result == "timevsinsufficient" 
+        ) {
         dataSets[ranges[j]]["draw"] += 1;
+      }
+      else {  
+        console.log("unknown result: " + result);
       }
     } 
   }
