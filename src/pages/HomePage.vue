@@ -184,12 +184,14 @@
 
       async getAllUserData(userName) {
 
+        const testUsersEnabled = process.env.VUE_APP_ENABLE_TEST_USERS;
+        
         this.showCharts = false;
         clearLocalStorage();
-        userName = userName.replace(/^\s+|\s+$/g, "");
-
-        if (userName == "testUser2") {
-          let testUserData = await fetchTestUserData();
+        if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
+          let userId = userName[userName.length - 1]
+          let testDataPath = `./testData/testUser${userId}.json`;
+          let testUserData = await fetchTestUserData(testDataPath);
           saveTestToStorage(testUserData);
         }
         else {
@@ -197,7 +199,9 @@
           this.spinnerText = "Fetching user data...";
           this.showProg = true;
 
+          userName = userName.replace(/^\s+|\s+$/g, "");
           let fetchStatus = await this.fetchUserData(userName);
+
           if (fetchStatus == "error") {
             this.showSpinner = false;
             this.showProg = false;

@@ -2,10 +2,9 @@
 
 import { clearLocalStorage } from "@/scripts/utils.js";
 
-export async function fetchTestUserData(){
+export async function fetchTestUserData(testDataPath){
     clearLocalStorage();
-
-    let testData = await fetch('/testData/testUser2.json')
+    let testData = await fetch(testDataPath);
     return testData.json();
 }
 
