@@ -5,7 +5,7 @@
 
         <h2 class="card-title font-weight-bold m-1" >
           <strong>
-            {{ ovUserName }}
+            {{ userName }}
           </strong>
         </h2>
 
@@ -58,7 +58,7 @@ export default {
     name: "UserOverview",
     props: {
         ovTimeClass: String,
-        ovUserName: String,
+        userName: String,
         ovWinCount: Number,
         ovDrawCount: Number,
         ovLossCount: Number,

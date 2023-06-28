@@ -12,19 +12,29 @@
 
             <canvas id="openings"></canvas> 
 
-            <button class="btn btn-primary slicer" :class="{active:timeClass === 'all'}" v-on:click="updateOpenings('all')">
+            <button class="btn btn-primary slicer" 
+            :class="{active:timeClass === 'all'}" 
+            v-on:click="updateOpenings('all')">
             All
             </button>
-            <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet'}" v-on:click="updateOpenings('bullet')">
+            <button class="btn btn-primary slicer" 
+            :class="{ active: timeClass === 'bullet'}" 
+            v-on:click="updateOpenings('bullet')">
             Bullet 
             </button>
-            <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }"  v-on:click="updateOpenings('blitz')">
+            <button class="btn btn-primary slicer" 
+            :class="{ active: timeClass === 'blitz' }"  
+            v-on:click="updateOpenings('blitz')">
             Blitz
             </button>
-            <button class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateOpenings('rapid')">
+            <button class="btn btn-primary slicer" 
+            :class="{ active: timeClass === 'rapid' }" 
+            v-on:click="updateOpenings('rapid')">
             Rapid
             </button>
-            <button class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateOpenings('daily')">
+            <button class="btn btn-primary slicer" 
+            :class="{ active: timeClass === 'daily' }" 
+            v-on:click="updateOpenings('daily')">
             Daily
             </button>
         </div>

@@ -22,7 +22,7 @@
 
 
 
-    <UserOverview @update-user-overview="updateOverview($event)" :ovUserName="ovUserName" :ovTimeClass="ovTimeClass"
+    <UserOverview @update-user-overview="updateOverview($event)" :userName="userName" :ovTimeClass="ovTimeClass"
       :ovTotalGames="ovTotalGames" :ovWinPercentage="ovWinPercentage" :ovWinCount="ovWinCount"
       :ovDrawPercentage="ovDrawPercentage" :ovDrawCount="ovDrawCount" :ovLossPercentage="ovLossPercentage"
       :ovLossCount="ovLossCount" />
@@ -60,6 +60,8 @@
 
   import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
 
+  import { fetchTestUserData, saveTestToStorage } from '@/scripts/userTests.js'
+
   import NavBar from "@/components/NavBar.vue";
   import InputForm from "@/components/InputForm.vue";
   import ProgBar from "@/components/ProgBar.vue";
@@ -93,6 +95,7 @@
     },
     data() {
       return {
+        userName: '',
         showSpinner: false,
         spinnerText: "",
         showProg: false,
@@ -106,8 +109,6 @@
         lossTimeClass: '',
         winTimeClass: '',
         drawTimeClass: '',
-        // overview
-        ovUserName: '',
         ovTimeClass: '',
         ovUserGames: 0,
         ovWinPercentage: 0,
@@ -119,6 +120,7 @@
         ovTotalGames: 0,
       }
     },
+
     methods: {
       async fetchUserData(userName){
         console.clear();
@@ -126,6 +128,7 @@
         this.gamesFound = 0;
         this.progress = 0;
         logAPIRequest(userName);
+
         // get overall stats
         let userStatsRes = await fetchUserStats(userName);
         if (userStatsRes.status != 200){
@@ -148,11 +151,9 @@
         }
         let archiveMonths = await archiveUrlsRes.json()
         let archiveUrls = archiveMonths.archives;
-
-         
-
         let totalGames = 0;
         let archivedGames = []
+
         for (var i = 0; i < archiveUrls.length; i++) {
           var archive = await fetch(archiveUrls[i]);
           var archiveJson = await archive.json();
@@ -176,22 +177,44 @@
         }
         this.spinnerText = "saving data...";
         window.localStorage.setItem("userName", userName);
-        // try {
-        //   window.localStorage.setItem("archivedGames", JSON.stringify(archivedGames));
-        // } catch (err) {
-        //   let inlineStorage = document.createElement("div");
-        //   let appDiv = document.getElementById("app");
-        //   inlineStorage.setAttribute("id", "inlineStorage");
-        //   inlineStorage.setAttribute("hidden", "hidden");
-        //   inlineStorage.textContent = JSON.stringify(archivedGames);
-        //   appDiv.appendChild(inlineStorage);
-        // }
-
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
 
-        let largestTimeClass = getLargestTimeClass();
+      },
 
+      async getAllUserData(userName) {
+
+        const testUsersEnabled = process.env.VUE_APP_ENABLE_TEST_USERS;
+        
+        this.showCharts = false;
+        clearLocalStorage();
+        if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
+          let userId = userName[userName.length - 1]
+          let testDataPath = `./testData/testUser${userId}.json`;
+          let testUserData = await fetchTestUserData(testDataPath);
+          saveTestToStorage(testUserData);
+        }
+        else {
+          this.showSpinner = true;
+          this.spinnerText = "Fetching user data...";
+          this.showProg = true;
+
+          userName = userName.replace(/^\s+|\s+$/g, "");
+          let fetchStatus = await this.fetchUserData(userName);
+
+          if (fetchStatus == "error") {
+            this.showSpinner = false;
+            this.showProg = false;
+            this.showCharts = false;
+            return;
+          }
+        }
+
+
+        this.showSpinner = false;
+        this.userName = window.localStorage.getItem("userName");
+
+        let largestTimeClass = getLargestTimeClass();
         this.ovTimeClass = largestTimeClass;
 
         this.openingsTimeClass = "all";
@@ -203,43 +226,15 @@
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
 
-      },
-
-      async getAllUserData(userName) {
-        this.showCharts = false;
-        clearLocalStorage();
-        userName = userName.replace(/^\s+|\s+$/g, "");
-        this.ovUserName = userName;
-        this.showSpinner = true;
-        this.spinnerText = "Fetching user data...";
-        this.showProg = true;
-
-        let fetchStatus = await this.fetchUserData(userName);
-
-        if (fetchStatus == "error") {
-          this.showSpinner = false;
-          this.showProg = false;
-          this.showCharts = false;
-          return;
-        }
-
-        this.showSpinner = false;
-
         this.showCharts = true;
-
         const element = document.getElementById('uname');
         element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
 
       },
 
-      // writeEloOverTime
       writeEloOverTime(timeClass = "rapid") {
-
-
-
         this.eloTimeClass = timeClass;
         this.showCharts = true;
-
       },
 
       updateOverview(timeClass) {
@@ -309,8 +304,6 @@
         this.ovLossCount = numLosses.toString();
 
       },
-
-
     }
 
   }

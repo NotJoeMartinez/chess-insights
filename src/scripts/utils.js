@@ -31,9 +31,8 @@ export function getPlayerStats() {
 }
 
 export function getUserName() {
-    let userName = document.getElementById("uname");
-
-    return userName.value;
+    let userName = window.localStorage.getItem("userName");
+    return userName;
 }
 
 export function utcToHuman(unixTimestamp) {
