@@ -151,11 +151,9 @@
         }
         let archiveMonths = await archiveUrlsRes.json()
         let archiveUrls = archiveMonths.archives;
-
-         
-
         let totalGames = 0;
         let archivedGames = []
+
         for (var i = 0; i < archiveUrls.length; i++) {
           var archive = await fetch(archiveUrls[i]);
           var archiveJson = await archive.json();
@@ -179,19 +177,18 @@
         }
         this.spinnerText = "saving data...";
         window.localStorage.setItem("userName", userName);
-
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
 
       },
 
       async getAllUserData(userName) {
-        this.showCharts = false;
 
+        this.showCharts = false;
         clearLocalStorage();
         userName = userName.replace(/^\s+|\s+$/g, "");
 
-        if (userName == "testUser1") {
+        if (userName == "testUser2") {
           let testUserData = await fetchTestUserData();
           saveTestToStorage(testUserData);
         }

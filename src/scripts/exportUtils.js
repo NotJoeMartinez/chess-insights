@@ -123,18 +123,22 @@ export function exportChessData(option) {
         for (let i = 0; i < archivedGames.length; i++) {
             let parsedGameNode = archivedGames[i];
             parsedGameNode.pgn = gameNodePgn[parsedGameNode.gameId];
-            
             parsedGames.push(parsedGameNode);
         }
+  
+        let allJsonData = {
+            "userName": getUserName(),
+            "playerStats": JSON.parse(window.localStorage.getItem("playerStats")),
+            "openings": JSON.parse(window.localStorage.getItem("openings")),    
+            "parsedGames": parsedGames
+        } 
 
-        let jsonFile = new Blob([JSON.stringify(parsedGames)], {
+        let jsonFile = new Blob([JSON.stringify(allJsonData)], {
             type: 'text/json'
         })
 
         let a = window.document.createElement('a');
-
         a.href = window.URL.createObjectURL(jsonFile);
-
 
         let timeStamp = getFormattedTimestamp();
         let uname = getUserName();
@@ -142,10 +146,8 @@ export function exportChessData(option) {
 
         a.download = fname;
         document.body.appendChild(a);
-
         a.click();
         document.body.removeChild(a);
-
 
     }
 
