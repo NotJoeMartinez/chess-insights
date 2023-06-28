@@ -9,13 +9,21 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-export function chartResByOp(timeClass="all") {
+export function graphResByOpp(timeClass="all") {
     const ctx = document.getElementById("resByOpChart");
     const chartInstance = Chart.getChart(ctx);
 
-    
+    let allData = getResByOppData(timeClass);
+    let labels = allData.map(entry => entry.title);
+    let values = allData.map(entry => entry.value);
+
+    if (chartInstance) {
+      chartInstance.data.datasets[0].data = allData; 
+      chartInstance.update();
+      return;
+    }
   
-    var resByOp = new Chart(ctx, {
+    const resByOp = new Chart(ctx, {
       type: "bar",
       label: "Results",
       data: {
@@ -68,6 +76,20 @@ export function chartResByOp(timeClass="all") {
       }
     }
     });
-    return openingChart;
+    console.debug("resByOp", resByOp)
+    return resByOp;
 }
   
+
+function getResByOppData(timeClass) {
+  if (window.localStorage.getItem("openings") != null) {
+    let localOpenings = window.localStorage.getItem("openings");
+    let openings = JSON.parse(localOpenings);
+    return openings[timeClass];
+  } 
+  else {
+    let inlineDiv = document.getElementById("openingsInlineStorage");
+    let inlineOpenings = JSON.parse(inlineDiv.textContent);
+    return inlineOpenings[timeClass];
+  }
+}

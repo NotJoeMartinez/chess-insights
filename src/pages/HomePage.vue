@@ -29,9 +29,9 @@
 
     <EloOverTime @update="writeEloOverTime($event)" :timeClass="eloTimeClass" />
 
+    <ResByOpRating @updateResByOp="resByOpTimeClass = $event" :timeClass="resByOpTimeClass" />
+
     <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
-
-
 
     <WinChart @updateWin="winTimeClass = $event" :timeClass="winTimeClass" />
 
@@ -63,7 +63,7 @@
   import UserOverview from "@/components/UserOverview.vue";
   import EloOverTime from "@/components/EloOverTime.vue";
   import OpeningGraph from "@/components/OpeningGraph.vue";
-  // import ResByOpRating from "@/components/ResByOpRating.vue"
+  import ResByOpRating from "@/components/ResByOpRating.vue"
   import WinChart from "@/components/WinChart.vue";
   import LossChart from "@/components/LossChart.vue";
   import DrawChart from "@/components/DrawChart.vue";
@@ -80,7 +80,7 @@
       UserOverview,
       EloOverTime,
       OpeningGraph,
-      // ResByOpRating,
+      ResByOpRating,
       WinChart,
       LossChart,
       DrawChart,
@@ -195,6 +195,7 @@
         this.winTimeClass = "all";
         this.lossTimeClass = "all";
         this.drawTimeClass = "all";
+        this.resByOpTimeClass = "all";
 
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);

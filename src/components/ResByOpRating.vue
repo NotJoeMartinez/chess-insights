@@ -21,29 +21,30 @@
 </template>
 
 <script>
-import { graphElo, resetChartZoom } from '../scripts/chartResByOp.js';
+import { graphResByOpp } from '@/scripts/graphResByOp.js';
+
 export default {
   name: 'resByOpRating',
-  data() {
-    return {
-        eloChartInstance: null,
-    };
-  },
+  // data() {
+  //   return {
+  //       eloChartInstance: null,
+  //   };
+  // },
   props: {
     timeClass: String,
   },
   methods : {
-    updateResByOp(timeClass) {
+    updateResByOpp(timeClass) {
       this.$emit('update', timeClass)
-      chartResByOp(timeClass);
-      resetChartZoom(timeClass)
-      },
-
-      },
+      graphResByOpp(timeClass);
+      // resetChartZoom(timeClass)
+    },
+  },
 
   mounted: function()  {
-    chartResByOp(this.timeClass);
-    }
+    console.debug("mounted resByOpRating")
+    graphResByOpp(this.timeClass);
+  }
 }
 
 
