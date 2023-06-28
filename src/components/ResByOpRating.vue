@@ -1,5 +1,5 @@
 <template>
-    <div class="div container resByOp chart pt-3 pb-3" id="resByOp" :timeClass="{timeClass}">
+    <div class="div container resByOp chart pt-3 pb-3" id="resByOp">
   <div class="row" id="resByOpRow">
     <div class="card" id="resByOpCard">
     <h2 class="card-title  mt-2">
@@ -8,12 +8,38 @@
       </strong>
     </h2>
     <div class="card-body" id="resByOpCardBody">
-      <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
       <canvas id="resByOppChart"></canvas> 
-      <button id="eotBullet" class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateResByOp('bullet')">Bullet</button>
-      <button id="eotBlitz" class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateResByOp('blitz')">Blitz</button>
-      <button id="eotRapid" class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateResByOp('rapid')">Rapid</button>
-      <button id="eotDaily" class="btn btn-primary slicer" :class="{ active: timeClass === 'daily' }" v-on:click="updateResByOp('daily')">Daily</button>
+
+      <button class="btn btn-primary slicer" 
+      :class="{active:timeClass === 'all'}" 
+      @click="updateResByOpp('all')">
+        All
+      </button>
+
+      <button class="btn btn-primary slicer" 
+      :class="{ active: timeClass === 'bullet' }" 
+      @click="updateResByOpp('bullet')">
+      Bullet
+      </button>
+
+      <button class="btn btn-primary slicer" 
+      :class="{ active: timeClass === 'blitz' }" 
+      @click="updateResByOpp('blitz')">
+        Blitz
+      </button>
+
+      <button class="btn btn-primary slicer" 
+      :class="{ active: timeClass === 'rapid' }" 
+      @click="updateResByOpp('rapid')">
+        Rapid
+      </button>
+
+      <button class="btn btn-primary slicer" 
+      :class="{ active: timeClass === 'daily' }" 
+      @click="updateResByOpp('daily')">
+        Daily
+      </button>
+
     </div>
   </div>
   </div>
@@ -33,9 +59,9 @@ export default {
   },
 
   methods : {
-    updateResByOpp(timeClass) {
-      this.$emit('update', timeClass)
-      graphResByOpp(timeClass);
+    updateResByOpp(newTimeClass) {
+      this.$emit('updateResByOpp', newTimeClass)
+      graphResByOpp(newTimeClass);
     },
     graphTestUser() {
       fetch('/testData/test_user.csv')
