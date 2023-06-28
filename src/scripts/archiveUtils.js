@@ -12,7 +12,6 @@ export function parseAndSaveArchivedGames(archivedGames) {
 
     }
 
-    console.log(`archivedGames: ${parsedArchivedGames.length}`)
     savePgnGames(pgnGames)
 
     try {
@@ -181,7 +180,7 @@ export function getPgnGames(){
 
 export function getArchivedGames() {
 
-    // console.log(window.localStorage.getItem("archivedGames"));
+
     if (window.localStorage.getItem("archivedGames") != null) {
         let archive = window.localStorage.getItem("archivedGames");
         return JSON.parse(archive);
