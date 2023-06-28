@@ -32,6 +32,10 @@ deploy.sh
 node_modules
 /dist
 
+# test data
+public/testData
+public/testData/*
+
 
 # local env files
 .env.local
@@ -64,3 +68,4 @@ babel.config.js
 
 # high secure (-_-) 
 .env
+

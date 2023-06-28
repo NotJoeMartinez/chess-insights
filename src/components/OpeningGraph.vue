@@ -34,7 +34,6 @@
 
 
 <script>
-
 import { graphOpenings } from '@/scripts/graphOpenings.js';
 
 export default {

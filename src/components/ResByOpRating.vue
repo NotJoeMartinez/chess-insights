@@ -9,7 +9,7 @@
     </h2>
     <div class="card-body" id="resByOpCardBody">
       <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
-      <canvas id="resByOpChart"></canvas> 
+      <canvas id="resByOppChart"></canvas> 
       <button id="eotBullet" class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateResByOp('bullet')">Bullet</button>
       <button id="eotBlitz" class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateResByOp('blitz')">Blitz</button>
       <button id="eotRapid" class="btn btn-primary slicer" :class="{ active: timeClass === 'rapid' }" v-on:click="updateResByOp('rapid')">Rapid</button>
@@ -21,29 +21,42 @@
 </template>
 
 <script>
-import { graphResByOpp } from '@/scripts/graphResByOp.js';
+import { graphResByOpp } from '@/scripts/graphResByOpp.js';
 
 export default {
-  name: 'resByOpRating',
-  // data() {
-  //   return {
-  //       eloChartInstance: null,
-  //   };
-  // },
   props: {
     timeClass: String,
   },
+
+  mounted: function()  {
+    graphResByOpp(this.timeClass);
+  },
+
   methods : {
     updateResByOpp(timeClass) {
       this.$emit('update', timeClass)
       graphResByOpp(timeClass);
-      // resetChartZoom(timeClass)
     },
-  },
+    graphTestUser() {
+      fetch('/testData/test_user.csv')
+      .then(response => {
 
-  mounted: function()  {
-    console.debug("mounted resByOpRating")
-    graphResByOpp(this.timeClass);
+      if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+      }
+      return response.text();
+    })
+    .then(csv => {
+      Papa.parse(csv, {
+        header: true,
+        complete: (results) => {
+          this.csvData = results.data;
+          graphResByOpp(this.timeClass, this.csvData);
+        }
+      });
+    }).catch(error => {
+      console.log(error); });
+    }
   }
 }
 
