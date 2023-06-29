@@ -14,7 +14,7 @@ export function graphOpenings(timeClass="all") {
     const chartInstance = Chart.getChart(ctx);
 
     let games = getGamesByTimeClass(timeClass)
-    let topOpenings = getTopOpenings(games, 10) 
+    games = addCounts(games) 
 
     let labels = allData.map(entry => entry.title);
     let values = allData.map(entry => entry.value);
@@ -110,55 +110,44 @@ function updateTooltipData(chartInstance, allData) {
   };
 }
 
-function getTopOpenings(games, n) {
-
+function addCounts(games) {
   let mainLines = games["mainLines"] 
 
   let counts = {};
 
   for (let i = 0; i < mainLines.length; i++) {
     let current = mainLines[i]["mainLine"]
-    counts[current] = (counts[current] || 0) + 1;
+    counts[current]["count"] = (counts[current] || 0) + 1;
+
+    let result = mainLines[i]["result"]
+
+    counts[current]["Win"] = 0;
+    counts[current]["Loss"] = 0;
+    counts[current]["Draw"] = 0;
+
+    if (result === "win") {
+        counts[current]["Win"] += 1; 
+    } 
+    else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
+      counts[current]["Loss"] += 1;
+    }
+    // else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+    else {
+      counts[current]["Draw"] += 1;
+    }
   }
 
-  let allCounts = []
-  for (const [key, value] of Object.entries(counts)) {
-      allCounts.push(value)
-  }
-
-
-
-  let openingTitles = []
-  let openingCounts = []
-
-  for (const [key, value] of Object.entries(counts)) {
-      if (nTopPercentile(value, allCounts, 0.7)) {
-        openingTitles.push(key);
-        openingCounts.push(value);
-      }
-  }
-  console.log(openingTitles)
-  console.log(openingCounts)
-
-  games["sortedOpenings"] = {
-      "labels": openingTitles,
-      "values": openingCounts
-  }
-
-  console.log(games)
+  games["counts"] = counts
+  console.log(games["counts"])
   return games
 }
 
 function nTopPercentile(num, allNums, n) {
   console.log(num)
   console.log(allNums)
-
   allNums.sort((a, b) => a - b);
-
   const index = Math.ceil(num.length * 0.9) - 1;
   const percentileValue = allNums[index];
-
-
   return num >= percentileValue;
 }
 
