@@ -24,6 +24,16 @@
                                   @click="submitForm()">
                                   Get Insights 
                           </button>
+                          <button type="button"
+                                  class="btn btn-secondary"
+                                  id="uploadBtn"
+                                  data-bs-toggle="tooltip" 
+                                  data-bs-placement="top" 
+                                  title="Upload json file"
+                                  @click="uploadFile">
+                                  <font-awesome-icon :icon="['fas', 'file-arrow-up']" />
+                          </button>
+
                       </span>
 
     </div>
@@ -37,6 +47,10 @@
 </template>
 
 <script>
+import { importJsonData } from '@/scripts/userImports.js';
+
+import * as bootstrap from 'bootstrap'
+
 export default {
   data() {
     return {
@@ -44,12 +58,50 @@ export default {
     }
   },
   mounted() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  
     this.suggestUserInput();
   },
   methods: {
     submitForm() {
       this.$emit('get-all-user-data', this.userName);
     },
+
+    uploadFile() {
+
+      let inputElement = document.createElement("input");
+      inputElement.type = "file";
+      inputElement.accept = ".json";
+      inputElement.click();
+
+      inputElement.addEventListener("change", (event) => {
+        if (event.target.files.length > 0) {
+          let reader = new FileReader();
+          reader.onload = (event) => {
+            try {
+              let json = JSON.parse(event.target.result);
+              importJsonData(json);
+              this.$emit('read-file-upload');
+            } catch(e) {
+              alert("The file could not be parsed as JSON. Please read documentation for more information.");
+              console.error("The file could not be parsed as JSON.", e);
+            }
+          };
+
+          reader.onerror = function() {
+            alert("There was an error reading the file. Please read documentation for more information.")
+            console.error("There was an error reading the file.");
+          };
+          
+          reader.readAsText(event.target.files[0]);
+        }
+
+      });
+    },
+
     suggestUserInput() {
       const input = document.getElementById("uname");
       const gms = [
@@ -129,3 +181,22 @@ export default {
   },
 }
 </script>
+
+<style>
+#uploadBtn {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #85a35a;
+  color: #ffffff;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+#uploadBtn:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    z-index: 1;
+}
+
+</style>

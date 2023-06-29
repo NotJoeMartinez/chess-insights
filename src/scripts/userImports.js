@@ -8,8 +8,9 @@ export async function fetchTestUserData(testDataPath){
     return testData.json();
 }
 
-export function saveTestToStorage(data) {
+export function importJsonData(data) {
 
+    clearLocalStorage();
     let userName = data["userName"];
     let playerStats = data["playerStats"];
     let archivedGames = data["parsedGames"];
@@ -60,4 +61,5 @@ export function saveTestToStorage(data) {
     }
 
 }
+
 
