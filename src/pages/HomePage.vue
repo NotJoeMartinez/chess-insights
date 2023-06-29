@@ -56,14 +56,21 @@
 <script>
   import {
     getLargestTimeClass,
-    saveOpeningsData,
     clearLocalStorage,
     fetchUserStats,
     fetchArchiveUrls,
     logAPIRequest
   } from '@/scripts/utils.js'
 
-  import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
+  import { 
+    parseAndSaveArchivedGames, 
+    verifyLiveChess,
+  } from '@/scripts/archiveUtils.js'
+
+  import {
+    calcOpeningsData,
+    saveOpeningsData
+  } from '@/scripts/openingsUtils.js'
 
 
   import NavBar from "@/components/NavBar.vue";
@@ -174,15 +181,19 @@
         }
         this.totalUserGames = totalGames;
         this.showProg = false;
+
         if (archivedGames.length < 1) {
           this.showProg = false;
           alert("No games found under that user")
           return;
         }
+
         this.spinnerText = "saving data...";
+
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
-        saveOpeningsData();
+        saveOpeningsData(calcOpeningsData());
+
       },
 
       async getAllUserData(userName) {

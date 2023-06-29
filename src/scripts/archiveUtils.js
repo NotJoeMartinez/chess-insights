@@ -1,7 +1,9 @@
 import { utcToHuman } from "@/scripts/utils.js";
+import { calcOpeningsData, saveOpeningsData } from "@/scripts/openingsUtils.js" 
 
 export function parseAndSaveArchivedGames(archivedGames) {
     let parsedArchivedGames = []
+
     let pgnGames = {}
 
     for (let i = 0; i < archivedGames.length; i++) {
@@ -160,7 +162,6 @@ export function parseGameNode(gameNode) {
     return parsedGameNode;
 }
 
-
 export function savePgnGames(pgn){
     let inlineStorage = document.createElement("div");
     let appDiv = document.getElementById("app");
@@ -180,7 +181,6 @@ export function getPgnGames(){
 
 export function getArchivedGames() {
 
-
     if (window.localStorage.getItem("archivedGames") != null) {
         let archive = window.localStorage.getItem("archivedGames");
         return JSON.parse(archive);
@@ -189,65 +189,5 @@ export function getArchivedGames() {
         let archive = inlineDiv.textContent;
         return JSON.parse(archive);
     }
-
-}
-
-
-export function getMainline(opening){
-    let mainLines = {
-        "Alekhine" : "Alekhines-Defense",
-        "Benko Gambit" : "Benko-Gambit",
-        "Benoni": "Benoni-Defense",
-        "Bird": "Birds-Opening"
-        // "Bishop",
-        // "Bogo-Indian",
-        // "Caro-Kann",
-        // "Catalan",
-        // "Danish Gambit",
-        // "Dutch",
-        // "English",
-        // "Four Knights Game",
-        // "French",
-        // "Grünfeld",
-        // "King's Fianchetto",
-        // "Budapest Gambit",
-        // "Indian Game",
-        // "King's Indian Defense",
-        // "Italian Game",
-        // "King's Gambit",
-        // "King's Indian Attack",
-        // "Modern w/1.e4",
-        // "Nimzo-Indian",
-        // "Nimzowitsch-Larsen",
-        // "Nimzowitsch",
-        // "Old Indian",
-        // "Owen",
-        // "Philidor",
-        // "Polish",
-        // "Ponziani",
-        // "Colle",
-        // "London",
-        // "Queen's Pawn",
-        // "Queen's Gambit",
-        // "Queen's Indian",
-        // "Petrov",
-        // "Scandinavian",
-        // "Scotch Game",
-        // "Semi-Slav",
-        // "Alapin Sicilian",
-        // "Closed Sicilian",
-        // "Sicilian",
-        // "Slav",
-        // "Ruy Lopez",
-        // "Tarrasch",
-        // "Three Knights",
-        // "Trompowsky",
-        // "Vienna Game",
-        // "Réti",
-        // "King's Pawn",
-        // "Uncommon",
-        // "Pirc",
-        // "Center Game"
-      }
 
 }

@@ -9,7 +9,6 @@
         <p class="card-text">Click to view the chess.com wiki of the opening</p>
         
         <div class="card-body">
-
             <canvas id="openings"></canvas> 
 
             <button class="btn btn-primary slicer" 

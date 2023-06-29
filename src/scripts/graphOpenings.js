@@ -1,20 +1,21 @@
 
-// import { Chart } from 'chart.js';
+
+import { getOpeningsData } from "@/scripts/openingsUtils.js";
+
 import Chart from 'chart.js/auto'
-import {LinearScale, PointElement, Tooltip, Legend, TimeScale} from "chart.js"; 
 import zoomPlugin from 'chartjs-plugin-zoom';
-
-// import moment from 'moment';
 import 'chartjs-adapter-moment';
-
+import { LinearScale, PointElement, Tooltip, Legend, TimeScale } from "chart.js"; 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
+
 
 export function graphOpenings(timeClass="all") {
     const ctx = document.getElementById("openings");
     const chartInstance = Chart.getChart(ctx);
 
-    let allData = getOpeningsData(timeClass);
-    
+    let games = getGamesByTimeClass(timeClass)
+    let topOpenings = getTopOpenings(games, 10) 
+
     let labels = allData.map(entry => entry.title);
     let values = allData.map(entry => entry.value);
 
@@ -33,11 +34,24 @@ export function graphOpenings(timeClass="all") {
       data: {
       labels: labels,
       datasets: [
-        {
-        label: "times used",
-        data: values,
-        borderWidth: 1
-      }
+          {
+            label: 'Loss',
+            data: losses,
+            borderWidth: 1,
+            backgroundColor: red, 
+          },
+          {
+            label: 'Draw',
+            data: draws,
+            borderWidth: 1,
+            backgroundColor: grey, 
+          },
+          {
+            label: 'Win',
+            data: wins,
+            borderWidth: 1,
+            backgroundColor: green, 
+          }
       ]
     },
     options: {
@@ -82,20 +96,6 @@ export function graphOpenings(timeClass="all") {
     });
     return openingChart;
 }
-  
-function getOpeningsData(timeClass) {
-  if (window.localStorage.getItem("openings") != null) {
-    let localOpenings = window.localStorage.getItem("openings");
-    let openings = JSON.parse(localOpenings);
-    return openings[timeClass];
-} else {
-    let inlineDiv = document.getElementById("openingsInlineStorage");
-    let inlineOpenings = JSON.parse(inlineDiv.textContent);
-    return inlineOpenings[timeClass];
-}
-
-} 
-  
 
 function updateTooltipData(chartInstance, allData) {
   chartInstance.options.plugins.tooltip.callbacks.label = function (context) {
@@ -108,4 +108,75 @@ function updateTooltipData(chartInstance, allData) {
       `Draws: ${drawCount}`
     ];
   };
+}
+
+function getTopOpenings(games, n) {
+
+  let mainLines = games["mainLines"] 
+
+  let counts = {};
+
+  for (let i = 0; i < mainLines.length; i++) {
+    let current = mainLines[i]["mainLine"]
+    counts[current] = (counts[current] || 0) + 1;
+  }
+
+  let allCounts = []
+  for (const [key, value] of Object.entries(counts)) {
+      allCounts.push(value)
+  }
+
+
+
+  let openingTitles = []
+  let openingCounts = []
+
+  for (const [key, value] of Object.entries(counts)) {
+      if (nTopPercentile(value, allCounts, 0.7)) {
+        openingTitles.push(key);
+        openingCounts.push(value);
+      }
+  }
+  console.log(openingTitles)
+  console.log(openingCounts)
+
+  games["sortedOpenings"] = {
+      "labels": openingTitles,
+      "values": openingCounts
+  }
+
+  console.log(games)
+  return games
+}
+
+function nTopPercentile(num, allNums, n) {
+  console.log(num)
+  console.log(allNums)
+
+  allNums.sort((a, b) => a - b);
+
+  const index = Math.ceil(num.length * 0.9) - 1;
+  const percentileValue = allNums[index];
+
+
+  return num >= percentileValue;
+}
+
+function getGamesByTimeClass(timeClass) {
+  let data = getOpeningsData();
+
+  let classData = [];
+
+  for (let i = 0; i < data["mainLines"].length; i++){
+    let game = data["mainLines"][i];
+    let rating = game["rating"];
+    if (timeClass != "all" && rating == timeClass){
+      classData.push(game)
+    }
+    else {
+      classData.push(game)
+    }
+  }
+
+  return data;
 }
