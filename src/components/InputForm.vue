@@ -30,7 +30,7 @@
                                   data-bs-toggle="tooltip" 
                                   data-bs-placement="top" 
                                   title="Upload json file"
-                                  @click="uploadFile()">
+                                  @click="uploadFile">
                                   <font-awesome-icon :icon="['fas', 'file-arrow-up']" />
                           </button>
 
@@ -47,7 +47,10 @@
 </template>
 
 <script>
+import { importJsonData } from '@/scripts/userImports.js';
+
 import * as bootstrap from 'bootstrap'
+
 export default {
   data() {
     return {
@@ -60,44 +63,45 @@ export default {
     return new bootstrap.Tooltip(tooltipTriggerEl)
     })
   
-
     this.suggestUserInput();
   },
   methods: {
     submitForm() {
       this.$emit('get-all-user-data', this.userName);
     },
+
     uploadFile() {
-      this.openFilePicker();
-    },
-    openFilePicker() {
+
       let inputElement = document.createElement("input");
       inputElement.type = "file";
       inputElement.accept = ".json";
       inputElement.click();
 
-      inputElement.addEventListener("change", function () {
-        if (this.files.length > 0) {
-          console.log("Filename ", this.files[0].name);
-          
+      inputElement.addEventListener("change", (event) => {
+        if (event.target.files.length > 0) {
           let reader = new FileReader();
-          reader.onload = function(event) {
+          reader.onload = (event) => {
             try {
               let json = JSON.parse(event.target.result);
-              console.log(json);
+              importJsonData(json);
+              this.$emit('read-file-upload');
             } catch(e) {
+              alert("The file could not be parsed as JSON. Please read documentation for more information.");
               console.error("The file could not be parsed as JSON.", e);
             }
           };
 
           reader.onerror = function() {
+            alert("There was an error reading the file. Please read documentation for more information.")
             console.error("There was an error reading the file.");
           };
           
-          reader.readAsText(this.files[0]);
+          reader.readAsText(event.target.files[0]);
         }
+
       });
     },
+
     suggestUserInput() {
       const input = document.getElementById("uname");
       const gms = [

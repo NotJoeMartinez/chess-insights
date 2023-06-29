@@ -1,7 +1,12 @@
 <template>
 
   <NavBar />
-  <InputForm @get-all-user-data="getAllUserData" />
+
+  <InputForm 
+  @get-all-user-data="getAllUserData" 
+  @read-file-upload="finishSetup" 
+  />
+
   <div v-if="showSpinner" class="container">
     <div class="spinner-border">
     </div>
@@ -60,7 +65,6 @@
 
   import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
 
-  import { fetchTestUserData, saveTestToStorage } from '@/scripts/userTests.js'
 
   import NavBar from "@/components/NavBar.vue";
   import InputForm from "@/components/InputForm.vue";
@@ -179,29 +183,26 @@
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData();
-
       },
 
       async getAllUserData(userName) {
-
-        const testUsersEnabled = process.env.VUE_APP_ENABLE_TEST_USERS;
-        
-        this.showCharts = false;
         clearLocalStorage();
+        const testUsersEnabled = process.env.VUE_APP_ENABLE_TEST_USERS;
+        this.showCharts = false;
+        this.showSpinner = true;
+
         if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
           let userId = userName[userName.length - 1]
           let testDataPath = `./testData/testUser${userId}.json`;
           let testUserData = await fetchTestUserData(testDataPath);
-          saveTestToStorage(testUserData);
+          importJsonData(testUserData);
         }
         else {
-          this.showSpinner = true;
           this.spinnerText = "Fetching user data...";
           this.showProg = true;
 
           userName = userName.replace(/^\s+|\s+$/g, "");
           let fetchStatus = await this.fetchUserData(userName);
-
           if (fetchStatus == "error") {
             this.showSpinner = false;
             this.showProg = false;
@@ -209,9 +210,11 @@
             return;
           }
         }
+        this.finishSetup();
+      },
 
-
-        this.showSpinner = false;
+      finishSetup(){
+        
         this.userName = window.localStorage.getItem("userName");
 
         let largestTimeClass = getLargestTimeClass();
@@ -223,13 +226,15 @@
         this.drawTimeClass = "all";
         this.resByOppTimeClass = "all";
 
+        this.showSpinner = false;
+
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
 
         this.showCharts = true;
+
         const element = document.getElementById('uname');
         element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-
       },
 
       writeEloOverTime(timeClass = "rapid") {
