@@ -38,19 +38,51 @@
             </button>
 
 
-            <button class="btn btn-primary slicer" id="openingsColorBtn"
+            <button 
+			class="btn btn-primary slicer" 
+			data-bs-toggle="tooltip" 
+			data-bs-placement="top" 
+			title="Toggle between white and black openings"
+			:class="color"
+			id="openingsColorBtn"
             @click="updateColor()">
-            {{ color }}
+            {{ color == "all" ? "W/B" : color.charAt(0).toUpperCase() + color.slice(1) }}
             </button>
+            <!-- {{ color == "all" ? "White/Black" : color.charAt(0).toUpperCase() + color.slice(1) }} -->
+			<!-- <font-awesome-icon :icon="['fas', 'fa-chess-pawn']" /> -->
+			<!-- <font-awesome-icon icon="fa-light fa-chess-pawn" /> -->
 
         </div>
     </div>
     </div>
 </template>
 
+<style>
+
+#openingsColorBtn {
+	margin-left: 15px;
+	padding: 5px 5px;
+	box-shadow: none;
+}
+
+#openingsColorBtn.black {
+	color: white;
+	background-color: #565352;
+	border-color: #565352;
+}
+
+#openingsColorBtn.white {
+	color: #565352;
+	background-color: #e9edcc;
+	border-color: #e9edcc;
+
+}
+</style>
+
 
 <script>
 import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
+import * as bootstrap from 'bootstrap'
 
 export default {
     name: "OpeningGraph",
@@ -83,11 +115,8 @@ export default {
             } else {
                 newColor = "white";
             }
-
             this.color = newColor;
-
             this.$emit('update-color', newColor);
-
             let filters = {
                 timeClass: this.timeClass,
                 color: newColor,
@@ -97,6 +126,10 @@ export default {
 
     },
         mounted: function() {
+			let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+				return new bootstrap.Tooltip(tooltipTriggerEl)
+			})
             let filters = {
                 timeClass: this.timeClass,
                 color: this.color,
@@ -106,4 +139,5 @@ export default {
 }
 
 </script>
+
 

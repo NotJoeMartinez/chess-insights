@@ -19,7 +19,6 @@ export function makeOpeningsChart(filters="") {
   let unsortedOpenings = getOpeningsData(filteredArchive)
   openingsData = processOpeningsData(unsortedOpenings, 50)
 
-  console.log(openingsData)
   const labels = openingsData.labels 
   const counts = openingsData.counts
   const wins = openingsData.wins
@@ -137,7 +136,7 @@ export function getOpeningsData(gameArchive) {
             let url = "https://www.chess.com/openings/" + mainLines[j].replace(/\s/g, "-").toLowerCase();
               allOpenings.push({
                   timeClass: gameArchive[i].timeClass,
-                  color: gameArchive[i].color,
+                  color: gameArchive[i].userColor,
                   result: getResult(gameArchive[i].result),
                   name: mainLines[j],
                   openingUrl: url 
@@ -197,42 +196,33 @@ export function getCounts(rawOpenings) {
 
 
 export function filterOpeningsData(gameArchive, filters) {
-  // skip this part if filters is none
-  const timeClass = filters.timeClass;
-  const color = filters.color;
+	// skip this part if filters is none
+	const timeClass = filters.timeClass;
+	const color = filters.color;
 
-  let filteredGameArchive = [];
+	let filteredGameArchive = [];
 
-
-  if (timeClass === "all" && color === "all") {
-    return gameArchive;
-  }
-
-  if (timeClass != "all" && color === "all") {
-    for (let i = 0; i < gameArchive.length; i++) {
-      if (gameArchive[i].timeClass === timeClass) {
-        filteredGameArchive.push(gameArchive[i])
-      }
-    }
-    return filteredGameArchive;
-  }
-
-  if (timeClass === "all" && color != "all") {
-    for (let i = 0; i < gameArchive.length; i++) {
-      if (gameArchive[i].timeClass === timeClass) {
-        filteredGameArchive.push(gameArchive[i])
-      }
-    }
-    return filteredGameArchive;
-  }
-
-  for (let i = 0; i < gameArchive.length; i++) {
-    if (gameArchive[i].timeClass === timeClass && gameArchive[i].color === color) {
-      filteredGameArchive.push(gameArchive[i])
-    }
-
-  }
-  return filteredGameArchive;
+	for (let i = 0; i < gameArchive.length; i++) {
+		if (timeClass === "all" && color === "all") {
+			return gameArchive;
+		}
+		else if (timeClass != "all" && color === "all") {
+			if (gameArchive[i].timeClass === timeClass) {
+				filteredGameArchive.push(gameArchive[i])
+			}
+		}
+		else if (timeClass === "all" && color != "all") {
+			if (gameArchive[i].userColor === color) {
+				filteredGameArchive.push(gameArchive[i])
+			}
+		}
+		else {
+			if (gameArchive[i].timeClass === timeClass && gameArchive[i].userColor === color) {
+				filteredGameArchive.push(gameArchive[i])
+			}
+		}
+	}
+	return filteredGameArchive;
 }
 
 function getResult(result) {
