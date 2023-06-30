@@ -45,6 +45,7 @@
       :columns="gridColumns" 
       :filter-key="searchQuery" 
       :filterColumn="searchColumn"
+      :opening="openingFilter"
       />
     </div>
   </div>
@@ -54,6 +55,7 @@
   import NavBar from '@/components/NavBar.vue';
   import ExploreGrid from '@/components/Explore/ExploreGrid.vue';
   import ExportExploreBtn from '@/components/Buttons/ExportExploreBtn.vue'
+  import { getOpeningsForExplore } from '@/scripts/openingsUtils.js';
 
   import {
     exploreAll,
@@ -65,7 +67,6 @@
       ExploreGrid,
       NavBar,
       ExportExploreBtn
-      
     },
     data() {
       return {
@@ -74,6 +75,7 @@
         searchColumn: 'opening',
         searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
         gridColumns: ['timeClass', 'date', 'result', 'rating', 'opponent', 'opening'],
+        openingFilter: [],
         gridData: [],
 
       }
@@ -99,9 +101,13 @@
 
     },
     mounted: function () {
-      if (window.localStorage.getItem("archivedGames") != null) {
+
+      let games = JSON.parse(window.localStorage.getItem("archivedGames"))
+
+      if (games != null) {
         console.log("we have enough space")
-        this.gridData = exploreAll()
+        this.gridData = exploreAll(games)
+        this.openingFilter = getOpeningsForExplore(games)  
       } else {
         console.log("we don't have enough space")
         this.fetchData()

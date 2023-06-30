@@ -63,33 +63,36 @@
   </template>
 
  <script>
+
  export default {
    name: 'ExploreGrid',
    props: {
      data: Array,
+     opening: Array,
      columns: Array,
      filterKey: String,
      filterColumn: String,
-     availableFilters: Array,
    },
    data() {
      return {
        sortKey: '',
        sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
-       filterOptions: {
-       "timeClass": ["rapid", "blitz", "bullet", "daily"],
-       "result": ["win", "loss", "draw"],
-       }, 
+      //  filterOptions: {
+      //  "timeClass": ["rapid", "blitz", "bullet", "daily"],
+      //  "result": ["win", "loss", "draw"],
+      //  "opening": this.opening 
+      //  }, 
        activeFilters: {
          "timeClass": [],
          "result": [],
+         "opening": [], 
        },
      };
    },
    computed: {
      filteredData() {
+      console.log(this.filterOptions)
        let data = this.data;
-   
        // Apply all active filters
        Object.keys(this.activeFilters).forEach((filterKey) => {
          const filterValues = this.activeFilters[filterKey];
@@ -122,9 +125,15 @@
            return (a === b ? 0 : a > b ? 1 : -1) * order;
          });
        }
- 
        return data;
      },
+     filterOptions() {
+      return {
+        "timeClass": ["rapid", "blitz", "bullet", "daily"],
+        "result": ["win", "loss", "draw"],
+        "opening": this.opening
+      }
+   }
    },
    methods: {
      sortBy(key) {
@@ -147,116 +156,10 @@
       },
       openGameUrl(url) {
         window.open(url, '_blank');
-        
       },
-   },
- };
+   }
+  }
  </script> 
-  <!-- <script>
-  export default {
-    name: 'ExploreGrid',
-    props: {
-      data: Array,
-      columns: Array,
-      filterKey: String,
-      filterColumn: String,
-      availableFilters: Array,
-    },
-    data() {
-      return {
-        sortKey: '',
-        sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
-        filterOptions: {
-        "timeClass": ["rapid", "blitz", "bullet", "daily"],
-        "result": ["win", "loss", "draw"],
-        }, 
-        activeFilters: {
-          "timeClass": [],
-          "result": [],
-        },
-        selectedColumn: null,
-        selectedOption: null,
-      };
-    },
-    computed: {
-      filteredData() {
-        const sortKey = this.sortKey;
-        const filterKey = this.filterKey && this.filterKey.toLowerCase();
-        const order = this.sortOrders[sortKey] || 1;
-        let data = this.data;
-
-        const selectedColumn = this.selectedColumn 
-        const selectedOption = this.selectedOption
-
-        if (selectedColumn && selectedOption) {
-          data = data.filter((row) => {
-              return Object.keys(row).some((key) => {
-                if (this.selectedOption == row[key] && key === this.selectedColumn) {
-                  return String(row[key]) === this.selectedOption;
-                } 
-              });
-          });
-        }
-  
-        // Filter data
-        if (filterKey) {
-          data = data.filter((row) => {
-              return Object.keys(row).some((key) => {
-                if (this.filterColumn === 'all'){
-                  return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
-                }
-                if (key === this.filterColumn){
-                  return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
-                }
-              });
-          });
-        }
-
-        // Sort data
-        if (sortKey) {
-
-          data = data.slice().sort((a, b) => {
-            a = a[sortKey];
-            b = b[sortKey];
-            return (a === b ? 0 : a > b ? 1 : -1) * order;
-          });
-        }
-        return data;
-      },
-    },
-    methods: {
-      sortBy(key) {
-        console.log(key)
-        this.sortKey = key;
-        this.sortOrders[key] = this.sortOrders[key] * -1;
-      },
-      filterColumnBy(column, option) {
-
-        if (this.selectedOption === option && this.selectedColumn === column) {
-          this.selectedOption = null;
-          this.selectedColumn = null;
-          return; 
-        }
-
-        this.selectedColumn = column;
-        this.selectedOption = option;
-        
-        if (this.activeFilters[column].includes(option)) {
-          this.activeFilters[column] = this.activeFilters[column].filter((filter) => filter !== option);
-        } else {
-          this.activeFilters[column].push(option);
-        }
-      },
-      capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-      },
-      openGameUrl(url) {
-        window.open(url, '_blank');
-        
-      },
-    },
-  };
-  </script> -->
 
 
 <style scoped>

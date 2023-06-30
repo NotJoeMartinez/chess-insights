@@ -3,9 +3,9 @@
 import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "@/scripts/archiveUtils.js";
 import { getResult } from "@/scripts/utils.js";
 
-export function exploreAll() {
+export function exploreAll(games) {
 
-    let games = getArchivedGames();
+    
     let gridData = [];
 
     for (let i = 0; i < games.length; i++) {
