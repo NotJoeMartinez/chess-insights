@@ -14,31 +14,36 @@ export function makeOpeningsChart(filters="") {
   let gameArchive = JSON.parse(localStorage.getItem("archivedGames"))
   let openingsData = {} 
 
-  if (filters != "") {
-    console.log("filtering")
-    let filteredArchive = filterOpeningsData(gameArchive, filters) 
-    let unsortedOpenings = getOpeningsData(filteredArchive)
-    openingsData = processOpeningsData(unsortedOpenings, 10)
-  }
-  else {
-    console.log("not filtering")
-    let unsortedOpenings = getOpeningsData(gameArchive)
-    openingsData = processOpeningsData(unsortedOpenings, 10)
+  let filteredArchive = filterOpeningsData(gameArchive, filters) 
+  let unsortedOpenings = getOpeningsData(filteredArchive)
+  openingsData = processOpeningsData(unsortedOpenings, 10)
+
+  const labels = openingsData.labels 
+  const counts = openingsData.counts
+  const wins = openingsData.wins
+  const losses = openingsData.losses
+  const draws = openingsData.draws
+
+  const ctx = document.getElementById("openings");
+  const chartInstance = Chart.getChart(ctx);
+
+  if (chartInstance) {
+    chartInstance.data.datasets[0].data = wins;
+    chartInstance.data.datasets[1].data = draws;
+    chartInstance.data.datasets[0].data = losses;
+    chartInstance.data.labels = labels;
+    chartInstance.update();
+    return;
   }
 
 
-    const labels = openingsData.labels 
-    const counts = openingsData.counts
-    const wins = openingsData.wins
-    const losses = openingsData.losses
-    const draws = openingsData.draws
+
 
     let colors = {
         RED: "#8f3431",
         GREEN: "#708641",
         GREY: "#888683"
     }
-    const ctx = document.getElementById("openings");
 
     new Chart(ctx, {
         type: 'bar',
@@ -111,15 +116,33 @@ export function filterOpeningsData(gameArchive, filters) {
   // skip this part if filters is none
   const timeClass = filters.timeClass;
   const color = filters.color;
+
+  let filteredGameArchive = [];
+
   console.log(filters)
 
-  if (timeClass === "all") {
-    console.log("all")
-    console.log(gameArchive)
+  if (timeClass === "all" && color === "all") {
     return gameArchive;
   }
 
-  let filteredGameArchive = [];
+  if (timeClass != "all" && color === "all") {
+    for (let i = 0; i < gameArchive.length; i++) {
+      if (gameArchive[i].timeClass === timeClass) {
+        filteredGameArchive.push(gameArchive[i])
+      }
+    }
+    return filteredGameArchive;
+  }
+
+  if (timeClass === "all" && color != "all") {
+    for (let i = 0; i < gameArchive.length; i++) {
+      if (gameArchive[i].timeClass === timeClass) {
+        filteredGameArchive.push(gameArchive[i])
+      }
+    }
+    return filteredGameArchive;
+  }
+
   for (let i = 0; i < gameArchive.length; i++) {
     if (gameArchive[i].timeClass === timeClass && gameArchive[i].color === color) {
       filteredGameArchive.push(gameArchive[i])

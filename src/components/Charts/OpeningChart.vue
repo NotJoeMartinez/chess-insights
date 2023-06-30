@@ -47,12 +47,6 @@ import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
 
 export default {
     name: "OpeningGraph",
-    // props: {
-    //     filters: {
-    //         timeClass: "all",
-    //         color: "all",
-    //     }
-    // },
 
     methods: {
         updateOpenings(newTimeClass) {
@@ -62,7 +56,7 @@ export default {
                 timeClass: newTimeClass,
                 color: "all",
             }
-            makeOpeningsChart(newTimeClass);
+            makeOpeningsChart(filters);
         },
     },
         mounted: function() {
