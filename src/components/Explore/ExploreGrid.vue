@@ -3,7 +3,7 @@
       {{ filteredData.length }} rows
     </div>
     <div class="table-responsive">
-      <table v-if="filteredData.length" class="table">
+      <table v-if="filteredData.length" class="table" id="exploreTable">
         <thead>
           <tr>
             <th

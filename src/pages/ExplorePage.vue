@@ -35,7 +35,9 @@
       </div>
     </div>
 
-
+    <div class="container">
+      <ExportExploreBtn />
+    </div>
 
     <div class="container pt-1"> 
       <ExploreGrid 
@@ -51,6 +53,7 @@
 <script>
   import NavBar from '@/components/NavBar.vue';
   import ExploreGrid from '@/components/Explore/ExploreGrid.vue';
+  import ExportExploreBtn from '@/components/Buttons/ExportExploreBtn.vue'
 
   import {
     exploreAll,
@@ -61,6 +64,8 @@
     components: {
       ExploreGrid,
       NavBar,
+      ExportExploreBtn
+      
     },
     data() {
       return {
