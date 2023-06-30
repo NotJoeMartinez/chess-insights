@@ -9,15 +9,34 @@
             <th
               v-for="(key, index) in columns"
               :key="'header-' + index"
-              @click="sortBy(key)"
-              :class="{ active: filterColumn === key }"
+              :class="{ active: filterColumn === key }" 
             >
-              {{ capitalize(key) }}
-              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+
+            <button
+              class="btn dropdown-toggle column-filter-selector" 
+              data-bs-toggle="dropdown"
+              >
+              {{ capitalize(key) }} 
+            </button> 
+
+            <ul class="dropdown-menu dropdown-menu-end ">
+              <!-- <li v-for="(option, optionIndex) in computedFilterOptions[option]" -->
+              <li v-for="(option, optionIndex) in filterOptions[key] || []"
+              class="dropdown-item"
+              :key="'option-' + optionIndex"
+              @click="filterColumnBy(key, option)"
+              >
+              {{ option }}
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-item" @click="sortBy(key)">
+                Sort Ascending
+            </li>
+            </ul>
+              
             </th>
           </tr>
         </thead>
-        <!-- :style="{ 'background-color': filterColumn === key ? '#e9edcc' : ''  }" -->
         <tbody>
           <tr v-for="(entry, rowIndex) in filteredData" 
             :key="'row-' + rowIndex"
@@ -53,6 +72,12 @@
       return {
         sortKey: '',
         sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
+        filterOptions: {
+        "timeClass": ["rapid", "blitz", "bullet", "daily"],
+        "result": ["win", "loss", "draw"],
+        }, 
+        selectedColumn: null,
+        selectedOption: null,
       };
     },
     computed: {
@@ -61,7 +86,23 @@
         const filterKey = this.filterKey && this.filterKey.toLowerCase();
         const order = this.sortOrders[sortKey] || 1;
         let data = this.data;
+
+        const selectedColumn = this.selectedColumn;
+        if (selectedColumn) {
+          console.log("selectedColumn", selectedColumn)
+
+          data = data.filter((row) => {
+              return Object.keys(row).some((key) => {
+                if (this.selectedColumn && key === this.selectedColumn) {
+                  return String(row[key]) === this.selectedOption;
+                } 
+              });
+          });
+
+
+        }
   
+
         // Filter data
         if (filterKey) {
           data = data.filter((row) => {
@@ -73,20 +114,18 @@
                   return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
                 }
               });
-
           });
         }
 
-  
         // Sort data
         if (sortKey) {
+
           data = data.slice().sort((a, b) => {
             a = a[sortKey];
             b = b[sortKey];
             return (a === b ? 0 : a > b ? 1 : -1) * order;
           });
         }
-  
         return data;
       },
     },
@@ -95,6 +134,10 @@
         console.log(key)
         this.sortKey = key;
         this.sortOrders[key] = this.sortOrders[key] * -1;
+      },
+      filterColumnBy(column, option) {
+        this.selectedColumn = column;
+        this.selectedOption = option;
       },
       capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -162,7 +205,7 @@
     td {
 
         min-width: 120px;
-        padding: 10px 20px;
+        /* padding: 10px 20px; */
     }
 
 
@@ -194,4 +237,17 @@
     table tr:hover {
         background-color: #1f1e1b; 
     }
+
+    .column-filter-selector {
+      color: #fff;
+    }
+    .dropdown-item:hover, .dropdown-item:focus {
+  color: var(--bs-dropdown-link-hover-color);
+  background-color: var(--bs-dropdown-link-hover-bg);
+}
+
+    /* .column-filter-dropdown{
+      background-color: black;
+      color: #fff;
+    } */
 </style>
