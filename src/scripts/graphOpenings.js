@@ -8,21 +8,24 @@ import 'chartjs-adapter-moment';
 import { LinearScale, PointElement, Tooltip, Legend, TimeScale } from "chart.js"; 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
+import { getArchivedGames } from '@/scripts/archiveUtils.js';
 
 export function makeOpeningsChart(filters="") {
 
-  let gameArchive = JSON.parse(localStorage.getItem("archivedGames"))
+  let gameArchive = getArchivedGames(); 
   let openingsData = {} 
 
   let filteredArchive = filterOpeningsData(gameArchive, filters) 
   let unsortedOpenings = getOpeningsData(filteredArchive)
-  openingsData = processOpeningsData(unsortedOpenings, 10)
+  openingsData = processOpeningsData(unsortedOpenings, 50)
 
+  console.log(openingsData)
   const labels = openingsData.labels 
   const counts = openingsData.counts
   const wins = openingsData.wins
   const losses = openingsData.losses
   const draws = openingsData.draws
+  const urls = openingsData.urls
 
   const ctx = document.getElementById("openings");
   const chartInstance = Chart.getChart(ctx);
@@ -30,14 +33,11 @@ export function makeOpeningsChart(filters="") {
   if (chartInstance) {
     chartInstance.data.datasets[0].data = wins;
     chartInstance.data.datasets[1].data = draws;
-    chartInstance.data.datasets[0].data = losses;
+    chartInstance.data.datasets[2].data = losses;
     chartInstance.data.labels = labels;
     chartInstance.update();
     return;
   }
-
-
-
 
     let colors = {
         RED: "#8f3431",
@@ -80,8 +80,16 @@ export function makeOpeningsChart(filters="") {
                 beginAtZero: true,
                 stacked: true
             }
-          }
-        }
+          },
+          onClick: function (event, elements) {
+            if (elements.length) {
+              const dataIndex = elements[0].index;
+              const url = urls[dataIndex];
+              window.open(url, "_blank");
+            }
+          },
+        },
+  
       });
 }
 
@@ -102,15 +110,90 @@ export function processOpeningsData(openingsData, n=100) {
   const wins = topOpeningsData.map(data => data.win);
   const losses = topOpeningsData.map(data => data.loss);
   const draws = topOpeningsData.map(data => data.draw);
+  const urls = topOpeningsData.map(data => data.url);
+ 
 
   return {
       labels,
       counts,
       wins,
       losses,
-      draws
+      draws,
+      urls
   };
 }
+
+
+export function getOpeningsData(gameArchive) {
+
+  let mainLines = ["Kings Pawn Opening", "Queens Pawn Opening", "Caro Kann Defense", "Vienna Game", "French Defense", "Italian Game", "Scandinavian Defense", "Center Game", "Petrovs Defense", "Pirc Defense", "Four Knights Game", "Giuoco Piano Game", "Barnes Opening", "Philidor Defense", "Sicilian Defense", "Ruy Lopez Opening", "Three Knights Opening", "Nimzowitsch Defense", "Scotch Game", "Bishops Opening", "Alekhines Defense", "Slav Defense", "Ponziani Opening", "Vant Kruijs Opening", "Modern Defense", "Queens Gambit Declined", "Closed Sicilian Defense", "Reti Opening", "Kings Fianchetto", "Kings Gambit", "Van Geet Opening", "Englund Gambit", "English Opening", "Englund Gambit Declined", "Alapin Sicilian", "Birds Opening", "Mieses Opening", "Dutch Defense", "Grob Opening", "Indian Game", "Kings Indian", "Kadas Opening", "Queens Gambit Accepted", "Saragossa Opening", "Ware Opening", "Colle System", "Dresden Opening", "London System", "English Defense", "Benko Gambit", "Benoni", "Bogo-Indian", "Catalan", "Danish Gambit", "Grunfeld Defense", "Budapest Gambit", "Kings Indian Defense", "Kings Indian Attack", "Nimzo Indian Defense", "Nimzowitsch Larsen Attack", "Old Indian Defense", "Owens Defense", "Polish Opening", "Queens Indian Defense", "Semi Slav Defense", "Tarrasch Defense", "Trompowsky Attack"]
+
+  let allOpenings = []
+
+  for (let i = 0; i < gameArchive.length; i++) {
+      let opening = gameArchive[i].opening;
+      for (let j = 0; j < mainLines.length; j++) {
+          if (opening.startsWith(mainLines[j])) {
+              allOpenings.push({
+                  timeClass: gameArchive[i].timeClass,
+                  color: gameArchive[i].color,
+                  result: getResult(gameArchive[i].result),
+                  name: mainLines[j],
+                  openingUrl: gameArchive[i].openingUrl
+              });
+          }
+      }
+    }
+
+  let countedOpenings = getCounts(allOpenings);
+  return countedOpenings;
+}
+
+// damn I need to learn typescript
+export function getCounts(rawOpenings) {
+  let nodeWithCounts = {};
+  // Count occurrences of each opening name
+  for (let i = 0; i < rawOpenings.length; i++) {
+    let name = rawOpenings[i].name;
+    let url = rawOpenings[i].openingUrl;
+    if (nodeWithCounts[name]) {
+    nodeWithCounts[name].count++;
+    } else {
+    nodeWithCounts[name] = {
+      count: 1,
+      win: 0,
+      loss: 0,
+      draw: 0,
+      url: url
+    };
+    }
+  }
+
+  // get win, loss, and draw counts for each opening
+  for (let i = 0; i < rawOpenings.length; i++) {
+    let currentNode = rawOpenings[i];
+    let name = currentNode.name;
+    nodeWithCounts[name][currentNode.result]++;
+  }
+
+  // add counts to array 
+  let countedOpenings = [];
+  for (let name in nodeWithCounts) {
+    let countedNode = nodeWithCounts[name];
+    let processedNode = {
+    name: name,
+    url: countedNode.url,
+    count: countedNode.count,
+    win: countedNode.win,
+    loss: countedNode.loss,
+    draw: countedNode.draw
+    };
+
+    countedOpenings.push(processedNode);
+  }
+  return countedOpenings;
+}
+
 
 export function filterOpeningsData(gameArchive, filters) {
   // skip this part if filters is none
@@ -119,7 +202,6 @@ export function filterOpeningsData(gameArchive, filters) {
 
   let filteredGameArchive = [];
 
-  console.log(filters)
 
   if (timeClass === "all" && color === "all") {
     return gameArchive;
@@ -163,72 +245,3 @@ function getResult(result) {
     return "draw";
   }
 }
-
-export function getOpeningsData(gameArchive) {
-
-  let mainLines = ["Kings Pawn Opening", "Queens Pawn Opening", "Caro Kann Defense", "Vienna Game", "French Defense", "Italian Game", "Scandinavian Defense", "Center Game", "Petrovs Defense", "Pirc Defense", "Four Knights Game", "Giuoco Piano Game", "Barnes Opening", "Philidor Defense", "Sicilian Defense", "Ruy Lopez Opening", "Three Knights Opening", "Nimzowitsch Defense", "Scotch Game", "Bishops Opening", "Alekhines Defense", "Slav Defense", "Ponziani Opening", "Vant Kruijs Opening", "Modern Defense", "Queens Gambit Declined", "Closed Sicilian Defense", "Reti Opening", "Kings Fianchetto", "Kings Gambit", "Van Geet Opening", "Englund Gambit", "English Opening", "Englund Gambit Declined", "Alapin Sicilian", "Birds Opening", "Mieses Opening", "Dutch Defense", "Grob Opening", "Indian Game", "Kings Indian", "Kadas Opening", "Queens Gambit Accepted", "Saragossa Opening", "Ware Opening", "Colle System", "Dresden Opening", "London System", "English Defense", "Benko Gambit", "Benoni", "Bogo-Indian", "Catalan", "Danish Gambit", "Grunfeld Defense", "Budapest Gambit", "Kings Indian Defense", "Kings Indian Attack", "Nimzo Indian Defense", "Nimzowitsch Larsen Attack", "Old Indian Defense", "Owens Defense", "Polish Opening", "Queens Indian Defense", "Semi Slav Defense", "Tarrasch Defense", "Trompowsky Attack"]
-
-  let allOpenings = []
-
-  for (let i = 0; i < gameArchive.length; i++) {
-      let opening = gameArchive[i].opening;
-      for (let j = 0; j < mainLines.length; j++) {
-          if (opening.startsWith(mainLines[j])) {
-              allOpenings.push({
-                  timeClass: gameArchive[i].timeClass,
-                  color: gameArchive[i].color,
-                  result: getResult(gameArchive[i].result),
-                  name: mainLines[j],
-                  openingUrl: gameArchive[i].openingUrl
-              });
-          }
-      }
-    }
-
-  let countedOpenings = getCounts(allOpenings);
-  return countedOpenings;
-}
-
-// damn I need to learn typescript
-export function getCounts(rawOpenings) {
-  let nodeWithCounts = {};
-  // Count occurrences of each opening name
-  for (let i = 0; i < rawOpenings.length; i++) {
-    let name = rawOpenings[i].name;
-    if (nodeWithCounts[name]) {
-    nodeWithCounts[name].count++;
-    } else {
-    nodeWithCounts[name] = {
-      count: 1,
-      win: 0,
-      loss: 0,
-      draw: 0
-    };
-    }
-  }
-
-  // get win, loss, and draw counts for each opening
-  for (let i = 0; i < rawOpenings.length; i++) {
-    let currentNode = rawOpenings[i];
-    let name = currentNode.name;
-    nodeWithCounts[name][currentNode.result]++;
-  }
-
-
-  // add counts to array 
-  let countedOpenings = [];
-  for (let name in nodeWithCounts) {
-    let countedNode = nodeWithCounts[name];
-    let processedNode = {
-    name: name,
-    count: countedNode.count,
-    win: countedNode.win,
-    loss: countedNode.loss,
-    draw: countedNode.draw
-    };
-
-    countedOpenings.push(processedNode);
-  }
-  return countedOpenings;
-}
-

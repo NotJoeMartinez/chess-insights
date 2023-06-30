@@ -34,12 +34,13 @@
 
     <EloOverTime @update="writeEloOverTime($event)" :timeClass="eloTimeClass" />
 
+    <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
+
     <ResByOpRating 
     :timeClass="resByOppTimeClass" 
     @updateResByOpp="resByOppTimeClass = $event"  
     />
 
-    <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
 
     <WinChart @updateWin="winTimeClass = $event" :timeClass="winTimeClass" />
 
