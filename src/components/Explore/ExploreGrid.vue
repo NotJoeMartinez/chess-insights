@@ -21,9 +21,10 @@
 
             <ul class="dropdown-menu dropdown-menu-end ">
               <!-- <li v-for="(option, optionIndex) in computedFilterOptions[option]" -->
+                <!-- :class="{ active: activeFilters[key].includes(option) }" -->
               <li v-for="(option, optionIndex) in filterOptions[key] || []"
               class="dropdown-item"
-              :class="{ active: selectedColumn === key && selectedOption === option }"
+              :class="{ active: activeFilters[key].includes(option) }"
               :key="'option-' + optionIndex"
               @click="filterColumnBy(key, option)"
               >
@@ -60,8 +61,98 @@
       <p v-else>No matches found.</p>
     </div>
   </template>
-  
-  <script>
+
+ <script>
+ export default {
+   name: 'ExploreGrid',
+   props: {
+     data: Array,
+     columns: Array,
+     filterKey: String,
+     filterColumn: String,
+     availableFilters: Array,
+   },
+   data() {
+     return {
+       sortKey: '',
+       sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
+       filterOptions: {
+       "timeClass": ["rapid", "blitz", "bullet", "daily"],
+       "result": ["win", "loss", "draw"],
+       }, 
+       activeFilters: {
+         "timeClass": [],
+         "result": [],
+       },
+     };
+   },
+   computed: {
+     filteredData() {
+       let data = this.data;
+   
+       // Apply all active filters
+       Object.keys(this.activeFilters).forEach((filterKey) => {
+         const filterValues = this.activeFilters[filterKey];
+         if (filterValues.length > 0) {
+           data = data.filter((row) => filterValues.includes(row[filterKey]));
+         }
+       });
+ 
+       // Filter data
+       if (this.filterKey) {
+         const filterText = this.filterKey.toLowerCase();
+         data = data.filter((row) => {
+           return Object.keys(row).some((key) => {
+             if (this.filterColumn === 'all'){
+               return String(row[key]).toLowerCase().includes(filterText);
+             }
+             if (key === this.filterColumn){
+               return String(row[key]).toLowerCase().includes(filterText);
+             }
+           });
+         });
+       }
+ 
+       // Sort data
+       if (this.sortKey) {
+         const order = this.sortOrders[this.sortKey] || 1;
+         data = data.slice().sort((a, b) => {
+           a = a[this.sortKey];
+           b = b[this.sortKey];
+           return (a === b ? 0 : a > b ? 1 : -1) * order;
+         });
+       }
+ 
+       return data;
+     },
+   },
+   methods: {
+     sortBy(key) {
+       this.sortKey = key;
+       this.sortOrders[key] = this.sortOrders[key] * -1;
+     },
+     filterColumnBy(column, option) {
+       const activeFilters = this.activeFilters[column];
+       const index = activeFilters.indexOf(option);
+       console.log(activeFilters)
+ 
+       if (index >= 0) {
+         activeFilters.splice(index, 1); // Remove filter
+       } else {
+         activeFilters.push(option); // Add filter
+       }
+     },
+     capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      openGameUrl(url) {
+        window.open(url, '_blank');
+        
+      },
+   },
+ };
+ </script> 
+  <!-- <script>
   export default {
     name: 'ExploreGrid',
     props: {
@@ -165,7 +256,7 @@
       },
     },
   };
-  </script>
+  </script> -->
 
 
 <style scoped>
