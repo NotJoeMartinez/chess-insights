@@ -12,30 +12,37 @@
             <canvas id="openings"></canvas> 
 
             <button class="btn btn-primary slicer" 
-            :class="{active:timeClass === 'all'}" 
-            v-on:click="updateOpenings('all')">
+            :class="{ active: timeClass === 'all'}" 
+            @click="updateOpenings('all')">
             All
             </button>
             <button class="btn btn-primary slicer" 
             :class="{ active: timeClass === 'bullet'}" 
-            v-on:click="updateOpenings('bullet')">
+            @click="updateOpenings('bullet')">
             Bullet 
             </button>
             <button class="btn btn-primary slicer" 
             :class="{ active: timeClass === 'blitz' }"  
-            v-on:click="updateOpenings('blitz')">
+            @click="updateOpenings('blitz')">
             Blitz
             </button>
             <button class="btn btn-primary slicer" 
             :class="{ active: timeClass === 'rapid' }" 
-            v-on:click="updateOpenings('rapid')">
+            @click="updateOpenings('rapid')">
             Rapid
             </button>
             <button class="btn btn-primary slicer" 
             :class="{ active: timeClass === 'daily' }" 
-            v-on:click="updateOpenings('daily')">
+            @click="updateOpenings('daily')">
             Daily
             </button>
+
+
+            <button class="btn btn-primary slicer" id="openingsColorBtn"
+            @click="updateColor()">
+            {{ color }}
+            </button>
+
         </div>
     </div>
     </div>
@@ -47,25 +54,52 @@ import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
 
 export default {
     name: "OpeningGraph",
-    props : {
-        timeClass: String,
+	data() {
+		return {
+			timeClass: "all",
+			color: "all",
+		}
     },
-
     methods: {
         updateOpenings(newTimeClass) {
+
+
             this.$emit('update-time-class', newTimeClass);
 
+			this.timeClass = newTimeClass;
             let filters = {
-                timeClass: newTimeClass,
-                color: "all",
+                timeClass: this.timeClass,
+                color: this.color,
             }
             makeOpeningsChart(filters);
         },
+        updateColor(){
+
+            let newColor = "";
+            if (this.color == "white") {
+                newColor = "black";
+            } else if (this.color == "black") {
+                newColor = "all";
+            } else {
+                newColor = "white";
+            }
+
+            this.color = newColor;
+
+            this.$emit('update-color', newColor);
+
+            let filters = {
+                timeClass: this.timeClass,
+                color: newColor,
+            }
+            makeOpeningsChart(filters);
+        }
+
     },
         mounted: function() {
             let filters = {
-                timeClass: "all",
-                color: "all",
+                timeClass: this.timeClass,
+                color: this.color,
             }
             makeOpeningsChart(filters);
         }

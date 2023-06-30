@@ -34,7 +34,14 @@
 
     <EloOverTime @update="writeEloOverTime($event)" :timeClass="eloTimeClass" />
 
-    <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
+    <!-- <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" /> -->
+    <OpeningGraph 
+    @update-time-class="openingsTimeClass = $event" 
+    @update-color="openingsColor = $event" 
+
+    :timeClass="openingsTimeClass" 
+    :color="openingsColor"
+    />
 
     <ResByOpRating 
     :timeClass="resByOppTimeClass" 
@@ -117,7 +124,6 @@
         totalUserGames: 0,
         eloTimeClass: '',
         resByOppTimeClass: '',
-        openingsTimeClass: '',
         lossTimeClass: '',
         winTimeClass: '',
         drawTimeClass: '',
@@ -233,7 +239,6 @@
         let largestTimeClass = getLargestTimeClass();
         this.ovTimeClass = largestTimeClass;
 
-        this.openingsTimeClass = "all";
         this.winTimeClass = "all";
         this.lossTimeClass = "all";
         this.drawTimeClass = "all";
