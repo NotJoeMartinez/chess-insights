@@ -64,6 +64,8 @@ testusers.csv
 jsconfig.json
 vue.config.js
 babel.config.js
+testData/*
+testData
 
 
 # high secure (-_-) 

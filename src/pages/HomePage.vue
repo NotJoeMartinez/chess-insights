@@ -34,12 +34,20 @@
 
     <EloOverTime @update="writeEloOverTime($event)" :timeClass="eloTimeClass" />
 
+    <!-- <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" /> -->
+    <OpeningGraph 
+    @update-time-class="openingsTimeClass = $event" 
+    @update-color="openingsColor = $event" 
+
+    :timeClass="openingsTimeClass" 
+    :color="openingsColor"
+    />
+
     <ResByOpRating 
     :timeClass="resByOppTimeClass" 
     @updateResByOpp="resByOppTimeClass = $event"  
     />
 
-    <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" />
 
     <WinChart @updateWin="winTimeClass = $event" :timeClass="winTimeClass" />
 
@@ -56,14 +64,21 @@
 <script>
   import {
     getLargestTimeClass,
-    saveOpeningsData,
     clearLocalStorage,
     fetchUserStats,
     fetchArchiveUrls,
     logAPIRequest
   } from '@/scripts/utils.js'
 
-  import { parseAndSaveArchivedGames, verifyLiveChess } from '@/scripts/archiveUtils.js'
+  import { 
+    parseAndSaveArchivedGames, 
+    verifyLiveChess,
+  } from '@/scripts/archiveUtils.js'
+
+  import {
+    calcOpeningsData,
+    saveOpeningsData
+  } from '@/scripts/openingsUtils.js'
 
 
   import NavBar from "@/components/NavBar.vue";
@@ -71,7 +86,7 @@
   import ProgBar from "@/components/ProgBar.vue";
   import UserOverview from "@/components/UserOverview.vue";
   import EloOverTime from "@/components/EloOverTime.vue";
-  import OpeningGraph from "@/components/OpeningGraph.vue";
+  import OpeningGraph from "@/components/Charts/OpeningChart.vue";
   import ResByOpRating from "@/components/ResByOpRating.vue"
   import WinChart from "@/components/WinChart.vue";
   import LossChart from "@/components/LossChart.vue";
@@ -109,7 +124,6 @@
         totalUserGames: 0,
         eloTimeClass: '',
         resByOppTimeClass: '',
-        openingsTimeClass: '',
         lossTimeClass: '',
         winTimeClass: '',
         drawTimeClass: '',
@@ -174,15 +188,19 @@
         }
         this.totalUserGames = totalGames;
         this.showProg = false;
+
         if (archivedGames.length < 1) {
           this.showProg = false;
           alert("No games found under that user")
           return;
         }
+
         this.spinnerText = "saving data...";
+
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
-        saveOpeningsData();
+        saveOpeningsData(calcOpeningsData());
+
       },
 
       async getAllUserData(userName) {
@@ -194,6 +212,7 @@
         if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
           let userId = userName[userName.length - 1]
           let testDataPath = `./testData/testUser${userId}.json`;
+          // fix this, it's not imported
           let testUserData = await fetchTestUserData(testDataPath);
           importJsonData(testUserData);
         }
@@ -220,7 +239,6 @@
         let largestTimeClass = getLargestTimeClass();
         this.ovTimeClass = largestTimeClass;
 
-        this.openingsTimeClass = "all";
         this.winTimeClass = "all";
         this.lossTimeClass = "all";
         this.drawTimeClass = "all";
