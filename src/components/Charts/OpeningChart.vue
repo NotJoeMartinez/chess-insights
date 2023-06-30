@@ -47,6 +47,9 @@ import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
 
 export default {
     name: "OpeningGraph",
+    props : {
+        timeClass: String,
+    },
 
     methods: {
         updateOpenings(newTimeClass) {
