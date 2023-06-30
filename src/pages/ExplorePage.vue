@@ -6,6 +6,8 @@
       </div>
     </div>
     
+    <div class="container search-form-container">
+
     <div class="input-group mb-3">
         <input type="text" 
         class="form-control search-form" 
@@ -15,7 +17,8 @@
         v-model="searchQuery"
         >
         <button 
-        class="btn btn-outline-secondary dropdown-toggle" 
+        id="searchColumnSelector"
+        class="btn  dropdown-toggle" 
         type="button" 
         data-bs-toggle="dropdown" 
         aria-expanded="false"> {{ searchColumn }} </button>
@@ -30,6 +33,7 @@
         </ul>
     </div>
 
+    </div>
     <div class="container pt-3">
       <p>Click on row to view game in a new window</p>
     </div>
@@ -59,7 +63,7 @@
         showSpinner: false,
         searchQuery: '',
         searchColumn: 'opening',
-        searchColumns: ['opening', 'opponent', 'result', 'rating', 'date'],
+        searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
         gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
         gridData: []
 
@@ -101,6 +105,16 @@
 
 
 <style >
+.search-form-container{
+  max-width: 75%;
+}
+
+#searchColumnSelector{
+  background-color: #272522;
+  color: #cfd9e6;
+  font-weight: 300;
+  border: none;
+}
 .table {
   background-color: #272522;
 }
@@ -115,8 +129,6 @@
     box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
     font-weight: 300;
     color: #cfd9e6;
-    /* border-top-right-radius: 0; */
-    /* border-bottom-right-radius: 0; */
   }
   .search-form:hover {
       box-shadow: 0 10px 30px -2px rgba(0, 0, 0, 0.3);

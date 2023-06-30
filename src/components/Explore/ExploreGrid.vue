@@ -61,6 +61,9 @@
         if (filterKey) {
           data = data.filter((row) => {
               return Object.keys(row).some((key) => {
+                if (this.filterColumn === 'all'){
+                  return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
+                }
                 if (key === this.filterColumn){
                   return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
                 }
