@@ -78,7 +78,7 @@
   import ProgBar from "@/components/ProgBar.vue";
   import UserOverview from "@/components/UserOverview.vue";
   import EloOverTime from "@/components/EloOverTime.vue";
-  import OpeningGraph from "@/components/OpeningGraph.vue";
+  import OpeningGraph from "@/components/Charts/OpeningChart.vue";
   import ResByOpRating from "@/components/ResByOpRating.vue"
   import WinChart from "@/components/WinChart.vue";
   import LossChart from "@/components/LossChart.vue";
