@@ -205,6 +205,7 @@
         if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
           let userId = userName[userName.length - 1]
           let testDataPath = `./testData/testUser${userId}.json`;
+          // fix this, it's not imported
           let testUserData = await fetchTestUserData(testDataPath);
           importJsonData(testUserData);
         }

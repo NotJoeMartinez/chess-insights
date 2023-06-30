@@ -43,22 +43,34 @@
 
 
 <script>
-import { graphOpenings } from '@/scripts/graphOpenings.js';
+import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
 
 export default {
     name: "OpeningGraph",
-    props: {
-        timeClass: String,
-    },
+    // props: {
+    //     filters: {
+    //         timeClass: "all",
+    //         color: "all",
+    //     }
+    // },
 
     methods: {
         updateOpenings(newTimeClass) {
             this.$emit('update-time-class', newTimeClass);
-            graphOpenings(newTimeClass);
+
+            let filters = {
+                timeClass: newTimeClass,
+                color: "all",
+            }
+            makeOpeningsChart(newTimeClass);
         },
     },
         mounted: function() {
-            graphOpenings(this.timeClass);
+            let filters = {
+                timeClass: "all",
+                color: "all",
+            }
+            makeOpeningsChart(filters);
         }
 }
 
