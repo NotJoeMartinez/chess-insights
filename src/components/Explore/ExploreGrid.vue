@@ -10,13 +10,14 @@
               v-for="(key, index) in columns"
               :key="'header-' + index"
               @click="sortBy(key)"
-              :class="{ active: sortKey == key }"
+              :class="{ active: filterColumn === key }"
             >
               {{ capitalize(key) }}
               <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
             </th>
           </tr>
         </thead>
+        <!-- :style="{ 'background-color': filterColumn === key ? '#e9edcc' : ''  }" -->
         <tbody>
           <tr v-for="(entry, rowIndex) in filteredData" 
             :key="'row-' + rowIndex"
@@ -26,8 +27,8 @@
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
-              :style="{ filter: filterColumn === key ? 'brightness(1.2)' : ''  }"
-              :class="{ active: filterColumn === key ? 'foo' : 'bar'}"
+              
+              :class="{ 'SearchRow': filterColumn === key }"
             >
               {{ entry[key] }}
             </td>
@@ -107,7 +108,26 @@
   </script>
 
 
-<style>
+<style scoped>
+  .active, .SearchRow {
+    --active-color: #e9edcc;
+    --active-width: 1px;
+  }
+  
+    td.SearchRow {
+        border-color: var(--active-color) !important;
+        border-width: var(--active-width) !important;
+        border-top: none;
+        border-bottom: none;
+    }
+    th.active {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-width: 2px !important;
+      border-color: var(--active-color) !important;
+    }
+
     thead {
         color: #cfd9e6 !important;
         background-color: #272522 !important;
@@ -122,7 +142,8 @@
     td {
 
         color: #cfd9e6 !important;
-        background-color: #272522 !important;
+        /* background-color: #272522 !important; */
+        background-color: #272522; 
     }
     table tr {
     /* border-bottom: solid 1px #312e2b; */
@@ -143,6 +164,8 @@
         min-width: 120px;
         padding: 10px 20px;
     }
+
+
 
     th.active .arrow {
         opacity: 1;
