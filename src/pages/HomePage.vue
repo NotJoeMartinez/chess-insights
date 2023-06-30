@@ -85,12 +85,12 @@
   import InputForm from "@/components/InputForm.vue";
   import ProgBar from "@/components/ProgBar.vue";
   import UserOverview from "@/components/UserOverview.vue";
-  import EloOverTime from "@/components/EloOverTime.vue";
+  import EloOverTime from "@/components/Charts/EloOverTimeChart.vue";
   import OpeningGraph from "@/components/Charts/OpeningChart.vue";
-  import ResByOpRating from "@/components/ResByOpRating.vue"
-  import WinChart from "@/components/WinChart.vue";
-  import LossChart from "@/components/LossChart.vue";
-  import DrawChart from "@/components/DrawChart.vue";
+  import ResByOpRating from "@/components/Charts/ResByRating.vue"
+  import WinChart from "@/components/Charts/WinChart.vue";
+  import LossChart from "@/components/Charts/LossChart.vue";
+  import DrawChart from "@/components/Charts/DrawChart.vue";
   import ExportBtn from "@/components/Buttons/ExportBtn.vue";
   import ExploreBtn from "@/components/Buttons/ExploreBtn.vue"
   import ExportPopup from "@/components/ExportPopup.vue"
