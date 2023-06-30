@@ -41,6 +41,7 @@
       data: Array,
       columns: Array,
       filterKey: String,
+      filterColumn: String,
     },
     data() {
       return {
@@ -58,11 +59,15 @@
         // Filter data
         if (filterKey) {
           data = data.filter((row) => {
-            return Object.keys(row).some((key) => {
-              return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
-            });
+              return Object.keys(row).some((key) => {
+                if (key === "opening"){
+                  return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
+                }
+              });
+
           });
         }
+
   
         // Sort data
         if (sortKey) {
@@ -78,6 +83,7 @@
     },
     methods: {
       sortBy(key) {
+        console.log(key)
         this.sortKey = key;
         this.sortOrders[key] = this.sortOrders[key] * -1;
       },

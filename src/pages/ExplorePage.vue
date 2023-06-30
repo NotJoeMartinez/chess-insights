@@ -5,20 +5,8 @@
       <div class="spinner-border">
       </div>
     </div>
-    <div class="container">
-      <form id="search">
-        <input type="text" placeholder="Search"
-                            id="exploreSearch"
-                            aria-describedby="u-addon" 
-                            autocapitalize="none" 
-                            autocorrect="off"
-                            class="form-control username-input"
-                            name="query"
-                            v-model="searchQuery"
-                            > 
+  
 
-      </form>
-    </div>
     <div class="container pt-3">
       <p>Click on row to view game in a new window</p>
     </div>
@@ -29,6 +17,39 @@
   </div>
 </template>
 
+<style scoped>
+.search-form {
+    font-size: 1.1rem !important;
+    padding: 0.8rem 1rem !important;
+    position: relative;
+    background: rgba(0, 10, 25, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 12px -2px rgba(0, 0, 0, 0.3);
+    font-weight: 300;
+    color: #cfd9e6;
+    /* border-top-right-radius: 0; */
+    /* border-bottom-right-radius: 0; */
+  }
+  .search-form:hover {
+      box-shadow: 0 10px 30px -2px rgba(0, 0, 0, 0.3);
+      z-index: 0;
+  }
+  .search-form:focus {
+      z-index: 0;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+  }
+  .explorePage {
+    max-width: 60%;
+  }
+
+  @media (max-width: 575.98px) {
+    .explorePage {
+      max-width: 100%;
+    }
+  }
+</style>
 <script>
   import NavBar from '@/components/NavBar.vue';
   import ExploreGrid from '@/components/Explore/ExploreGrid.vue';
@@ -37,10 +58,6 @@
     exploreAll,
     exploreFromAPI
   } from '@/scripts/exploreUtils.js';
-  import {
-    getUserName
-  } from '@/scripts/utils.js';
-
   export default {
     name: 'ExplorePage',
     components: {
@@ -51,6 +68,7 @@
       return {
         showSpinner: false,
         searchQuery: '',
+        // gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
         gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
         gridData: []
 
@@ -67,31 +85,15 @@
 
     },
     mounted: function () {
-
-
-
       if (window.localStorage.getItem("archivedGames") != null) {
         console.log("we have enough space")
         this.gridData = exploreAll()
       } else {
         console.log("we don't have enough space")
         this.fetchData()
-
       }
     }
   }
 </script>
 
 
-<style >
-
-  .explorePage {
-    max-width: 60%;
-  }
-
-  @media (max-width: 575.98px) {
-    .explorePage {
-      max-width: 100%;
-    }
-  }
-</style>
