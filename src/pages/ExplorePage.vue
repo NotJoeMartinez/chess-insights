@@ -7,39 +7,41 @@
     </div>
     
     <div class="container search-form-container">
+      <div class="input-group mb-3">
+          <input type="text" 
+          class="form-control search-form" 
+          aria-label="Text input with dropdown button"
+          autocapitalize="none" 
+          autocorrect="off"
+          v-model="searchQuery"
+          >
+          <button 
+          id="searchColumnSelector"
+          class="btn  dropdown-toggle" 
+          type="button" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false"> {{ searchColumn }} </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <!-- avoid listing current search column -->
+            <li v-for="column in filteredColumns" 
+            :key="column" 
+            @click="editSearchColumn(column)"
+            class="dropdown-item"> {{ column }} 
+          </li>
 
-    <div class="input-group mb-3">
-        <input type="text" 
-        class="form-control search-form" 
-        aria-label="Text input with dropdown button"
-        autocapitalize="none" 
-        autocorrect="off"
-        v-model="searchQuery"
-        >
-        <button 
-        id="searchColumnSelector"
-        class="btn  dropdown-toggle" 
-        type="button" 
-        data-bs-toggle="dropdown" 
-        aria-expanded="false"> {{ searchColumn }} </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <!-- avoid listing current search column -->
-          <li v-for="column in filteredColumns" 
-          :key="column" 
-          @click="editSearchColumn(column)"
-          class="dropdown-item"> {{ column }} 
-        </li>
-
-        </ul>
+          </ul>
+      </div>
     </div>
 
-    </div>
-    <div class="container pt-3">
-      <p>Click on row to view game in a new window</p>
-    </div>
+
+
     <div class="container pt-1"> 
-      <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery" :filterColumn="searchColumn">
-      </ExploreGrid>
+      <ExploreGrid 
+      :data="gridData" 
+      :columns="gridColumns" 
+      :filter-key="searchQuery" 
+      :filterColumn="searchColumn"
+      />
     </div>
   </div>
 </template>
@@ -65,7 +67,7 @@
         searchColumn: 'opening',
         searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
         gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
-        gridData: []
+        gridData: [],
 
       }
     },

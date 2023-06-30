@@ -1,4 +1,7 @@
 <template>
+    <div class="container pt-3">
+      {{ filteredData.length }} rows
+    </div>
     <div class="table-responsive">
       <table v-if="filteredData.length" class="table">
         <thead>
@@ -57,7 +60,6 @@
         let data = this.data;
   
         // Filter data
-        console.log(this.filterColumn)
         if (filterKey) {
           data = data.filter((row) => {
               return Object.keys(row).some((key) => {
