@@ -26,7 +26,9 @@
             <li v-for="column in filteredColumns" 
             :key="column" 
             @click="editSearchColumn(column)"
-            class="dropdown-item"> {{ column }} 
+            class="dropdown-item"
+            > 
+            {{ column }} 
           </li>
 
           </ul>
@@ -66,7 +68,7 @@
         searchQuery: '',
         searchColumn: 'opening',
         searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
-        gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
+        gridColumns: ['timeClass', 'date', 'result', 'rating', 'opponent', 'opening'],
         gridData: [],
 
       }
@@ -79,6 +81,7 @@
     methods:{
       async fetchData(){
         let userName = window.localStorage.getItem("userName")
+        console.log("fetching data for " + userName)
         this.showSpinner = true;
         await exploreFromAPI(userName)
         this.showSpinner = false

@@ -23,6 +23,7 @@
               <!-- <li v-for="(option, optionIndex) in computedFilterOptions[option]" -->
               <li v-for="(option, optionIndex) in filterOptions[key] || []"
               class="dropdown-item"
+              :class="{ active: selectedColumn === key && selectedOption === option }"
               :key="'option-' + optionIndex"
               @click="filterColumnBy(key, option)"
               >
@@ -35,6 +36,7 @@
             </ul>
               
             </th>
+
           </tr>
         </thead>
         <tbody>
@@ -67,6 +69,7 @@
       columns: Array,
       filterKey: String,
       filterColumn: String,
+      availableFilters: Array,
     },
     data() {
       return {
@@ -76,6 +79,10 @@
         "timeClass": ["rapid", "blitz", "bullet", "daily"],
         "result": ["win", "loss", "draw"],
         }, 
+        activeFilters: {
+          "timeClass": [],
+          "result": [],
+        },
         selectedColumn: null,
         selectedOption: null,
       };
@@ -87,22 +94,19 @@
         const order = this.sortOrders[sortKey] || 1;
         let data = this.data;
 
-        const selectedColumn = this.selectedColumn;
-        if (selectedColumn) {
-          console.log("selectedColumn", selectedColumn)
+        const selectedColumn = this.selectedColumn 
+        const selectedOption = this.selectedOption
 
+        if (selectedColumn && selectedOption) {
           data = data.filter((row) => {
               return Object.keys(row).some((key) => {
-                if (this.selectedColumn && key === this.selectedColumn) {
+                if (this.selectedOption == row[key] && key === this.selectedColumn) {
                   return String(row[key]) === this.selectedOption;
                 } 
               });
           });
-
-
         }
   
-
         // Filter data
         if (filterKey) {
           data = data.filter((row) => {
@@ -136,8 +140,21 @@
         this.sortOrders[key] = this.sortOrders[key] * -1;
       },
       filterColumnBy(column, option) {
+
+        if (this.selectedOption === option && this.selectedColumn === column) {
+          this.selectedOption = null;
+          this.selectedColumn = null;
+          return; 
+        }
+
         this.selectedColumn = column;
         this.selectedOption = option;
+        
+        if (this.activeFilters[column].includes(option)) {
+          this.activeFilters[column] = this.activeFilters[column].filter((filter) => filter !== option);
+        } else {
+          this.activeFilters[column].push(option);
+        }
       },
       capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -209,7 +226,6 @@
     }
 
 
-
     th.active .arrow {
         opacity: 1;
     }
@@ -241,9 +257,14 @@
     .column-filter-selector {
       color: #fff;
     }
-    .dropdown-item:hover, .dropdown-item:focus {
-  color: var(--bs-dropdown-link-hover-color);
-  background-color: var(--bs-dropdown-link-hover-bg);
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #fff;
+  background-color: #272522; 
+}
+
+.dropdown-item.active{
+  color: #fff;
+  background-color: #272522; 
 }
 
     /* .column-filter-dropdown{

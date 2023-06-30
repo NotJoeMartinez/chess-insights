@@ -125,3 +125,16 @@ export function logAPIRequest(userName) {
         console.error('Error:', error);
     });
 }
+
+
+export function getResult(result) {
+    if (result === "win") {
+      return "win";
+    } 
+    else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
+      return "loss";
+    }
+    else {
+      return "draw";
+    }
+  }

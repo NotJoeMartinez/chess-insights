@@ -1,6 +1,7 @@
 
 
 import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "@/scripts/archiveUtils.js";
+import { getResult } from "@/scripts/utils.js";
 
 export function exploreAll() {
 
@@ -9,12 +10,12 @@ export function exploreAll() {
 
     for (let i = 0; i < games.length; i++) {
         let row = {
-        timeClass: games[i].timeClass,
-        opponent : games[i].opponent,
-        result: games[i].result,
-        opening: games[i].opening,
         date : games[i].date,
+        timeClass: games[i].timeClass,
         rating: games[i].userRating,
+        result: getResult(games[i].result),
+        opponent : games[i].opponent,
+        opening: games[i].opening,
         gameUrl: games[i].gameUrl,
         }
         gridData.push(row)
@@ -24,11 +25,11 @@ export function exploreAll() {
 }
 
 export async function exploreFromAPI(  userName ) {
-
-
+    
     let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     var playerStatsRes = await fetch(playerStatsUrl);
     var playerStats = await playerStatsRes.json();
+    console.log(playerStatsRes.status);
 
     if (playerStatsRes.status != 404) {
       window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
