@@ -134,12 +134,13 @@ export function getOpeningsData(gameArchive) {
       let opening = gameArchive[i].opening;
       for (let j = 0; j < mainLines.length; j++) {
           if (opening.startsWith(mainLines[j])) {
+            let url = "https://www.chess.com/openings/" + mainLines[j].replace(/\s/g, "-").toLowerCase();
               allOpenings.push({
                   timeClass: gameArchive[i].timeClass,
                   color: gameArchive[i].color,
                   result: getResult(gameArchive[i].result),
                   name: mainLines[j],
-                  openingUrl: gameArchive[i].openingUrl
+                  openingUrl: url 
               });
           }
       }
