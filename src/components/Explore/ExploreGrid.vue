@@ -26,6 +26,8 @@
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
+              :style="{ filter: filterColumn === key ? 'brightness(1.2)' : ''  }"
+              :class="{ active: filterColumn === key ? 'foo' : 'bar'}"
             >
               {{ entry[key] }}
             </td>
