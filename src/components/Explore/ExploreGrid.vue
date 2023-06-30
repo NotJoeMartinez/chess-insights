@@ -57,10 +57,11 @@
         let data = this.data;
   
         // Filter data
+        console.log(this.filterColumn)
         if (filterKey) {
           data = data.filter((row) => {
               return Object.keys(row).some((key) => {
-                if (key === "opening"){
+                if (key === this.filterColumn){
                   return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
                 }
               });
@@ -100,22 +101,21 @@
 
 
 <style>
-    table {
-        background-color: #272522;
-
-    }
-
     thead {
-        background-color: #1f1e1b;
+        color: #cfd9e6 !important;
+        background-color: #272522 !important;
     }
 
     th {
-        background-color: #1f1e1b;
+        color: #cfd9e6 !important;
+        background-color: #272522 !important;
         user-select: none;
     }
 
     td {
-        background-color: #272522;
+
+        color: #cfd9e6 !important;
+        background-color: #272522 !important;
     }
     table tr {
     /* border-bottom: solid 1px #312e2b; */

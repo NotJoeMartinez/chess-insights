@@ -5,19 +5,106 @@
       <div class="spinner-border">
       </div>
     </div>
-  
+    
+    <div class="input-group mb-3">
+        <input type="text" 
+        class="form-control search-form" 
+        aria-label="Text input with dropdown button"
+        autocapitalize="none" 
+        autocorrect="off"
+        v-model="searchQuery"
+        >
+        <button 
+        class="btn btn-outline-secondary dropdown-toggle" 
+        type="button" 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"> {{ searchColumn }} </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <!-- avoid listing current search column -->
+          <li v-for="column in filteredColumns" 
+          :key="column" 
+          @click="editSearchColumn(column)"
+          class="dropdown-item"> {{ column }} 
+        </li>
+
+        </ul>
+    </div>
 
     <div class="container pt-3">
       <p>Click on row to view game in a new window</p>
     </div>
     <div class="container pt-1"> 
-      <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+      <ExploreGrid :data="gridData" :columns="gridColumns" :filter-key="searchQuery" :filterColumn="searchColumn">
       </ExploreGrid>
     </div>
   </div>
 </template>
 
-<style scoped>
+<script>
+  import NavBar from '@/components/NavBar.vue';
+  import ExploreGrid from '@/components/Explore/ExploreGrid.vue';
+
+  import {
+    exploreAll,
+    exploreFromAPI
+  } from '@/scripts/exploreUtils.js';
+  export default {
+    name: 'ExplorePage',
+    components: {
+      ExploreGrid,
+      NavBar,
+    },
+    data() {
+      return {
+        showSpinner: false,
+        searchQuery: '',
+        searchColumn: 'opening',
+        searchColumns: ['opening', 'opponent', 'result', 'rating', 'date'],
+        gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
+        gridData: []
+
+      }
+    },
+    computed: {
+    filteredColumns: function() {
+      return this.searchColumns.filter(column => column !== this.searchColumn);
+      }
+    },
+    methods:{
+      async fetchData(){
+        let userName = window.localStorage.getItem("userName")
+        this.showSpinner = true;
+        await exploreFromAPI(userName)
+        this.showSpinner = false
+        this.gridData = exploreAll()
+      },
+      editSearchColumn(column){
+        console.log(column)
+        this.searchColumn = column
+      }
+
+    },
+    mounted: function () {
+      if (window.localStorage.getItem("archivedGames") != null) {
+        console.log("we have enough space")
+        this.gridData = exploreAll()
+      } else {
+        console.log("we don't have enough space")
+        this.fetchData()
+      }
+    }
+  }
+</script>
+
+
+
+
+
+<style >
+.table {
+  background-color: #272522;
+}
+
 .search-form {
     font-size: 1.1rem !important;
     padding: 0.8rem 1rem !important;
@@ -50,50 +137,3 @@
     }
   }
 </style>
-<script>
-  import NavBar from '@/components/NavBar.vue';
-  import ExploreGrid from '@/components/Explore/ExploreGrid.vue';
-
-  import {
-    exploreAll,
-    exploreFromAPI
-  } from '@/scripts/exploreUtils.js';
-  export default {
-    name: 'ExplorePage',
-    components: {
-      ExploreGrid,
-      NavBar,
-    },
-    data() {
-      return {
-        showSpinner: false,
-        searchQuery: '',
-        // gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
-        gridColumns: ['timeClass', 'opponent', 'result', 'opening', 'rating', 'date'],
-        gridData: []
-
-      }
-    },
-    methods:{
-      async fetchData(){
-        let userName = window.localStorage.getItem("userName")
-        this.showSpinner = true;
-        await exploreFromAPI(userName)
-        this.showSpinner = false
-        this.gridData = exploreAll()
-      }
-
-    },
-    mounted: function () {
-      if (window.localStorage.getItem("archivedGames") != null) {
-        console.log("we have enough space")
-        this.gridData = exploreAll()
-      } else {
-        console.log("we don't have enough space")
-        this.fetchData()
-      }
-    }
-  }
-</script>
-
-

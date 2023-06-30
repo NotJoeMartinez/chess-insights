@@ -5,8 +5,10 @@
     100% { opacity: 1; }
   }
   
-  
-  
+.card {
+  color: #cad6e6;
+} 
+
   /* input form */
   #inputUsername[placeholder] {
     animation: fadeIn .75s;
@@ -15,7 +17,7 @@
   body {
     font-family: "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     background-color: #312e2b;
-
+    color: #cad6e6;
   }
   
   #app {
@@ -236,7 +238,7 @@
     text-transform: uppercase;
     color: #96efff !important;
     background: -webkit-linear-gradient(115deg, #108aff, #96efff);
-    -webkit-background-clip: text;
+    /* -webkit-background-clip: text; */
     -webkit-text-fill-color: transparent;
     border-radius: 30px;
     border: 1px solid #108aff;

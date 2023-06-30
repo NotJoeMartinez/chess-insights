@@ -49,7 +49,7 @@
 <script>
 import { importJsonData } from '@/scripts/userImports.js';
 
-import * as bootstrap from 'bootstrap'
+// import * as bootstrap from 'bootstrap'
 
 export default {
   data() {
@@ -58,10 +58,10 @@ export default {
     }
   },
   mounted() {
-    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    // let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    // let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    // return new bootstrap.Tooltip(tooltipTriggerEl)
+    // })
   
     this.suggestUserInput();
   },
@@ -183,6 +183,14 @@ export default {
 </script>
 
 <style>
+.form-control::placeholder {
+  color: rgba(200, 206, 212, 0.75);
+  opacity: 1;
+
+}
+#uname {
+  color: #ffffff !important;
+}
 #uploadBtn {
   padding-top: 1rem;
   padding-bottom: 1rem;
