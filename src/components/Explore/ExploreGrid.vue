@@ -77,11 +77,6 @@
      return {
        sortKey: '',
        sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
-      //  filterOptions: {
-      //  "timeClass": ["rapid", "blitz", "bullet", "daily"],
-      //  "result": ["win", "loss", "draw"],
-      //  "opening": this.opening 
-      //  }, 
        activeFilters: {
          "timeClass": [],
          "result": [],
@@ -91,13 +86,13 @@
    },
    computed: {
      filteredData() {
-      console.log(this.filterOptions)
        let data = this.data;
        // Apply all active filters
        Object.keys(this.activeFilters).forEach((filterKey) => {
          const filterValues = this.activeFilters[filterKey];
+         console.log(filterValues)
          if (filterValues.length > 0) {
-           data = data.filter((row) => filterValues.includes(row[filterKey]));
+            data = data.filter((row) => filterValues.includes(row[filterKey]));
          }
        });
  

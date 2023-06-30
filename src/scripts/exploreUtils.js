@@ -2,6 +2,7 @@
 
 import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "@/scripts/archiveUtils.js";
 import { getResult } from "@/scripts/utils.js";
+import { getMainLine } from "@/scripts/openingsUtils.js"
 
 export function exploreAll(games) {
 
@@ -15,7 +16,7 @@ export function exploreAll(games) {
         rating: games[i].userRating,
         result: getResult(games[i].result),
         opponent : games[i].opponent,
-        opening: games[i].opening,
+        opening: getMainLine(games[i].opening),
         gameUrl: games[i].gameUrl,
         }
         gridData.push(row)
