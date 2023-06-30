@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { graphWinLoss } from '../scripts/graphWinLoss.js' 
+import { graphWinLoss } from '../../scripts/graphWinLoss.js' 
 
 export default {
     name: "WinChart",
