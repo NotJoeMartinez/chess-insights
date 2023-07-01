@@ -1,6 +1,7 @@
 # [chessinsights.xyz](https://chessinsights.xyz/)
 
 ![img](imgs/rapidOverTime.png)
+![img](imgs/resByOppRating.png)
 
 Chess Insights is a tool that uses the chess.com api to export all user data to a 
 csv file. It also has home data visualization tools that are still a work in progress. 

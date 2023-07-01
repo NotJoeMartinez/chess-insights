@@ -2,6 +2,7 @@
   <NavBar />
   <div class="container explorePage pt-3">
     <div v-if="showSpinner" class="container">
+      <h1>Loading games..</h1>
       <div class="spinner-border">
       </div>
     </div>
@@ -90,9 +91,11 @@
         let userName = window.localStorage.getItem("userName")
         console.log("fetching data for " + userName)
         this.showSpinner = true;
+
         await exploreFromAPI(userName)
         this.showSpinner = false
-        this.gridData = exploreAll()
+        let games = JSON.parse(window.localStorage.getItem("archivedGames"))
+        this.gridData = exploreAll(games)
       },
       editSearchColumn(column){
         console.log(column)
