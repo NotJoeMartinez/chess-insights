@@ -65,13 +65,3 @@ Game month archives
 ```
 https://api.chess.com/pub/player/{username}/games/{YYYY}/{MM}
 ```
-
-### Demo
-![img](imgs/demo.png)
-![img](imgs/rapidOverTime.png)
-![img](imgs/topOpenings.png)
-![img](imgs/gamesWonBy.png)
-
-
-
-
