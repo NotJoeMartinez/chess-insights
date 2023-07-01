@@ -1,6 +1,10 @@
 <template>
-    <div class="container pt-3">
-      {{ filteredData.length }} rows
+    <div class="container pt-4 pb-4">
+
+      <h4>
+        <strong> {{ filteredData.length }}  </strong> Games Found 
+      </h4>
+
     </div>
     <div class="table-responsive">
       <table v-if="filteredData.length" class="table" id="exploreTable">
@@ -47,8 +51,8 @@
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
-              
-              :class="{ 'SearchRow': filterColumn === key }"
+              :class="{ 'SearchRow': filterColumn === key }" 
+
             >
               {{ entry[key] }}
             </td>
@@ -89,7 +93,6 @@
        // Apply all active filters
        Object.keys(this.activeFilters).forEach((filterKey) => {
          const filterValues = this.activeFilters[filterKey];
-         console.log(filterValues)
          if (filterValues.length > 0) {
             data = data.filter((row) => filterValues.includes(row[filterKey]));
          }
@@ -140,7 +143,6 @@
 
        const activeFilters = this.activeFilters[column];
        const index = activeFilters.indexOf(option);
-       console.log(activeFilters)
  
        if (index >= 0) {
          activeFilters.splice(index, 1); // Remove filter
@@ -153,113 +155,114 @@
       },
       openGameUrl(url) {
         window.open(url, '_blank');
-      },
-   }
+      }
+    } 
   }
  </script> 
 
 
 <style scoped>
-  .active, .SearchRow {
-    --active-color: #e9edcc;
+.win {
+  color: #779556 !important;
+}
+.loss {
+  color: #d9534f !important;
+}
+
+
+.table-responsive {
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+  border-radius: 10px;
+}
+
+.active, .SearchRow {
+    --active-color: #81b64c;
     --active-width: 1px;
-  }
+}
   
-    td.SearchRow {
-        border-color: var(--active-color) !important;
-        border-width: var(--active-width) !important;
-        border-top: none;
-        border-bottom: none;
-    }
-    th.active {
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      border-width: 2px !important;
-      border-color: var(--active-color) !important;
-    }
+td.SearchRow {
+    border-color: var(--active-color) !important;
+    border-width: var(--active-width) !important;
+    border-top: none;
+    border-bottom: none;
+}
+th.active {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-width: 2px !important;
+  border-color: var(--active-color) !important;
+}
 
-    thead {
-        color: #cfd9e6 !important;
-        background-color: #272522 !important;
-    }
+th {
+    color: #ebecd0 !important;
+    background-color: #0c131c!important;
+    user-select: none;
+}
+.column-filter-selector {
+  font-weight: bold;
+}
 
-    th {
-        color: #cfd9e6 !important;
-        background-color: #272522 !important;
-        user-select: none;
-    }
-
-    td {
-
-        color: #cfd9e6 !important;
-        /* background-color: #272522 !important; */
-        background-color: #272522; 
-    }
-    table tr {
-    /* border-bottom: solid 1px #312e2b; */
-    border-bottom: 2px solid #312e2b;
-    }
-    /* prevent changing tool tips */
-    .table-hover-row {
-    cursor: pointer;
-    }
-    .table-hover-row * {
-      cursor: pointer;
-    }
-
-
-    th,
-    td {
-
-        min-width: 120px;
-        /* padding: 10px 20px; */
-    }
-
-
-    th.active .arrow {
-        opacity: 1;
-    }
-
-    .arrow {
-        display: inline-block;
-        vertical-align: middle;
-        width: 0;
-        height: 0;
-        margin-left: 5px;
-        opacity: 0.66;
-    }
-
-    .arrow.asc {
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-bottom: 4px solid #fff;
-    }
-
-    .arrow.dsc {
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 4px solid #fff;
-    }
-    table tr:hover {
-        background-color: #1f1e1b; 
-    }
-
-    .column-filter-selector {
-      color: #fff;
-    }
-.dropdown-item:hover, .dropdown-item:focus {
-  color: #fff;
+td {
+  color: #FFF !important;
+  font-size: 16px;
+  font-weight: 500;
   background-color: #272522; 
+}
+table tr {
+  border-bottom: 2px solid #312e2b;
+}
+
+table tr:nth-child(even) {
+  background-color: #ebecd0 !important; 
+}
+.table-hover-row {
+cursor: pointer;
+}
+.table-hover-row * {
+  cursor: pointer;
+}
+
+th.active .arrow {
+    opacity: 1;
+}
+
+.arrow {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    opacity: 0.66;
+}
+
+.arrow.asc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #fff;
+}
+
+.arrow.dsc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #fff;
+}
+table tr:hover {
+    background-color: #1f1e1b; 
+}
+
+.column-filter-selector {
+  color: #fff;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+color: #fff;
+background-color: #272522; 
 }
 
 .dropdown-item.active{
-  color: #fff;
-  background-color: #272522; 
+color: #fff;
+background-color: #272522; 
 }
 
-    /* .column-filter-dropdown{
-      background-color: black;
-      color: #fff;
-    } */
+
 </style>
