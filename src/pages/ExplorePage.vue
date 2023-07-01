@@ -116,10 +116,6 @@
   }
 </script>
 
-
-
-
-
 <style >
 .search-form-container{
   max-width: 75%;

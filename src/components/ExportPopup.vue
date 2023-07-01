@@ -15,11 +15,9 @@
                 <div class="modal-body">
                     <ul>
                         <li><b>Everything:</b> all available data to csv</li>
-                        <li><b>Simplified:</b> date, timeClass, result, rating and gameUrl</li>
+                        <li><b>JSON:</b> Can be used to import games</li>
                         <li><b>PGN:</b> <a href="https://en.wikipedia.org/wiki/Portable_Game_Notation"
                                 target="_blank">Portable Game Notation</a></li>
-                        <li><b>JSON: </b><a href="https://en.wikipedia.org/wiki/JSON" target="_blank">Javascript Object
-                                Notation</a></li>
                         <li><b>Custom:</b> Select what data to export</li>
                     </ul>
                 </div>
@@ -33,7 +31,7 @@
                         <button type="button" class="btn btn-primary export-option mb-1" @click="exportData('pgn')">PGN
                             (.pgn)</button>
                         <button type="button" class="btn btn-primary export-option mb-1"
-                            @click="exportData('json')">JSON (.json)</button>
+                            @click="exportData('json')">JSON (.json) </button>
                         <button type="button" id="custom-export-btn" data-bs-toggle="modal"
                             data-bs-target="#custom-export-modal" class="btn btn-primary export-option mb-1"
                             @click="viewCustomExport()">Custom</button>

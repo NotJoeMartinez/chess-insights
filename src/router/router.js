@@ -5,6 +5,8 @@ import {
 
 import HomePage from '@/pages/HomePage.vue'
 import ExplorePage from '@/pages/ExplorePage.vue'
+import AboutPage from '@/pages/AboutPage.vue'
+
 const routes = [{
         'path': '/',
         component: HomePage
@@ -14,6 +16,11 @@ const routes = [{
         'name': 'Explore',
         component: ExplorePage
     },
+    {
+        'path': '/about',
+        'name': 'About',
+        component: AboutPage
+    }
 ]
 
 const router = createRouter({
