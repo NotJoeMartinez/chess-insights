@@ -2,6 +2,8 @@
 import Chart from 'chart.js/auto'
 import {LinearScale, PointElement, Tooltip, Legend, TimeScale} from "chart.js"; 
 import zoomPlugin from 'chartjs-plugin-zoom';
+import { getResult } from '@/scripts/utils.js';
+import { getMainLine } from '@/scripts/openingsUtils.js';
 
 // import moment from 'moment';
 import 'chartjs-adapter-moment';
@@ -20,8 +22,22 @@ export function graphElo(timeClass="rapid")  {
 
     let allData = getChartData(timeClass);
 
+    const dates = allData.dates;
+    const ratings = allData.ratings;
+    const results = allData.results;
+    const links = allData.links;
+    const openings = allData.opening;
+    const userColor = allData.userColor;
+
+  let green = "#32CD32"
+  let grey = "#cacac9"
+  // let red = "#cf4846"
+  let red = "#E10600" 
+  const colors = results.map(result => result == "win" ? green : result == "loss" ? red: grey);
+
     if (chartInstance) {
-      chartInstance.data.datasets[0].data = allData; 
+      chartInstance.data.labels = dates; 
+      chartInstance.data.datasets[0].data = ratings;
       chartInstance.update();
       return;
     }
@@ -31,12 +47,14 @@ export function graphElo(timeClass="rapid")  {
     const eloChart = new Chart(ctx, {
         type: 'line',
         data: {
-          // labels: dates,
+          labels: dates,
           datasets: [
             {
-            label: 'ELO',
-            data: allData,
-            borderWidth: 1
+            label: '',
+            data: ratings,
+            borderWidth: 0.2,
+            borderColor: "#fff",
+            backgroundColor: colors,
             }
         ]
         },
@@ -47,8 +65,8 @@ export function graphElo(timeClass="rapid")  {
             mode: 'index'
           },
           parsing: {
-            yAxisKey: 'game.elo',
-            xAxisKey: 'date'
+            yAxisKey: ratings,
+            xAxisKey: dates
           },
 
           scales: {
@@ -66,37 +84,67 @@ export function graphElo(timeClass="rapid")  {
                   major: {
                     enabled: true
                   }
-                  // offset: true,
-                  // autoSkip: true,
-                  // // autoSkipPadding: 50,
-                  // maxRotation: 90
-                },
-                // time: {
-                  // displayFormats: {
 
-                    // hour: 'HH:mm',
-                    // minute: 'HH:mm',
-                  // }
-                // }
+                },
+
              
               },
         },
-
           
           plugins: {
+
             tooltip: {
               enabled: true,
               intersect: false,
               mode: 'index',
-              borderWidth: 1
+              borderWidth: 1,
+
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) {
+                    label += ': ';
+                  }
+                  if (context.parsed.y !== null) {
+                    let index = context.dataIndex;
+                    let result = results[index];
+                    let rating = ratings[index];
+                    label += `${rating} (${result}) `;
+                  }
+                  return label;
+                },
+
+                labelColor: function(context) {
+                  let index = context.dataIndex;
+                  return {
+                    borderColor: colors[index],
+                    backgroundColor: colors[index],
+                    borderWidth: 2,
+                    borderDash: [2, 2],
+                    borderRadius: 2,
+                  };
+                },
+                footer: function(context){
+                  let index = context[0].dataIndex;
+                  let opening = openings[index];
+                  return opening;
+                },
+                beforeFooter: function(context) {
+                  let index = context[0].dataIndex;
+                  return `${userColor[index]}`;
+
+                }
+              },
             },
+
             zoom: {
               zoom: {
                 wheel: {
-                  enabled: false 
+                  enabled: true 
                 },
                 pan: {
-                  enabled: true
+                  enabled: true,
+                  mode: 'xy'
                 },
                 drag: {
                   enabled: true
@@ -106,7 +154,6 @@ export function graphElo(timeClass="rapid")  {
                     x: {min: 100, max: 1000}
                   },
                 mode: 'x',
-                // sensitivity: 1
               }
             }
           }
@@ -118,15 +165,26 @@ export function graphElo(timeClass="rapid")  {
         {intersect: true}, true);
         if (points.length) {
           const firstPoint = points[0]
-          const value = eloChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-          window.open(value.game.link, "_blank");
+          let url = links[firstPoint.index]
+          window.open(url, "_blank");
         }
       }
+  
       ctx.onclick = clickHandler;
       eloChart.update();
 
       return eloChart;
  }
+
+ function removeData(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+  });
+  chart.update();
+}
+
+
 
 
  function getChartData(timeClass) {
@@ -136,21 +194,42 @@ export function graphElo(timeClass="rapid")  {
 
 
   // let parsedDates = [];
-  let allData = [];
+  // let allData = [];
+  let allData = {
+    ratings: [],
+    dates: [],
+    results: [],
+    links: [],
+    opening: [],
+    userColor: []
+  }
+
 
   for (var i=0; i<archivedGames.length; i++) {
       // let parsedGameNode = parseGameNode(archivedGames[i],uname);
       let parsedGameNode = archivedGames[i]
       if (parsedGameNode.timeClass == timeClass){
+
         let rating = parsedGameNode.userRating;
         let link = parsedGameNode.gameUrl;
-
+        let userColor = parsedGameNode.userColor;
         let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
+        let result = getResult(parsedGameNode.result);
+        let opening = getMainLine(parsedGameNode.opening);
 
-        allData.push({ date: `${safeDate}`, game: {elo: rating, link: `${link}`} });
+        allData.userColor.push(userColor);
+        allData.dates.push(safeDate);
+        allData.ratings.push(rating);
+        allData.links.push(link);
+        allData.opening.push(opening);
+        allData.results.push(result);
+
+
       }
 
   }
+
+  console.log(allData)
   return allData;
  }
 
@@ -160,9 +239,14 @@ export function resetChartZoom(timeClass) {
   const chartInstance = Chart.getChart(ctx);
 
   let allData = getChartData(timeClass);
+  let dates = allData.dates;
+  let ratings = allData.ratings;
+
 
   if (chartInstance) {
-    chartInstance.data.datasets[0].data = allData; 
+    chartInstance.data.labels = dates; 
+    chartInstance.data.datasets[0].data = ratings;
+
     chartInstance.resetZoom();
     chartInstance.update();
     return;
