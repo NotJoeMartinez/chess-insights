@@ -164,7 +164,6 @@ for (let name in nodeWithCounts) {
 return countedOpenings;
 }
 
-
 export function filterOpeningsData(gameArchive, filters) {
     // skip this part if filters is none
     const timeClass = filters.timeClass;
@@ -194,7 +193,6 @@ export function filterOpeningsData(gameArchive, filters) {
     }
     return filteredGameArchive;
 }
-
 
 export function processOpeningsData(openingsData, n=100) {
     // Sort the data by count in descending order

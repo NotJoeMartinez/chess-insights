@@ -20,8 +20,6 @@
             </button> 
 
             <ul class="dropdown-menu dropdown-menu-end ">
-              <!-- <li v-for="(option, optionIndex) in computedFilterOptions[option]" -->
-                <!-- :class="{ active: activeFilters[key].includes(option) }" -->
               <li v-for="(option, optionIndex) in filterOptions[key] || []"
               class="dropdown-item"
               :class="{ active: activeFilters[key].includes(option) }"
@@ -80,6 +78,7 @@
        activeFilters: {
          "timeClass": [],
          "result": [],
+         "color": [],
          "opening": [], 
        },
      };
@@ -126,6 +125,7 @@
       return {
         "timeClass": ["rapid", "blitz", "bullet", "daily"],
         "result": ["win", "loss", "draw"],
+        "color": ["white", "black"],
         "opening": this.opening
       }
    }
@@ -136,6 +136,8 @@
        this.sortOrders[key] = this.sortOrders[key] * -1;
      },
      filterColumnBy(column, option) {
+
+
        const activeFilters = this.activeFilters[column];
        const index = activeFilters.indexOf(option);
        console.log(activeFilters)

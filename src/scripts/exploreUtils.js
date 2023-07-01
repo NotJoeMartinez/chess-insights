@@ -15,6 +15,7 @@ export function exploreAll(games) {
         timeClass: games[i].timeClass,
         rating: games[i].userRating,
         result: getResult(games[i].result),
+        color: games[i].userColor,
         opponent : games[i].opponent,
         opening: getMainLine(games[i].opening),
         gameUrl: games[i].gameUrl,
