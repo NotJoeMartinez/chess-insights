@@ -27,10 +27,12 @@ export function graphElo(timeClass="rapid")  {
     const results = allData.results;
     const links = allData.links;
     const openings = allData.opening;
+    const userColor = allData.userColor;
 
-  let green = "#708641"
-  let grey = "#888683"
-  let red = "#8f3431"
+  let green = "#32CD32"
+  let grey = "#cacac9"
+  // let red = "#cf4846"
+  let red = "#E10600" 
   const colors = results.map(result => result == "win" ? green : result == "loss" ? red: grey);
 
     if (chartInstance) {
@@ -48,10 +50,11 @@ export function graphElo(timeClass="rapid")  {
           labels: dates,
           datasets: [
             {
-            label: 'Elo',
+            label: '',
             data: ratings,
-            borderWidth: 1,
-            color: colors,
+            borderWidth: 0.2,
+            borderColor: "#fff",
+            backgroundColor: colors,
             }
         ]
         },
@@ -106,7 +109,7 @@ export function graphElo(timeClass="rapid")  {
                     let index = context.dataIndex;
                     let result = results[index];
                     let rating = ratings[index];
-                    label += ` (${result}) ${rating}`;
+                    label += `${rating} (${result}) `;
                   }
                   return label;
                 },
@@ -121,11 +124,15 @@ export function graphElo(timeClass="rapid")  {
                     borderRadius: 2,
                   };
                 },
-
                 footer: function(context){
                   let index = context[0].dataIndex;
                   let opening = openings[index];
                   return opening;
+                },
+                beforeFooter: function(context) {
+                  let index = context[0].dataIndex;
+                  return `${userColor[index]}`;
+
                 }
               },
             },
@@ -133,10 +140,11 @@ export function graphElo(timeClass="rapid")  {
             zoom: {
               zoom: {
                 wheel: {
-                  enabled: false 
+                  enabled: true 
                 },
                 pan: {
-                  enabled: true
+                  enabled: true,
+                  mode: 'xy'
                 },
                 drag: {
                   enabled: true
@@ -192,7 +200,8 @@ export function graphElo(timeClass="rapid")  {
     dates: [],
     results: [],
     links: [],
-    opening: []
+    opening: [],
+    userColor: []
   }
 
 
@@ -203,15 +212,16 @@ export function graphElo(timeClass="rapid")  {
 
         let rating = parsedGameNode.userRating;
         let link = parsedGameNode.gameUrl;
+        let userColor = parsedGameNode.userColor;
         let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
         let result = getResult(parsedGameNode.result);
         let opening = getMainLine(parsedGameNode.opening);
 
+        allData.userColor.push(userColor);
         allData.dates.push(safeDate);
         allData.ratings.push(rating);
         allData.links.push(link);
         allData.opening.push(opening);
-
         allData.results.push(result);
 
 
