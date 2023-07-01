@@ -48,10 +48,10 @@ export function graphElo(timeClass="rapid")  {
           labels: dates,
           datasets: [
             {
-            label: 'ELO',
+            label: 'Elo',
             data: ratings,
             borderWidth: 1,
-            // color: colors,
+            color: colors,
             }
         ]
         },
@@ -89,19 +89,20 @@ export function graphElo(timeClass="rapid")  {
         },
           
           plugins: {
+
             tooltip: {
               enabled: true,
               intersect: false,
               mode: 'index',
               borderWidth: 1,
+
               callbacks: {
                 label: function(context) {
                   let label = context.dataset.label || '';
                   if (label) {
-                      label += ': ';
+                    label += ': ';
                   }
                   if (context.parsed.y !== null) {
-
                     let index = context.dataIndex;
                     let result = results[index];
                     let rating = ratings[index];
@@ -109,24 +110,26 @@ export function graphElo(timeClass="rapid")  {
                   }
                   return label;
                 },
+
                 labelColor: function(context) {
                   let index = context.dataIndex;
                   return {
-                  borderColor: colors[index],
-                  backgroundColor: colors[index],
-                  borderWidth: 2,
-                  borderDash: [2, 2],
-                  borderRadius: 2,
-                };
+                    borderColor: colors[index],
+                    backgroundColor: colors[index],
+                    borderWidth: 2,
+                    borderDash: [2, 2],
+                    borderRadius: 2,
+                  };
+                },
+
+                footer: function(context){
+                  let index = context[0].dataIndex;
+                  let opening = openings[index];
+                  return opening;
+                }
               },
-              footer: function(context){
-                let index = context[0].dataIndex;
-                let opening = openings[index];
-                return opening;
-
-              }
-
             },
+
             zoom: {
               zoom: {
                 wheel: {
@@ -147,7 +150,6 @@ export function graphElo(timeClass="rapid")  {
             }
           }
         }
-      }
       });
 
       function clickHandler(click) {
@@ -205,19 +207,14 @@ export function graphElo(timeClass="rapid")  {
         let result = getResult(parsedGameNode.result);
         let opening = getMainLine(parsedGameNode.opening);
 
-        allData.ratings.push(rating);
         allData.dates.push(safeDate);
-        allData.results.push(result);
+        allData.ratings.push(rating);
         allData.links.push(link);
         allData.opening.push(opening);
 
-        // allData.push({ date: 
-        //   `${safeDate}`, 
-        //   game: {
-        //     elo: rating, 
-        //     link: `${link}`,
-        //     result: getResult(parsedGameNode)
-        //   }});
+        allData.results.push(result);
+
+
       }
 
   }
