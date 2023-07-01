@@ -20,7 +20,7 @@
             <h3>Exporting Data</h3>
             <img src="../assets/exporting.png" alt="usage" class="img-fluid demo">
             <p>
-                To export your dada click the button that says export and you will see this popup.
+                To export your data click the button that says export and you will see this popup.
                 See the git repo for a more detailed explanation of each of the data points pulled   
                 from the API. If you want as much data as possible or want to reupload your 
                 data to the site select the json file option.
