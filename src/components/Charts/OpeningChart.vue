@@ -82,7 +82,7 @@
 
 <script>
 import { makeOpeningsChart } from '@/scripts/graphOpenings.js';
-import * as bootstrap from 'bootstrap'
+// import * as bootstrap from 'bootstrap'
 
 export default {
     name: "OpeningGraph",
@@ -126,10 +126,10 @@ export default {
 
     },
         mounted: function() {
-			let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-			let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-				return new bootstrap.Tooltip(tooltipTriggerEl)
-			})
+			// let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			// 	return new bootstrap.Tooltip(tooltipTriggerEl)
+			// })
             let filters = {
                 timeClass: this.timeClass,
                 color: this.color,

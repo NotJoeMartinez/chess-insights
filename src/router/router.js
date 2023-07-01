@@ -5,7 +5,6 @@ import {
 
 import HomePage from '@/pages/HomePage.vue'
 import ExplorePage from '@/pages/ExplorePage.vue'
-
 const routes = [{
         'path': '/',
         component: HomePage

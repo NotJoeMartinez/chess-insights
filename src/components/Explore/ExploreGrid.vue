@@ -1,17 +1,41 @@
 <template>
+    <div class="container pt-3">
+      {{ filteredData.length }} rows
+    </div>
     <div class="table-responsive">
-      <table v-if="filteredData.length" class="table">
+      <table v-if="filteredData.length" class="table" id="exploreTable">
         <thead>
           <tr>
             <th
               v-for="(key, index) in columns"
               :key="'header-' + index"
-              @click="sortBy(key)"
-              :class="{ active: sortKey == key }"
+              :class="{ active: filterColumn === key }" 
             >
-              {{ capitalize(key) }}
-              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+
+            <button
+              class="btn dropdown-toggle column-filter-selector" 
+              data-bs-toggle="dropdown"
+              >
+              {{ capitalize(key) }} 
+            </button> 
+
+            <ul class="dropdown-menu dropdown-menu-end ">
+              <li v-for="(option, optionIndex) in filterOptions[key] || []"
+              class="dropdown-item"
+              :class="{ active: activeFilters[key].includes(option) }"
+              :key="'option-' + optionIndex"
+              @click="filterColumnBy(key, option)"
+              >
+              {{ option }}
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-item" @click="sortBy(key)">
+                Sort Ascending
+            </li>
+            </ul>
+              
             </th>
+
           </tr>
         </thead>
         <tbody>
@@ -23,6 +47,8 @@
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
+              
+              :class="{ 'SearchRow': filterColumn === key }"
             >
               {{ entry[key] }}
             </td>
@@ -33,83 +59,142 @@
       <p v-else>No matches found.</p>
     </div>
   </template>
-  
-  <script>
-  export default {
-    name: 'ExploreGrid',
-    props: {
-      data: Array,
-      columns: Array,
-      filterKey: String,
-    },
-    data() {
+
+ <script>
+
+ export default {
+   name: 'ExploreGrid',
+   props: {
+     data: Array,
+     opening: Array,
+     columns: Array,
+     filterKey: String,
+     filterColumn: String,
+   },
+   data() {
+     return {
+       sortKey: '',
+       sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
+       activeFilters: {
+         "timeClass": [],
+         "result": [],
+         "color": [],
+         "opening": [], 
+       },
+     };
+   },
+   computed: {
+     filteredData() {
+       let data = this.data;
+       // Apply all active filters
+       Object.keys(this.activeFilters).forEach((filterKey) => {
+         const filterValues = this.activeFilters[filterKey];
+         console.log(filterValues)
+         if (filterValues.length > 0) {
+            data = data.filter((row) => filterValues.includes(row[filterKey]));
+         }
+       });
+ 
+       // Filter data
+       if (this.filterKey) {
+         const filterText = this.filterKey.toLowerCase();
+         data = data.filter((row) => {
+           return Object.keys(row).some((key) => {
+             if (this.filterColumn === 'all'){
+               return String(row[key]).toLowerCase().includes(filterText);
+             }
+             if (key === this.filterColumn){
+               return String(row[key]).toLowerCase().includes(filterText);
+             }
+           });
+         });
+       }
+ 
+       // Sort data
+       if (this.sortKey) {
+         const order = this.sortOrders[this.sortKey] || 1;
+         data = data.slice().sort((a, b) => {
+           a = a[this.sortKey];
+           b = b[this.sortKey];
+           return (a === b ? 0 : a > b ? 1 : -1) * order;
+         });
+       }
+       return data;
+     },
+     filterOptions() {
       return {
-        sortKey: '',
-        sortOrders: this.columns.reduce((o, key) => ((o[key] = 1), o), {}),
-      };
-    },
-    computed: {
-      filteredData() {
-        const sortKey = this.sortKey;
-        const filterKey = this.filterKey && this.filterKey.toLowerCase();
-        const order = this.sortOrders[sortKey] || 1;
-        let data = this.data;
-  
-        // Filter data
-        if (filterKey) {
-          data = data.filter((row) => {
-            return Object.keys(row).some((key) => {
-              return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
-            });
-          });
-        }
-  
-        // Sort data
-        if (sortKey) {
-          data = data.slice().sort((a, b) => {
-            a = a[sortKey];
-            b = b[sortKey];
-            return (a === b ? 0 : a > b ? 1 : -1) * order;
-          });
-        }
-  
-        return data;
-      },
-    },
-    methods: {
-      sortBy(key) {
-        this.sortKey = key;
-        this.sortOrders[key] = this.sortOrders[key] * -1;
-      },
-      capitalize(str) {
+        "timeClass": ["rapid", "blitz", "bullet", "daily"],
+        "result": ["win", "loss", "draw"],
+        "color": ["white", "black"],
+        "opening": this.opening
+      }
+   }
+   },
+   methods: {
+     sortBy(key) {
+       this.sortKey = key;
+       this.sortOrders[key] = this.sortOrders[key] * -1;
+     },
+     filterColumnBy(column, option) {
+
+
+       const activeFilters = this.activeFilters[column];
+       const index = activeFilters.indexOf(option);
+       console.log(activeFilters)
+ 
+       if (index >= 0) {
+         activeFilters.splice(index, 1); // Remove filter
+       } else {
+         activeFilters.push(option); // Add filter
+       }
+     },
+     capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
       },
       openGameUrl(url) {
         window.open(url, '_blank');
-        
       },
-    },
-  };
-  </script>
+   }
+  }
+ </script> 
 
 
-<style>
-    table {
-        background-color: #272522;
-
+<style scoped>
+  .active, .SearchRow {
+    --active-color: #e9edcc;
+    --active-width: 1px;
+  }
+  
+    td.SearchRow {
+        border-color: var(--active-color) !important;
+        border-width: var(--active-width) !important;
+        border-top: none;
+        border-bottom: none;
+    }
+    th.active {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-width: 2px !important;
+      border-color: var(--active-color) !important;
     }
 
     thead {
-        background-color: #1f1e1b;
+        color: #cfd9e6 !important;
+        background-color: #272522 !important;
     }
 
     th {
-        background-color: #1f1e1b;
+        color: #cfd9e6 !important;
+        background-color: #272522 !important;
         user-select: none;
     }
 
     td {
-        background-color: #272522;
+
+        color: #cfd9e6 !important;
+        /* background-color: #272522 !important; */
+        background-color: #272522; 
     }
     table tr {
     /* border-bottom: solid 1px #312e2b; */
@@ -128,8 +213,9 @@
     td {
 
         min-width: 120px;
-        padding: 10px 20px;
+        /* padding: 10px 20px; */
     }
+
 
     th.active .arrow {
         opacity: 1;
@@ -158,4 +244,22 @@
     table tr:hover {
         background-color: #1f1e1b; 
     }
+
+    .column-filter-selector {
+      color: #fff;
+    }
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #fff;
+  background-color: #272522; 
+}
+
+.dropdown-item.active{
+  color: #fff;
+  background-color: #272522; 
+}
+
+    /* .column-filter-dropdown{
+      background-color: black;
+      color: #fff;
+    } */
 </style>
