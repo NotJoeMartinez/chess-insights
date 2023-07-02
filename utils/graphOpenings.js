@@ -1,12 +1,9 @@
 
 
-// import { getOpeningsData } from "~/utils/openingsUtils.js";
 
 import Chart from 'chart.js/auto'
-// import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-moment';
 import { LinearScale, PointElement, Tooltip, Legend, TimeScale } from "chart.js"; 
-// Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 Chart.register( LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
 import { getArchivedGames } from '~/utils/archiveUtils.js';

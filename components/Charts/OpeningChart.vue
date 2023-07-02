@@ -82,7 +82,6 @@
 
 <script>
 import { makeOpeningsChart } from '~/utils/graphOpenings.js';
-// import * as bootstrap from 'bootstrap'
 
 export default {
     name: "OpeningChart",

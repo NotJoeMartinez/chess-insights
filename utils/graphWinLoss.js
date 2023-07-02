@@ -1,4 +1,3 @@
-// import { Chart } from 'chart.js';
 import Chart from 'chart.js/auto'
 import {
   LinearScale,
@@ -8,12 +7,8 @@ import {
   TimeScale
 } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-// import zoomPlugin from 'chartjs-plugin-zoom';
-
-// import moment from 'moment';
 import 'chartjs-adapter-moment';
 
-// Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale);
 Chart.register(LinearScale, PointElement, Tooltip, Legend, TimeScale);
 
 import {
@@ -32,7 +27,6 @@ export function graphWinLoss(inputResult, timeClass = "all") {
     data = getLossData(timeClass)
     labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
     // colorObj = getColors("loss")
-
   }
   if (inputResult == "win") {
     ctx = document.getElementById("gamesWonBy");

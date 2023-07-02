@@ -34,7 +34,6 @@
 </template>
 
 <script>
-// import { graphWinLoss } from '../~/utils/graphWinLoss.js'
 import { graphWinLoss } from '~/utils/graphWinLoss.js'
 
 export default {
