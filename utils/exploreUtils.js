@@ -1,6 +1,6 @@
 
 
-import { parseAndSaveArchivedGames, verifyLiveChess, getArchivedGames} from "~/utils/archiveUtils.js";
+import { parseAndSaveArchivedGames, verifyLiveChess } from "~/utils/archiveUtils.js";
 import { getResult } from "~/utils/utils.js";
 import { getMainLine } from "~/utils/openingsUtils.js"
 

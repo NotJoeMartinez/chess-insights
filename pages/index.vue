@@ -188,31 +188,24 @@
 
       async getAllUserData(userName) {
         clearLocalStorage();
-        const testUsersEnabled = process.env.VUE_APP_ENABLE_TEST_USERS;
+
         this.showCharts = false;
         this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
 
-        if (testUsersEnabled == "true" && userName.startsWith("testUser")) {
-          let userId = userName[userName.length - 1]
-          let testDataPath = `./testData/testUser${userId}.json`;
-          // fix this, it's not imported
-          // let testUserData = await fetchTestUserData(testDataPath);
-          // importJsonData(testUserData);
-        }
-        else {
-          this.spinnerText = "Fetching user data...";
-          this.showProg = true;
+        userName = userName.replace(/^\s+|\s+$/g, "");
+        let fetchStatus = await this.fetchUserData(userName);
 
-          userName = userName.replace(/^\s+|\s+$/g, "");
-          let fetchStatus = await this.fetchUserData(userName);
-          if (fetchStatus == "error") {
-            this.showSpinner = false;
-            this.showProg = false;
-            this.showCharts = false;
-            return;
-          }
+        if (fetchStatus == "error") {
+          this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
+          return;
         }
+
         this.finishSetup();
+
       },
 
       finishSetup(){

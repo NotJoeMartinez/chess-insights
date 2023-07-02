@@ -7,7 +7,7 @@ import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
-import { getArchivedGames, parseGameNode } from '~/utils/archiveUtils.js';
+import { getArchivedGames } from '~/utils/archiveUtils.js';
 
 
 export function graphElo(timeClass="rapid")  {
@@ -27,7 +27,6 @@ export function graphElo(timeClass="rapid")  {
 
   let green = "#32CD32"
   let grey = "#cacac9"
-  // let red = "#cf4846"
   let red = "#E10600" 
   const colors = results.map(result => result == "win" ? green : result == "loss" ? red: grey);
 
@@ -39,7 +38,6 @@ export function graphElo(timeClass="rapid")  {
     }
 
 
-    // let timeFormat = "YYYY-MM-DD HH:mm";
     const eloChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -188,8 +186,7 @@ export function graphElo(timeClass="rapid")  {
   let archivedGames = getArchivedGames();
 
 
-  // let parsedDates = [];
-  // let allData = [];
+
   let allData = {
     ratings: [],
     dates: [],
@@ -201,7 +198,6 @@ export function graphElo(timeClass="rapid")  {
 
 
   for (var i=0; i<archivedGames.length; i++) {
-      // let parsedGameNode = parseGameNode(archivedGames[i],uname);
       let parsedGameNode = archivedGames[i]
       if (parsedGameNode.timeClass == timeClass){
 

@@ -1,5 +1,4 @@
 import { utcToHuman } from "~/utils/utils.js";
-import { calcOpeningsData, saveOpeningsData } from "~/utils/openingsUtils.js" 
 
 export function parseAndSaveArchivedGames(archivedGames) {
     let parsedArchivedGames = []
