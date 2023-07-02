@@ -50,6 +50,7 @@
 import { graphResByOpp } from '~/utils/graphResByOpp.js';
 
 export default {
+  name: "ResByRating",
   props: {
     timeClass: String,
   },

@@ -25,7 +25,7 @@
   <script>
   import { graphElo, resetChartZoom } from '~/utils/graphElo.js';
     export default {
-      name: 'EloOverTime',
+      name: 'EloOverTimeChart',
       ssr: false,
       data() {
         return {
