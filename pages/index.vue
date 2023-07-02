@@ -19,6 +19,7 @@
   :games-found="gamesFound" />
 
   <div v-if="showCharts">
+
     <div class="container px-4">
       <div class="row">
         <div class="col d-flex justify-content-center gap-2">
@@ -122,16 +123,46 @@
       }
     },
 
+    mounted: function () {
+      let localData = this.getLocalData();
+      if (localData != null) {
+        this.finishSetup();
+      }
+    },
+
     methods: {
+      async getAllUserData(userName) {
+        clearLocalStorage();
+        this.showCharts = false;
+        this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
+
+        userName = userName.replace(/^\s+|\s+$/g, "");
+        let fetchStatus = await this.fetchUserData(userName);
+
+        if (fetchStatus == "error") {
+          this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
+          return;
+        }
+
+        this.finishSetup();
+
+      },
+
       async fetchUserData(userName){
         console.clear();
         clearLocalStorage();
+
         this.gamesFound = 0;
         this.progress = 0;
+
         logAPIRequest(userName);
 
-        // get overall stats
         let userStatsRes = await fetchUserStats(userName);
+
         if (userStatsRes.status != 200){
           this.showSpinner = false;
           alert(`There was an error fetching the user's stats. code: ${userStatsRes.status}`);
@@ -142,14 +173,14 @@
           window.localStorage.setItem("playerStats", JSON.stringify(userStats));
         }
 
-
-        // get archive urls list
         let archiveUrlsRes = await fetchArchiveUrls(userName);
+
         if (archiveUrlsRes.status != 200){
           this.showSpinner = false;
           alert(`There was an error fetching the user's archives code: ${archiveUrlsRes.status}`);
           return "error";
         }
+
         let archiveMonths = await archiveUrlsRes.json()
         let archiveUrls = archiveMonths.archives;
         let totalGames = 0;
@@ -169,6 +200,7 @@
           this.gamesFound = totalGames;
           this.progress = prog;
         }
+
         this.totalUserGames = totalGames;
         this.showProg = false;
 
@@ -183,28 +215,6 @@
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData(calcOpeningsData());
-
-      },
-
-      async getAllUserData(userName) {
-        clearLocalStorage();
-
-        this.showCharts = false;
-        this.showSpinner = true;
-        this.spinnerText = "Fetching user data...";
-        this.showProg = true;
-
-        userName = userName.replace(/^\s+|\s+$/g, "");
-        let fetchStatus = await this.fetchUserData(userName);
-
-        if (fetchStatus == "error") {
-          this.showSpinner = false;
-          this.showProg = false;
-          this.showCharts = false;
-          return;
-        }
-
-        this.finishSetup();
 
       },
 
@@ -267,8 +277,6 @@
           }
         }
 
-
-
         let totalGames = numWins + numDraws + numLosses;
 
 
@@ -303,7 +311,28 @@
         this.ovLossCount = numLosses.toString();
 
       },
+
+      getLocalData() {
+        let userName = window.localStorage.getItem("userName");
+        let playerStats = window.localStorage.getItem("playerStats");
+        let openings = window.localStorage.getItem("openings");
+        let archivedGames = window.localStorage.getItem("archivedGames");
+
+        if (userName == null || playerStats == null || openings == null || archivedGames == null) {
+          return null;
+        } else {
+          return {
+            userName: userName,
+            playerStats: playerStats,
+            openings: openings,
+            archivedGames: archivedGames
+          }
+        }
+
+      },
+
     }
+  
 
   }
 </script>
