@@ -81,7 +81,7 @@
 
 
 <script>
-import { makeOpeningsChart } from '~/utils/graphOpenings.js';
+import { makeOpeningsChart } from '~/utils/chartOpenings.js';
 
 export default {
     name: "OpeningChart",
