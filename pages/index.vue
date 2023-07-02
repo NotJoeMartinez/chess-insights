@@ -107,10 +107,10 @@
         progress: 0,
         totalUserGames: 0,
         eloTimeClass: '',
-        resByOppTimeClass: '',
-        lossTimeClass: '',
-        winTimeClass: '',
-        drawTimeClass: '',
+        resByOppTimeClass: 'all',
+        lossTimeClass: 'all',
+        winTimeClass: 'all',
+        drawTimeClass: 'all',
         ovTimeClass: '',
         ovUserGames: 0,
         ovWinPercentage: 0,
@@ -132,58 +132,48 @@
 
     methods: {
       async getAllUserData(userName) {
+        console.clear();
         clearLocalStorage();
+
         this.showCharts = false;
         this.showSpinner = true;
         this.spinnerText = "Fetching user data...";
         this.showProg = true;
 
-        userName = userName.replace(/^\s+|\s+$/g, "");
-        let fetchStatus = await this.fetchUserData(userName);
-
-        if (fetchStatus == "error") {
-          this.showSpinner = false;
-          this.showProg = false;
-          this.showCharts = false;
-          return;
-        }
-
-        this.finishSetup();
-
-      },
-
-      async fetchUserData(userName){
-        console.clear();
-        clearLocalStorage();
-
+        let totalGames = 0;
         this.gamesFound = 0;
         this.progress = 0;
+
+        userName = userName.replace(/^\s+|\s+$/g, "");
 
         logAPIRequest(userName);
 
         let userStatsRes = await fetchUserStats(userName);
 
-        if (userStatsRes.status != 200){
-          this.showSpinner = false;
+        if (userStatsRes.error){
           alert(`There was an error fetching the user's stats. code: ${userStatsRes.status}`);
-          return "error";
+          this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
+          return;
         }
         else {
           let userStats = await userStatsRes.json();
           window.localStorage.setItem("playerStats", JSON.stringify(userStats));
         }
 
-        let archiveUrlsRes = await fetchArchiveUrls(userName);
 
+        let archiveUrlsRes = await fetchArchiveUrls(userName);
         if (archiveUrlsRes.status != 200){
           this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
           alert(`There was an error fetching the user's archives code: ${archiveUrlsRes.status}`);
-          return "error";
+          return;
         }
 
         let archiveMonths = await archiveUrlsRes.json()
         let archiveUrls = archiveMonths.archives;
-        let totalGames = 0;
         let archivedGames = []
 
         for (var i = 0; i < archiveUrls.length; i++) {
@@ -202,43 +192,36 @@
         }
 
         this.totalUserGames = totalGames;
-        this.showProg = false;
 
         if (archivedGames.length < 1) {
+          this.showSpinner = false;
+          this.showCharts = false;
           this.showProg = false;
           alert("No games found under that user")
           return;
         }
 
-        this.spinnerText = "saving data...";
 
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData(calcOpeningsData());
-
+        this.finishSetup();
       },
 
       finishSetup(){
-        
+        this.showProg = false;
+        this.spinnerText = "saving data...";
+
         this.userName = window.localStorage.getItem("userName");
-
         let largestTimeClass = getLargestTimeClass();
-        this.ovTimeClass = largestTimeClass;
-
-        this.winTimeClass = "all";
-        this.lossTimeClass = "all";
-        this.drawTimeClass = "all";
-        this.resByOppTimeClass = "all";
-
-        this.showSpinner = false;
-
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
-
+        this.showSpinner = false;
         this.showCharts = true;
 
         const element = document.getElementById('uname');
         element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+
       },
 
       writeEloOverTime(timeClass = "rapid") {
