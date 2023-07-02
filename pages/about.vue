@@ -141,13 +141,8 @@
 </template>
 
 <script>
-import NavBar from '~/components/NavBar.vue';
-// import * as bootstrap from 'bootstrap'
 export default {
     name: "About",
-    components:{
-        NavBar
-    }
 
 }
 </script>

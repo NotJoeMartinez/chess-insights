@@ -68,7 +68,7 @@
 
 // import * as bootstrap from 'bootstrap'
  export default {
-   name: 'ExploreGrid',
+   name: 'ExploreTable',
    props: {
      data: Array,
      opening: Array,

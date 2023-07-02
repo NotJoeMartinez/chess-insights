@@ -38,11 +38,11 @@
     </div>
 
     <div class="container">
-      <ExportExploreBtn />
+      <ButtonsExportExploreBtn />
     </div>
 
     <div class="container pt-1"> 
-      <ExploreGrid 
+      <ExploreTable
       :data="gridData" 
       :columns="gridColumns" 
       :filter-key="searchQuery" 
@@ -55,23 +55,14 @@
 </template>
 
 <script>
-  import NavBar from '~/components/NavBar.vue';
-  import ExploreGrid from '~/components/Explore/ExploreGrid.vue';
-  import ExportExploreBtn from '~/components/Buttons/ExportExploreBtn.vue'
-
   import { getOpeningsForExplore } from '~/utils/openingsUtils.js';
-
   import {
     exploreAll,
     exploreFromAPI
   } from '~/utils/exploreUtils.js';
+
   export default {
     name: 'ExplorePage',
-    components: {
-      ExploreGrid,
-      NavBar,
-      ExportExploreBtn
-    },
     data() {
       return {
         showSpinner: false,
