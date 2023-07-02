@@ -20,6 +20,13 @@
                                 target="_blank">Portable Game Notation</a></li>
                         <li><b>Custom:</b> Select what data to export</li>
                     </ul>
+                    <b>
+                        Warning:
+                    </b>
+                    If you reloaded the page at any time before export you will need to download  
+                    the data again before exporting.
+
+                    
                 </div>
                 <div class="modal-footer">
 

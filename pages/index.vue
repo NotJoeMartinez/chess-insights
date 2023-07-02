@@ -4,7 +4,7 @@
 
   <InputForm 
   @get-all-user-data="getAllUserData" 
-  @read-file-upload="finishSetup" 
+  @read-file-upload="handleFileUpload" 
   />
 
   <div v-if="showSpinner" class="container">
@@ -130,8 +130,6 @@
     mounted: function () {
       let localData = this.getLocalData();
       if (localData != null) {
-        this.showCharts = false;
-        this.showSpinner = true;
         this.finishSetup();
       }
       else {
@@ -234,12 +232,19 @@
 
       },
 
+      handleFileUpload() {
+        this.showCharts = false;
+        this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
+        this.finishSetup();
+      },
+
       writeEloOverTime(timeClass = "rapid") {
         this.eloTimeClass = timeClass;
       },
 
       updateOverview(timeClass) {
-
         let userStats = window.localStorage.getItem("playerStats");
         userStats = JSON.parse(userStats);
         let apiTimeClass = "chess_" + timeClass;

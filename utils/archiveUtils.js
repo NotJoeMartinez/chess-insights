@@ -172,9 +172,14 @@ export function savePgnGames(pgn){
 }
 
 export function getPgnGames(){
+    if (document.getElementById("pgnGames") != null) {
         let inlineDiv = document.getElementById("pgnGames");
         let archive = inlineDiv.textContent;
         return JSON.parse(archive);
+    }
+    else {
+        return null;
+    }
 }
 
 

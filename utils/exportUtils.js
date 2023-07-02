@@ -42,6 +42,11 @@ export function exportChessData(option) {
 
 
     let gameNodePgn = getPgnGames(archivedGames);
+    if (gameNodePgn == null){
+        alert("PGN data lost please download again and avoid refreshing the page");
+        return;
+    }
+
     let csvData = []
 
     if (option == 'all') {
@@ -185,6 +190,11 @@ export function makeCustomExport() {
 
     let archivedGames = getArchivedGames();
     let gameNodePgn = getPgnGames(archivedGames);
+
+    if (gameNodePgn == null){
+        alert("PGN data lost please download again and avoid refreshing the page");
+        return;
+    }
 
     let csvData = []
 
