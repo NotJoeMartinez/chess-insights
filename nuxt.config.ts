@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   ],
   app:{
     head: {
-      title: 'Chess Insights',
+      title: 'Free Chess.com Insights',
       meta: [
         { charset: 'utf-8' },
         { 
