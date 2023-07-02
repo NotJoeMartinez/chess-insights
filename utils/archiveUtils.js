@@ -181,12 +181,19 @@ export function getPgnGames(){
 export function getArchivedGames() {
 
     if (window.localStorage.getItem("archivedGames") != null) {
+        console.log("archivedGames found in local storage")
         let archive = window.localStorage.getItem("archivedGames");
         return JSON.parse(archive);
-    } else {
+    } 
+    else if (document.getElementById("archivedGames") != null) {
+        console.log("archivedGames not found in local storage")
         let inlineDiv = document.getElementById("archivedGames");
         let archive = inlineDiv.textContent;
         return JSON.parse(archive);
+    }
+    else {
+        console.log("no archivedGames found")
+        return null;
     }
 
 }

@@ -23,6 +23,7 @@
     <div class="container px-4">
       <div class="row">
         <div class="col d-flex justify-content-center gap-2">
+          <ButtonsClearCharts />
           <ButtonsExploreBtn />
           <ButtonsExportBtn />
         </div>
@@ -71,6 +72,7 @@
 
     <ExportPopup />
 
+
   </div>
 </div>
 </template>
@@ -87,11 +89,13 @@
   import { 
     parseAndSaveArchivedGames, 
     verifyLiveChess,
+    getArchivedGames,
   } from '~/utils/archiveUtils.js'
 
   import {
     calcOpeningsData,
-    saveOpeningsData
+    saveOpeningsData,
+    getSavedOpeningsData
   } from '~/utils/openingsUtils.js'
 
   export default {
@@ -126,7 +130,12 @@
     mounted: function () {
       let localData = this.getLocalData();
       if (localData != null) {
+        this.showCharts = false;
+        this.showSpinner = true;
         this.finishSetup();
+      }
+      else {
+        clearLocalStorage();
       }
     },
 
@@ -217,6 +226,7 @@
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
         this.showSpinner = false;
+        
         this.showCharts = true;
 
         const element = document.getElementById('uname');
@@ -226,7 +236,6 @@
 
       writeEloOverTime(timeClass = "rapid") {
         this.eloTimeClass = timeClass;
-        this.showCharts = true;
       },
 
       updateOverview(timeClass) {
@@ -298,8 +307,9 @@
       getLocalData() {
         let userName = window.localStorage.getItem("userName");
         let playerStats = window.localStorage.getItem("playerStats");
-        let openings = window.localStorage.getItem("openings");
-        let archivedGames = window.localStorage.getItem("archivedGames");
+        let openings = getSavedOpeningsData()
+        let archivedGames = getArchivedGames(); 
+      
 
         if (userName == null || playerStats == null || openings == null || archivedGames == null) {
           return null;

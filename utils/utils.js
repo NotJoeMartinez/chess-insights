@@ -1,7 +1,6 @@
 
 export function clearLocalStorage() {
     window.localStorage.clear();
-    console.log("local storage cleared")
     let inlineStorage = document.getElementById('archivedGames');
     if (inlineStorage) {
         inlineStorage.remove()
@@ -12,6 +11,12 @@ export function clearLocalStorage() {
         inlinePgnStorage.remove()
         console.log("inline pgn storage cleared")
     }
+    let inlineOpeningsStorage = document.getElementById('openings');
+    if (inlineOpeningsStorage) {
+        inlineOpeningsStorage.remove()
+        console.log("inline openings storage cleared")
+    }
+    console.log("local storage cleared")
 
 }
 
