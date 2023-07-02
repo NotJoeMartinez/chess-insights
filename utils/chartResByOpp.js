@@ -38,7 +38,6 @@ export function graphResByOpp(timeClass) {
     chartInstance.data.datasets[0].data = losses; 
     chartInstance.data.datasets[1].data = draws; 
     chartInstance.data.datasets[2].data = wins;
-    // chartInstance.labels = rangeLabels;
     chartInstance.update();
     return;
   }
@@ -177,7 +176,6 @@ function getChartData(timeClass) {
 
   }
 
-  // console.log("chartData.length: " + chartData.length)
   return chartData;
   
 }

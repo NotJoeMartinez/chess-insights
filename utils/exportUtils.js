@@ -4,7 +4,6 @@ import {
 } from '~/utils/utils.js';
 import {
     getArchivedGames,
-    parseGameNode,
     getPgnGames
 } from '~/utils/archiveUtils.js';
 
@@ -52,9 +51,7 @@ export function exportChessData(option) {
 
         for (var i = 0; i < archivedGames.length; i++) {
             var row = [];
-            // let gameNode = archivedGames[i];
             let parsedGameNode = archivedGames[i]; 
-            // parsedGameNode.pgn = gameNodePgn[parsedGameNode.gameId];
 
             row.push(parsedGameNode.userAccuracy);
             row.push(parsedGameNode.opponentAccuracy);

@@ -48,10 +48,6 @@
             @click="updateColor()">
             {{ color == "all" ? "W/B" : color.charAt(0).toUpperCase() + color.slice(1) }}
             </button>
-            <!-- {{ color == "all" ? "White/Black" : color.charAt(0).toUpperCase() + color.slice(1) }} -->
-			<!-- <font-awesome-icon :icon="['fas', 'fa-chess-pawn']" /> -->
-			<!-- <font-awesome-icon icon="fa-light fa-chess-pawn" /> -->
-
         </div>
     </div>
     </div>
@@ -125,10 +121,6 @@ export default {
 
     },
         mounted: function() {
-			// let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-			// let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-			// 	return new bootstrap.Tooltip(tooltipTriggerEl)
-			// })
             let filters = {
                 timeClass: this.timeClass,
                 color: this.color,

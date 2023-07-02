@@ -20,26 +20,21 @@ export function graphWinLoss(inputResult, timeClass = "all") {
   let ctx = '';
   let data = [];
   let labels = [];
-  // let colorObj = {}
 
   if (inputResult == "loss") {
     ctx = document.getElementById("gamesLostBy");
     data = getLossData(timeClass)
     labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
-    // colorObj = getColors("loss")
   }
   if (inputResult == "win") {
     ctx = document.getElementById("gamesWonBy");
     data = getWinData(timeClass)
     labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
-    // colorObj = getColors("win")
-
   }
   if (inputResult == "draw") {
     ctx = document.getElementById("gamesDrawnBy");
     data = getDrawData(timeClass)
     labels = ["Agreement", "Stalemate", "Repetition", "Insufficient"];
-    // colorObj = getColors("draw")
   }
 
 
@@ -53,9 +48,6 @@ export function graphWinLoss(inputResult, timeClass = "all") {
   }
 
 
-
-
-
   var myChart = new Chart(ctx, {
     type: "doughnut",
     plugins: [ChartDataLabels],
@@ -64,9 +56,6 @@ export function graphWinLoss(inputResult, timeClass = "all") {
       datasets: [{
         label: "Number of games",
         data: data,
-        // backgroundColor: colorObj.backgroundColor,
-        // borderColor: colorObj.borderColor,
-        // hoverBackgroundColor: colorObj.hoverBackgroundColor,
         backgroundColor: [
           "rgba(91, 138, 99, 1)",
           "rgba(138, 91, 121, 1)",
@@ -286,74 +275,4 @@ function getDrawData(timeClass) {
     data = [agreed, stalemate, repetition, m_insufficient]
   }
   return data;
-}
-
-function getColors(mode) {
-  let colorObj = {}
-  if (mode == "win") {
-    colorObj.backgroundColor = [
-        "rgba(91, 138, 99, 1)",
-        "rgba(138, 91, 121, 1)",
-        "rgba(136, 122, 91, 1)",
-        "rgba(91, 106, 138, 1)"
-      ],
-      colorObj.borderColor = [
-        "rgba(91, 138, 99, 1)",
-        "rgba(138, 91, 121, 1)",
-        "rgba(136, 122, 91, 1)",
-        "rgba(91, 106, 138, 1)"
-      ],
-      colorObj.hoverBackgroundColor = [
-        "rgba(91, 138, 99, 0.8)",
-        "rgba(138, 91, 121, 0.8)",
-        "rgba(136, 122, 91, 0.8)",
-        "rgba(91, 106, 138, 0.8)"
-      ]
-  }
-
-
-  if (mode == "loss") {
-    colorObj.backgroundColor = [
-      "rgba(51, 178, 48, 1)",
-      "rgba(52, 202, 49, 1)",
-      "rgba(51, 178, 48, 1)",
-      "rgba(52, 202, 49, 1)"
-    ]
-    colorObj.borderColor= [
-      "rgba(51, 178, 48, 1)",
-      "rgba(52, 202, 49, 1)",
-      "rgba(51, 178, 48, 1)",
-      "rgba(52, 202, 49, 1)"
-    ]
-    colorObj.hoverBackgroundColor =[
-      "rgba(51, 178, 48, 0.8)",
-      "rgba(52, 202, 49, 0.8)",
-      "rgba(51, 178, 48, 0.8)",
-      "rgba(52, 202, 49, 0.8)"
-    ]
-  }
-
-  if (mode == "draw") {
-    colorObj.backgroundColor = [
-      "rgba(189, 190, 185, 1)",
-      "rgba(137, 139, 139, 1)",
-      "rgba(101, 102, 102, 1)",
-      "rgba(216, 218, 218, 1)"
-    ]
-    colorObj.borderColor = [
-      "rgba(189, 190, 185, 1)",
-      "rgba(137, 139, 139, 1)",
-      "rgba(101, 102, 102, 1)",
-      "rgba(216, 218, 218, 1)"
-    ]
-    colorObj.hoverBackgroundColor =  [
-      "rgba(189, 190, 185, 0.8)",
-      "rgba(137, 139, 139, 0.8)",
-      "rgba(101, 102, 102, 0.8)",
-      "rgba(216, 218, 218, 0.8)"
-    ]
-
-  }
-  return colorObj
-
 }
