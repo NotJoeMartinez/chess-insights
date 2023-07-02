@@ -4,6 +4,7 @@
 .nitro
 .cache
 dist
+.npmrc
 
 # Node dependencies
 node_modules
