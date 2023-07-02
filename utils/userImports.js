@@ -56,8 +56,9 @@ export function importJsonData(data) {
         let appDiv = document.getElementById("app");
         inlineStorage.setAttribute("id", "openingsInlineStorage");
         inlineStorage.setAttribute("hidden", "hidden");
-        inlineStorage.textContent = JSON.stringify(openingsData);
+        inlineStorage.textContent = JSON.stringify(openings);
         appDiv.appendChild(inlineStorage);
+        console.log("openings saved to inline storage")
     }
 
 }

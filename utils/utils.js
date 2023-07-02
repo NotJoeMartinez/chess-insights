@@ -1,7 +1,6 @@
 
 export function clearLocalStorage() {
-    localStorage.clear();
-    console.log("local storage cleared")
+    window.localStorage.clear();
     let inlineStorage = document.getElementById('archivedGames');
     if (inlineStorage) {
         inlineStorage.remove()
@@ -12,6 +11,12 @@ export function clearLocalStorage() {
         inlinePgnStorage.remove()
         console.log("inline pgn storage cleared")
     }
+    let inlineOpeningsStorage = document.getElementById('openings');
+    if (inlineOpeningsStorage) {
+        inlineOpeningsStorage.remove()
+        console.log("inline openings storage cleared")
+    }
+    console.log("local storage cleared")
 
 }
 
@@ -90,18 +95,31 @@ export function getLargestTimeClass() {
     return maxClass
 }
 
-// gets overview of player stats
-export async function fetchUserStats(userName){
+
+export async function fetchUserStats(userName) {
     let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
-    let playerStatsRes = await fetch(playerStatsUrl);
-    return playerStatsRes;
-}
+    
+    try {
+      let playerStatsRes = await fetch(playerStatsUrl);
+  
+      // Add a check to see if the fetch request was successful
+      if (!playerStatsRes.ok) {
+        throw new Error(`HTTP error! status: ${playerStatsRes.status}`);
+      }
+  
+      return playerStatsRes;
+    } catch (error) {
+      console.error(`There was a problem with the fetch operation: ${error.message}`);
+      // Return an error code or a relevant error object
+      return { error: true, message: error.message };
+    }
+  }
+
 
 // gets all games ever played by user
 export async function fetchArchiveUrls(userName) {
     let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
     let response = await fetch(archiveUrl);
-
     return response; 
 }
 

@@ -4,7 +4,7 @@
 
   <InputForm 
   @get-all-user-data="getAllUserData" 
-  @read-file-upload="finishSetup" 
+  @read-file-upload="handleFileUpload" 
   />
 
   <div v-if="showSpinner" class="container">
@@ -19,9 +19,11 @@
   :games-found="gamesFound" />
 
   <div v-if="showCharts">
+
     <div class="container px-4">
       <div class="row">
         <div class="col d-flex justify-content-center gap-2">
+          <ButtonsClearCharts />
           <ButtonsExploreBtn />
           <ButtonsExportBtn />
         </div>
@@ -70,6 +72,7 @@
 
     <ExportPopup />
 
+
   </div>
 </div>
 </template>
@@ -86,11 +89,13 @@
   import { 
     parseAndSaveArchivedGames, 
     verifyLiveChess,
+    getArchivedGames,
   } from '~/utils/archiveUtils.js'
 
   import {
     calcOpeningsData,
-    saveOpeningsData
+    saveOpeningsData,
+    getSavedOpeningsData
   } from '~/utils/openingsUtils.js'
 
   export default {
@@ -106,10 +111,10 @@
         progress: 0,
         totalUserGames: 0,
         eloTimeClass: '',
-        resByOppTimeClass: '',
-        lossTimeClass: '',
-        winTimeClass: '',
-        drawTimeClass: '',
+        resByOppTimeClass: 'all',
+        lossTimeClass: 'all',
+        winTimeClass: 'all',
+        drawTimeClass: 'all',
         ovTimeClass: '',
         ovUserGames: 0,
         ovWinPercentage: 0,
@@ -122,20 +127,42 @@
       }
     },
 
+    mounted: function () {
+      let localData = this.getLocalData();
+      if (localData != null) {
+        this.finishSetup();
+      }
+      else {
+        clearLocalStorage();
+      }
+    },
+
     methods: {
-      async fetchUserData(userName){
+      async getAllUserData(userName) {
         console.clear();
         clearLocalStorage();
+
+        this.showCharts = false;
+        this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
+
+        let totalGames = 0;
         this.gamesFound = 0;
         this.progress = 0;
+
+        userName = userName.replace(/^\s+|\s+$/g, "");
+
         logAPIRequest(userName);
 
-        // get overall stats
         let userStatsRes = await fetchUserStats(userName);
-        if (userStatsRes.status != 200){
-          this.showSpinner = false;
+
+        if (userStatsRes.error){
           alert(`There was an error fetching the user's stats. code: ${userStatsRes.status}`);
-          return "error";
+          this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
+          return;
         }
         else {
           let userStats = await userStatsRes.json();
@@ -143,16 +170,17 @@
         }
 
 
-        // get archive urls list
         let archiveUrlsRes = await fetchArchiveUrls(userName);
         if (archiveUrlsRes.status != 200){
           this.showSpinner = false;
+          this.showProg = false;
+          this.showCharts = false;
           alert(`There was an error fetching the user's archives code: ${archiveUrlsRes.status}`);
-          return "error";
+          return;
         }
+
         let archiveMonths = await archiveUrlsRes.json()
         let archiveUrls = archiveMonths.archives;
-        let totalGames = 0;
         let archivedGames = []
 
         for (var i = 0; i < archiveUrls.length; i++) {
@@ -169,75 +197,54 @@
           this.gamesFound = totalGames;
           this.progress = prog;
         }
+
         this.totalUserGames = totalGames;
-        this.showProg = false;
 
         if (archivedGames.length < 1) {
+          this.showSpinner = false;
+          this.showCharts = false;
           this.showProg = false;
           alert("No games found under that user")
           return;
         }
 
-        this.spinnerText = "saving data...";
 
         window.localStorage.setItem("userName", userName);
         parseAndSaveArchivedGames(archivedGames);
         saveOpeningsData(calcOpeningsData());
-
-      },
-
-      async getAllUserData(userName) {
-        clearLocalStorage();
-
-        this.showCharts = false;
-        this.showSpinner = true;
-        this.spinnerText = "Fetching user data...";
-        this.showProg = true;
-
-        userName = userName.replace(/^\s+|\s+$/g, "");
-        let fetchStatus = await this.fetchUserData(userName);
-
-        if (fetchStatus == "error") {
-          this.showSpinner = false;
-          this.showProg = false;
-          this.showCharts = false;
-          return;
-        }
-
         this.finishSetup();
-
       },
 
       finishSetup(){
-        
+        this.showProg = false;
+        this.spinnerText = "saving data...";
+
         this.userName = window.localStorage.getItem("userName");
-
         let largestTimeClass = getLargestTimeClass();
-        this.ovTimeClass = largestTimeClass;
-
-        this.winTimeClass = "all";
-        this.lossTimeClass = "all";
-        this.drawTimeClass = "all";
-        this.resByOppTimeClass = "all";
-
-        this.showSpinner = false;
-
         this.updateOverview("all")
         this.writeEloOverTime(largestTimeClass);
-
+        this.showSpinner = false;
+        
         this.showCharts = true;
 
         const element = document.getElementById('uname');
         element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+
+      },
+
+      handleFileUpload() {
+        this.showCharts = false;
+        this.showSpinner = true;
+        this.spinnerText = "Fetching user data...";
+        this.showProg = true;
+        this.finishSetup();
       },
 
       writeEloOverTime(timeClass = "rapid") {
         this.eloTimeClass = timeClass;
-        this.showCharts = true;
       },
 
       updateOverview(timeClass) {
-
         let userStats = window.localStorage.getItem("playerStats");
         userStats = JSON.parse(userStats);
         let apiTimeClass = "chess_" + timeClass;
@@ -266,8 +273,6 @@
             numDraws = userStats[apiTimeClass].record.draw;
           }
         }
-
-
 
         let totalGames = numWins + numDraws + numLosses;
 
@@ -303,7 +308,29 @@
         this.ovLossCount = numLosses.toString();
 
       },
+
+      getLocalData() {
+        let userName = window.localStorage.getItem("userName");
+        let playerStats = window.localStorage.getItem("playerStats");
+        let openings = getSavedOpeningsData()
+        let archivedGames = getArchivedGames(); 
+      
+
+        if (userName == null || playerStats == null || openings == null || archivedGames == null) {
+          return null;
+        } else {
+          return {
+            userName: userName,
+            playerStats: playerStats,
+            openings: openings,
+            archivedGames: archivedGames
+          }
+        }
+
+      },
+
     }
+  
 
   }
 </script>

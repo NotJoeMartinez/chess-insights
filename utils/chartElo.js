@@ -170,16 +170,6 @@ export function graphElo(timeClass="rapid")  {
       return eloChart;
  }
 
- function removeData(chart) {
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.pop();
-  });
-  chart.update();
-}
-
-
-
 
  function getChartData(timeClass) {
 

@@ -44,6 +44,26 @@ export function saveOpeningsData(openingsData) {
     }
 }
 
+
+export function getSavedOpeningsData() {
+
+    if (window.localStorage.getItem("openings") != null) {
+        console.log("openings found in local storage")
+        let openings = window.localStorage.getItem("openings");
+        return JSON.parse(openings);
+    } 
+    else if (document.getElementById("openingsInlineStorage") != null) {
+        console.log("openings not found in local storage")
+        let inlineDiv = document.getElementById("openings");
+        let openings = inlineDiv.textContent;
+        return JSON.parse(openings);
+    }
+    else {
+        return null;
+    }
+}
+
+
 export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGames) {
     let winCount = 0;
     let lossCount = 0;
