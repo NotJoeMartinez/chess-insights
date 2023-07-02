@@ -47,9 +47,10 @@
 </template>
 
 <script>
-import { graphResByOpp } from '~/utils/graphResByOpp.js';
+import { graphResByOpp } from '~/utils/chartResByOpp.js';
 
 export default {
+  name: "ResByRating",
   props: {
     timeClass: String,
   },

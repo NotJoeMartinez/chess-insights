@@ -1,15 +1,11 @@
-// import { Chart } from 'chart.js';
 import Chart from 'chart.js/auto'
 import {LinearScale, PointElement, Tooltip, Legend, TimeScale} from "chart.js"; 
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { getResult } from '~/utils/utils.js';
 import { getMainLine } from '~/utils/openingsUtils.js';
-
-// import moment from 'moment';
 import 'chartjs-adapter-moment';
 
 Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
-// Chart.register(LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
 import { getArchivedGames, parseGameNode } from '~/utils/archiveUtils.js';
 
@@ -228,7 +224,6 @@ export function graphElo(timeClass="rapid")  {
 
   }
 
-  console.log(allData)
   return allData;
  }
 

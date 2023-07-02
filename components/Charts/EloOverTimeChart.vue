@@ -23,9 +23,9 @@
   </template>
   
   <script>
-  import { graphElo, resetChartZoom } from '~/utils/graphElo.js';
+  import { graphElo, resetChartZoom } from '~/utils/chartElo.js';
     export default {
-      name: 'EloOverTime',
+      name: 'EloOverTimeChart',
       ssr: false,
       data() {
         return {

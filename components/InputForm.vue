@@ -51,7 +51,6 @@
 <script>
 import { importJsonData } from '~/utils/userImports.js';
 
-
 export default {
   data() {
     return {
@@ -59,11 +58,6 @@ export default {
     }
   },
   mounted() {
-    // let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    // let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    // return new bootstrap.Tooltip(tooltipTriggerEl)
-    // })
-  
     this.suggestUserInput();
   },
   methods: {
@@ -207,5 +201,4 @@ export default {
     color: white;
     z-index: 1;
 }
-
 </style>

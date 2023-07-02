@@ -81,11 +81,10 @@
 
 
 <script>
-import { makeOpeningsChart } from '~/utils/graphOpenings.js';
-// import * as bootstrap from 'bootstrap'
+import { makeOpeningsChart } from '~/utils/chartOpenings.js';
 
 export default {
-    name: "OpeningGraph",
+    name: "OpeningChart",
 	data() {
 		return {
 			timeClass: "all",

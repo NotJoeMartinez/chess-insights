@@ -34,8 +34,7 @@
 </template>
 
 <script>
-// import { graphWinLoss } from '../~/utils/graphWinLoss.js'
-import { graphWinLoss } from '~/utils/graphWinLoss.js'
+import { graphWinLoss } from '~/utils/chartWinLoss.js'
 
 export default {
     name: "LossChart",

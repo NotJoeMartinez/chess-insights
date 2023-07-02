@@ -1,7 +1,7 @@
 <template>
-
-  <div>
+<div>
   <NavBar /> 
+
   <InputForm 
   @get-all-user-data="getAllUserData" 
   @read-file-upload="finishSetup" 
@@ -13,57 +13,68 @@
     {{ spinnerText }}
   </div>
 
-  <ProgBar v-if="showProg" :progress="progress" :games-found="gamesFound" />
+  <ProgBar 
+  v-if="showProg" 
+  :progress="progress" 
+  :games-found="gamesFound" />
 
   <div v-if="showCharts">
     <div class="container px-4">
       <div class="row">
         <div class="col d-flex justify-content-center gap-2">
-          <ExploreBtn />
-          <ExportBtn />
+          <ButtonsExploreBtn />
+          <ButtonsExportBtn />
         </div>
       </div>
     </div>
 
+    <UserOverview 
+    @update-user-overview="updateOverview($event)" 
+    :userName="userName" 
+    :ovTimeClass="ovTimeClass"
+    :ovTotalGames="ovTotalGames" 
+    :ovWinPercentage="ovWinPercentage" 
+    :ovWinCount="ovWinCount"
+    :ovDrawPercentage="ovDrawPercentage" 
+    :ovDrawCount="ovDrawCount" 
+    :ovLossPercentage="ovLossPercentage"
+    :ovLossCount="ovLossCount" />
 
+    <ChartsEloOverTimeChart 
+    @update="writeEloOverTime($event)" 
+    :timeClass="eloTimeClass" />
 
-    <UserOverview @update-user-overview="updateOverview($event)" :userName="userName" :ovTimeClass="ovTimeClass"
-      :ovTotalGames="ovTotalGames" :ovWinPercentage="ovWinPercentage" :ovWinCount="ovWinCount"
-      :ovDrawPercentage="ovDrawPercentage" :ovDrawCount="ovDrawCount" :ovLossPercentage="ovLossPercentage"
-      :ovLossCount="ovLossCount" />
-
-    <EloOverTime @update="writeEloOverTime($event)" :timeClass="eloTimeClass" />
-
-    <!-- <OpeningGraph @update-time-class="openingsTimeClass = $event" :timeClass="openingsTimeClass" /> -->
-    <OpeningGraph 
+    <ChartsOpeningChart
     @update-time-class="openingsTimeClass = $event" 
     @update-color="openingsColor = $event" 
-
     :timeClass="openingsTimeClass" 
-    :color="openingsColor"
-    />
+    :color="openingsColor" />
 
-    <ResByOpRating 
+    <ChartsResByRating
     :timeClass="resByOppTimeClass" 
-    @updateResByOpp="resByOppTimeClass = $event"  
+    @updateResByOpp="resByOppTimeClass = $event" />
+
+    <ChartsWinChart 
+    @updateWin="winTimeClass = $event" 
+    :timeClass="winTimeClass" />
+
+    <ChartsLossChart 
+    @updateLoss="lossTimeClass = $event" 
+    :timeClass="lossTimeClass" 
     />
 
-
-    <WinChart @updateWin="winTimeClass = $event" :timeClass="winTimeClass" />
-
-    <LossChart @updateLoss="lossTimeClass = $event" :timeClass="lossTimeClass" />
-
-    <DrawChart @updateDraw="drawTimeClass = $event" :timeClass="drawTimeClass" />
+    <ChartsDrawChart 
+    @updateDraw="drawTimeClass = $event" 
+    :timeClass="drawTimeClass" 
+    />
 
     <ExportPopup />
 
   </div>
-
 </div>
 </template>
 
 <script>
-  // import * as bootstrap from 'bootstrap'
   import {
     getLargestTimeClass,
     clearLocalStorage,
@@ -82,38 +93,8 @@
     saveOpeningsData
   } from '~/utils/openingsUtils.js'
 
-
-  import NavBar from "@/components/NavBar.vue";
-  import InputForm from "@/components/InputForm.vue";
-  import ProgBar from "@/components/ProgBar.vue";
-  import UserOverview from "@/components/UserOverview.vue";
-  import EloOverTime from "@/components/Charts/EloOverTimeChart.vue";
-  import OpeningGraph from "@/components/Charts/OpeningChart.vue";
-  import ResByOpRating from "@/components/Charts/ResByRating.vue"
-  import WinChart from "@/components/Charts/WinChart.vue";
-  import LossChart from "@/components/Charts/LossChart.vue";
-  import DrawChart from "@/components/Charts/DrawChart.vue";
-  import ExportBtn from "@/components/Buttons/ExportBtn.vue";
-  import ExploreBtn from "@/components/Buttons/ExploreBtn.vue"
-  import ExportPopup from "@/components/ExportPopup.vue"
-
   export default {
     name: "HomePage",
-    components: {
-      NavBar,
-      InputForm,
-      ProgBar,
-      UserOverview,
-      EloOverTime,
-      OpeningGraph,
-      ResByOpRating,
-      WinChart,
-      LossChart,
-      DrawChart,
-      ExportBtn,
-      ExploreBtn,
-      ExportPopup
-    },
     data() {
       return {
         userName: '',

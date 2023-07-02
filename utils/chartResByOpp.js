@@ -1,15 +1,9 @@
 /* eslint-disable */
-// import { Chart } from 'chart.js';
 import Chart from 'chart.js/auto'
 import {LinearScale, PointElement, Tooltip, Legend, TimeScale} from "chart.js"; 
-// import zoomPlugin from 'chartjs-plugin-zoom';
-
-// import moment from 'moment';
 import 'chartjs-adapter-moment';
-
 import {  getArchivedGames } from '~/utils/archiveUtils.js';
 
-// Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 Chart.register(LinearScale, PointElement, Tooltip, Legend, TimeScale); 
 
 export function graphResByOpp(timeClass) {
