@@ -19,15 +19,15 @@
 
           <div class="row" id="winLossRow">
             <div class="col">
-              <h3><b>{{ ovWinPercentage }}%</b></h3>
+              <h4><b>{{ ovWinPercentage }}%</b></h4>
               {{ ovWinCount }} Won
             </div>
             <div class="col">
-              <h3><b>{{ ovDrawPercentage }}%</b></h3>
+              <h4><b>{{ ovDrawPercentage }}%</b></h4>
               {{ ovDrawCount }} Drawn
             </div>
             <div class="col">
-              <h3><b>{{ ovLossPercentage }}%</b></h3>
+              <h4><b>{{ ovLossPercentage }}%</b></h4>
               {{ ovLossCount }} Lost
             </div>
           </div>
@@ -76,6 +76,9 @@ export default {
 </script>
 
 <style>
+
+
+
 #winLossBar{
   max-width: 60%;
 }
@@ -88,4 +91,27 @@ export default {
 #progLoss {
   background-color: #b23330;
 }
+
+/* small screens */
+@media (max-width: 576px) {
+  #eloCard{
+    max-width: 100%;
+  }
+  #eloCardBody{
+    max-width: 100%;
+  }
+  #winLossBar{
+    max-width: 100%;
+  }
+  #progWinds {
+    background-color: #85a94e;
+  }
+  #progDraws {
+    background-color: #8b8987;
+  }
+  #progLoss {
+    background-color: #b23330;
+  }
+}
+
 </style>
