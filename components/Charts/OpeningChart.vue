@@ -55,6 +55,12 @@
 
 <style>
 
+/* small screen */
+
+#openingsContainer{
+        padding-left: 0 ;
+        padding-right: 0 ;
+    }
 #openingsColorBtn {
 	margin-left: 15px;
 	padding: 5px 5px;
