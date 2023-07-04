@@ -172,7 +172,7 @@ export function savePgnGames(pgn){
 }
 
 export function getPgnGames(){
-    if (document.getElementById("pgnGames") != null) {
+    if (document.getElementById("pgnGames") !== null) {
         let inlineDiv = document.getElementById("pgnGames");
         let archive = inlineDiv.textContent;
         return JSON.parse(archive);
@@ -185,12 +185,12 @@ export function getPgnGames(){
 
 export function getArchivedGames() {
 
-    if (window.localStorage.getItem("archivedGames") != null) {
+    if (window.localStorage.getItem("archivedGames") !== null) {
         console.log("archivedGames found in local storage")
         let archive = window.localStorage.getItem("archivedGames");
         return JSON.parse(archive);
     } 
-    else if (document.getElementById("archivedGames") != null) {
+    else if (document.getElementById("archivedGames") !== null) {
         console.log("archivedGames not found in local storage")
         let inlineDiv = document.getElementById("archivedGames");
         let archive = inlineDiv.textContent;

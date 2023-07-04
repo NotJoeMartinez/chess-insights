@@ -31,8 +31,10 @@ export async function exploreFromAPI(  userName ) {
     let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
     let playerStatsRes = await fetch(playerStatsUrl);
     let playerStats = await playerStatsRes.json();
+
     console.log(playerStatsRes.status);
 
+    // I'm not sure about type coercion here
     if (playerStatsRes.status != 404) {
       window.localStorage.setItem("playerStats", JSON.stringify(playerStats));
     } else {

@@ -112,7 +112,7 @@ function getLossData(timeClass) {
     let result = parsedGameNode.result;
     let nodeTimeClass = parsedGameNode.timeClass;
 
-    if (timeClass != "all" && nodeTimeClass === timeClass) {
+    if (timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (result) {
         case "abandoned":
           lAbandoned++;
@@ -172,7 +172,7 @@ function getWinData(timeClass) {
     let nodeTimeClass = parsedGameNode.timeClass;
 
     // specific time class
-    if (wonBy != "" && timeClass != "all" && nodeTimeClass === timeClass) {
+    if (wonBy !== "" && timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (wonBy) {
         case "abandoned":
           wAbandoned++;
@@ -192,7 +192,7 @@ function getWinData(timeClass) {
     }
 
     // all time class
-    if (wonBy != "" && timeClass === "all") {
+    if (wonBy !== "" && timeClass === "all") {
       switch (wonBy) {
         case "abandoned":
           wAbandoned++;
@@ -233,7 +233,7 @@ function getDrawData(timeClass) {
     let result = parsedGameNode.result;
 
     // specific time class
-    if (timeClass != "all" && nodeTimeClass === timeClass) {
+    if (timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (result) {
         case "agreed":
           agreed++;
