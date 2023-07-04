@@ -91,6 +91,7 @@ vue.config.js
 babel.config.js
 testData/*
 testData
+scratch.js
 
 
 # high secure (-_-) 

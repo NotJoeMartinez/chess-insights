@@ -159,7 +159,7 @@ function getChartData(timeClass) {
   let archivedGames = getArchivedGames();
   let chartData = [];
 
-  for (var i=0; i<archivedGames.length; i++) {
+  for (let i=0; i<archivedGames.length; i++) {
       let parsedGameNode = archivedGames[i];
       if (parsedGameNode.timeClass == timeClass){
         let result = parsedGameNode.result;

@@ -29,8 +29,8 @@ export function exploreAll(games) {
 export async function exploreFromAPI(  userName ) {
     
     let playerStatsUrl = `https://api.chess.com/pub/player/${userName}/stats`;
-    var playerStatsRes = await fetch(playerStatsUrl);
-    var playerStats = await playerStatsRes.json();
+    let playerStatsRes = await fetch(playerStatsUrl);
+    let playerStats = await playerStatsRes.json();
     console.log(playerStatsRes.status);
 
     if (playerStatsRes.status != 404) {
@@ -41,17 +41,17 @@ export async function exploreFromAPI(  userName ) {
     }
 
     let archiveUrl = `https://api.chess.com/pub/player/${userName}/games/archives`;
-    var response = await fetch(archiveUrl);
-    var archiveMonths = await response.json();
-    var archiveUrls = archiveMonths.archives
+    let response = await fetch(archiveUrl);
+    let archiveMonths = await response.json();
+    let archiveUrls = archiveMonths.archives
     let totalGames = 0;
 
     let archivedGames = []
-    for (var i = 0; i < archiveUrls.length; i++) {
-      var archive = await fetch(archiveUrls[i]);
-      var archiveJson = await archive.json();
-      var archiveGameList = archiveJson.games;
-      for (var j = 0; j < archiveGameList.length; j++) {
+    for (let i = 0; i < archiveUrls.length; i++) {
+      let archive = await fetch(archiveUrls[i]);
+      let archiveJson = await archive.json();
+      let archiveGameList = archiveJson.games;
+      for (let j = 0; j < archiveGameList.length; j++) {
         if (verifyLiveChess(archiveGameList[j])) {
           archivedGames.push(archiveGameList[j]);
           totalGames = totalGames + 1;

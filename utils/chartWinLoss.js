@@ -48,7 +48,7 @@ export function graphWinLoss(inputResult, timeClass = "all") {
   }
 
 
-  var myChart = new Chart(ctx, {
+  let myChart = new Chart(ctx, {
     type: "doughnut",
     plugins: [ChartDataLabels],
     data: {
@@ -107,7 +107,7 @@ function getLossData(timeClass) {
   let lTimeOut = 0;
   let data = []
 
-  for (var i = 0; i < archivedGames.length; i++) {
+  for (let i = 0; i < archivedGames.length; i++) {
     let parsedGameNode = archivedGames[i];
     let result = parsedGameNode.result;
     let nodeTimeClass = parsedGameNode.timeClass;
@@ -166,7 +166,7 @@ function getWinData(timeClass) {
   let wResignation = 0;
   let wTimeOut = 0;
 
-  for (var i = 0; i < archivedGames.length; i++) {
+  for (let i = 0; i < archivedGames.length; i++) {
     let parsedGameNode = archivedGames[i];
     let wonBy = parsedGameNode.wonBy;
     let nodeTimeClass = parsedGameNode.timeClass;
@@ -227,7 +227,7 @@ function getDrawData(timeClass) {
   let repetition = 0;
   let m_insufficient = 0;
 
-  for (var i = 0; i < archivedGames.length; i++) {
+  for (let i = 0; i < archivedGames.length; i++) {
     let parsedGameNode = archivedGames[i];
     let nodeTimeClass = parsedGameNode.timeClass;
     let result = parsedGameNode.result;

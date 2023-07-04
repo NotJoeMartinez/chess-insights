@@ -183,11 +183,11 @@
         let archiveUrls = archiveMonths.archives;
         let archivedGames = []
 
-        for (var i = 0; i < archiveUrls.length; i++) {
-          var archive = await fetch(archiveUrls[i]);
-          var archiveJson = await archive.json();
-          var archiveGameList = archiveJson.games;
-          for (var j = 0; j < archiveGameList.length; j++) {
+        for (let i = 0; i < archiveUrls.length; i++) {
+          let archive = await fetch(archiveUrls[i]);
+          let archiveJson = await archive.json();
+          let archiveGameList = archiveJson.games;
+          for (let j = 0; j < archiveGameList.length; j++) {
             if (verifyLiveChess(archiveGameList[j])) {
               archivedGames.push(archiveGameList[j]);
               totalGames = totalGames + 1;

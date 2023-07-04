@@ -14,7 +14,7 @@ export function rowsToCsv(csvData, option) {
         type: 'text/csv'
     })
 
-    var a = window.document.createElement('a');
+    let a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(csvFile);
 
 
@@ -54,8 +54,8 @@ export function exportChessData(option) {
 
         csvData.push(headers);
 
-        for (var i = 0; i < archivedGames.length; i++) {
-            var row = [];
+        for (let i = 0; i < archivedGames.length; i++) {
+            let row = [];
             let parsedGameNode = archivedGames[i]; 
 
             row.push(parsedGameNode.userAccuracy);
@@ -200,12 +200,10 @@ export function makeCustomExport() {
 
     csvData.push(headers);
 
-    for (var i = 0; i < archivedGames.length; i++) {
-        var row = [];
+    for (let i = 0; i < archivedGames.length; i++) {
+        let row = [];
         let parsedGameNode = archivedGames[i];
-        // let parsedGameNode = parseGameNode(gameNode);
-
-        for (var j = 0; j < headers.length; j++) {
+        for (let j = 0; j < headers.length; j++) {
             if (headers[j] == "pgn") {
                 row.push(gameNodePgn[parsedGameNode.gameId].replace(/(\r\n|\r|\n)/g, ''));
                 continue;
