@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container chart pt-3 pb-3 " id="lossContainer" :timeClass="{lossTimeClass}">
+    <div class="container chart pt-3 pb-3 " id="lossContainer">
         <div class="row lost-by">
             <div class="card lost-by">
                 <div class="card-body">
@@ -53,9 +53,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-/* canvas {
-    max-width: 50%;
-} */
-</style>

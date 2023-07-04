@@ -1,5 +1,5 @@
 <template>
-    <div class="div container resByOp chart pt-3 pb-3" id="resByOp">
+    <div class="div container chart pt-3 pb-3" id="resByOp">
   <div class="row" id="resByOpRow">
     <div class="card" id="resByOpCard">
     <h2 class="card-title  mt-2">
@@ -89,10 +89,3 @@ export default {
 
 
 </script>
-
-<style scoped>
-/* .eloOverTime {
-max-width: 70%;
-max-height: 50%;
-} */
-</style>

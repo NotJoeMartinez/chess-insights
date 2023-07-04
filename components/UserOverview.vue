@@ -1,5 +1,5 @@
 <template>
-    <div class="div container userOverview chart  pt-3 pb-3" id="userOverview" :ovTimeClass="{ovTimeClass}">
+    <div class="div container userOverview chart  pt-3 pb-3" id="userOverview ">
       <div class="row" >
         <div class="card" id="eloCard">
 
@@ -71,6 +71,9 @@ export default {
         updateOverview(newovTimeClass) {
             this.$emit('update-user-overview', newovTimeClass);
         },
+    },
+    mounted: function () {
+      console.log("user overview")
     }
 }
 </script>
