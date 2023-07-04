@@ -96,14 +96,3 @@ export function makeOpeningsChart(filters="") {
 }
 
 
-function getResult(result) {
-  if (result === "win") {
-    return "win";
-  } 
-  else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
-    return "loss";
-  }
-  else {
-    return "draw";
-  }
-}
