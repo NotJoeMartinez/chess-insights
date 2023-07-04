@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container chart pt-3 pb-3" id="drawContainer" :timeClass="{winTimeClass}">
+    <div class="container chart pt-3 pb-3" id="drawContainer">
         <div class="row draw-by">
             <div class="card draw-by">
                 <div class="card-body">
@@ -15,7 +15,6 @@
                     <div class="container pieChartContainer p-3">
                         <canvas id="gamesDrawnBy"> </canvas>
                     </div>
-
                     <button class="btn btn-primary slicer" :class="{ active: timeClass === 'all' }" v-on:click="updateDraw('all')">All</button>
                     <button class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateDraw('bullet')">Bullet</button>
                     <button class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateDraw('blitz')">Blitz</button>

@@ -1,5 +1,5 @@
 <template>
-        <div class="div container eloOverTime chart pt-3 pb-3" id="eloGraph" :timeClass="{timeClass}">
+        <div class="div container chart pt-3 pb-3" id="eloGraph" >
       <div class="row" id="eloCardRow">
         <div class="card" id="eloCard">
         <h2 class="card-title  mt-2">
@@ -9,7 +9,6 @@
         </h2>
         <p class="card-text"> Click data points to open game in another window. Click and drag to zoom in on specific area </p>
         <div class="card-body" id="eloCardBody">
-          <!-- <canvas id="eloOverTime" :style="{ display: 'block', boxSizing: 'border-box', touchAction: 'auto', userSelect: 'none', height: '619px', width: '1238px' }" ></canvas> -->
           <canvas id="eloOverTime"></canvas> 
           <button id="eotBullet" class="btn btn-primary slicer" :class="{ active: timeClass === 'bullet' }" v-on:click="updateElo('bullet')">Bullet</button>
           <button id="eotBlitz" class="btn btn-primary slicer" :class="{ active: timeClass === 'blitz' }" v-on:click="updateElo('blitz')">Blitz</button>
@@ -22,7 +21,7 @@
     </div>
   </template>
   
-  <script>
+ <script>
   import { graphElo, resetChartZoom } from '~/utils/chartElo.js';
     export default {
       name: 'EloOverTimeChart',
@@ -50,13 +49,4 @@
         graphElo(this.timeClass);
         }
     }
-   
-
-  </script>
-
-<style scoped>
-/* .eloOverTime {
-  max-width: 70%;
-  max-height: 50%;
-} */
-</style>
+ </script>
