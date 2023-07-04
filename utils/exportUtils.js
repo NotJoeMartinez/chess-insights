@@ -42,14 +42,14 @@ export function exportChessData(option) {
 
 
     let gameNodePgn = getPgnGames(archivedGames);
-    if (gameNodePgn == null){
+    if (gameNodePgn === null){
         alert("PGN data lost please download again and avoid refreshing the page");
         return;
     }
 
     let csvData = []
 
-    if (option == 'all') {
+    if (option === 'all') {
 
 
         csvData.push(headers);
@@ -80,7 +80,7 @@ export function exportChessData(option) {
         }
         rowsToCsv(csvData, "all");
 
-    } else if (option == "simple") {
+    } else if (option === "simple") {
         csvData.push(["date", "timeClass", "result", "rating", "gameUrl"]);
         for (let i = 0; i < archivedGames.length; i++) {
             let row = [];
@@ -95,7 +95,7 @@ export function exportChessData(option) {
         }
         rowsToCsv(csvData, "simple");
 
-    } else if (option == 'pgn') {
+    } else if (option === 'pgn') {
 
         let pgnData = "";
         for (let game in gameNodePgn) {
@@ -119,7 +119,7 @@ export function exportChessData(option) {
         a.click();
         document.body.removeChild(a);
 
-    } else if (option == 'json') {
+    } else if (option === 'json') {
 
         let parsedGames = [];
         for (let i = 0; i < archivedGames.length; i++) {
@@ -191,7 +191,7 @@ export function makeCustomExport() {
     let archivedGames = getArchivedGames();
     let gameNodePgn = getPgnGames(archivedGames);
 
-    if (gameNodePgn == null){
+    if (gameNodePgn === null){
         alert("PGN data lost please download again and avoid refreshing the page");
         return;
     }
@@ -204,7 +204,7 @@ export function makeCustomExport() {
         let row = [];
         let parsedGameNode = archivedGames[i];
         for (let j = 0; j < headers.length; j++) {
-            if (headers[j] == "pgn") {
+            if (headers[j] === "pgn") {
                 row.push(gameNodePgn[parsedGameNode.gameId].replace(/(\r\n|\r|\n)/g, ''));
                 continue;
             }

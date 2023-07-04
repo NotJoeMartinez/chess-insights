@@ -34,7 +34,7 @@ export function parseAndSaveArchivedGames(archivedGames) {
 export function verifyLiveChess(gameNode) {
 
     try {
-        if ((gameNode.rules == "chess" )) {
+        if ((gameNode.rules === "chess" )) {
             return true;
         } else {
             return false;
@@ -65,7 +65,7 @@ export function parseGameNode(gameNode) {
     parsedGameNode["ogPgn"] = gameNode.pgn;
 
     // find game color
-    if (gameNode.white.username.toUpperCase() == uname.toUpperCase()) {
+    if (gameNode.white.username.toUpperCase() === uname.toUpperCase()) {
         parsedGameNode["userColor"] = "white";
         parsedGameNode["result"] = gameNode.white.result;
         parsedGameNode["opponent"] = gameNode.black.username;
@@ -105,11 +105,11 @@ export function parseGameNode(gameNode) {
 
     // find out how you won
     parsedGameNode["wonBy"] = "";
-    if ((parsedGameNode.userColor == "white") && (parsedGameNode.result == "win")) {
+    if ((parsedGameNode.userColor === "white") && (parsedGameNode.result === "win")) {
         parsedGameNode["wonBy"] = gameNode.black.result;
     }
 
-    if ((parsedGameNode.userColor == "black") && (parsedGameNode.result == "win")) {
+    if ((parsedGameNode.userColor === "black") && (parsedGameNode.result === "win")) {
         parsedGameNode["wonBy"] = gameNode.white.result;
     }
 

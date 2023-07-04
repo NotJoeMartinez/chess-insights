@@ -28,7 +28,8 @@ export function graphElo(timeClass="rapid")  {
   let green = "#32CD32"
   let grey = "#cacac9"
   let red = "#E10600" 
-  const colors = results.map(result => result == "win" ? green : result == "loss" ? red: grey);
+
+  const colors = results.map(result => result === "win" ? green : result === "loss" ? red: grey);
 
     if (chartInstance) {
       chartInstance.data.labels = dates; 
@@ -189,7 +190,7 @@ export function graphElo(timeClass="rapid")  {
 
   for (let i=0; i<archivedGames.length; i++) {
       let parsedGameNode = archivedGames[i]
-      if (parsedGameNode.timeClass == timeClass){
+      if (parsedGameNode.timeClass === timeClass){
 
         let rating = parsedGameNode.userRating;
         let link = parsedGameNode.gameUrl;

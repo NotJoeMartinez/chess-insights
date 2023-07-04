@@ -100,7 +100,7 @@
 
       let games = JSON.parse(window.localStorage.getItem("archivedGames"))
 
-      if (games != null) {
+      if (games !== null) {
         console.log("we have enough space")
         this.gridData = exploreAll(games)
         this.openingFilter = getOpeningsForExplore(games)  

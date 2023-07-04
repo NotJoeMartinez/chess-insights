@@ -81,7 +81,7 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
                 else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
                     lossCount++;
                 }
-                else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+                else if (result === "agreed" || result === "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
                     drawCount++;
                 }
             }
@@ -100,10 +100,10 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
             let result = gameNode.result
             if (result === "win") {
                 winCount++;
-            } else if (result === "resigned" || result === "timeout" || result === "checkmated" || result == "abandoned") {
+            } else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
                 lossCount++;
             }
-            else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+            else if (result === "agreed" || result === "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
                 drawCount++;
             }
         }
