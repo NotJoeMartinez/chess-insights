@@ -161,13 +161,13 @@ function getChartData(timeClass) {
 
   for (let i=0; i<archivedGames.length; i++) {
       let parsedGameNode = archivedGames[i];
-      if (parsedGameNode.timeClass == timeClass){
+      if (parsedGameNode.timeClass === timeClass){
         let result = parsedGameNode.result;
         let rating = parsedGameNode.opponentRating;
 
         chartData.push({ opponentRating: `${rating}`, result: `${result}` });
       }
-      else if (timeClass == "all") {
+      else if (timeClass === "all") {
         let result = parsedGameNode.result;
         let rating = parsedGameNode.opponentRating;
 
@@ -239,16 +239,16 @@ function makeDataSet(ranges, chartData){
       if (chartData[i]["opponentRating"] >= ranges[j] - 99 && chartData[i]["opponentRating"] <= ranges[j]) {
         let result = chartData[i]["result"];
 
-        if (result == "win") {
+        if (result === "win") {
           dataSets[ranges[j]]["win"] += 1;
         }
-        else if (result == "resigned" || result == "checkmated" || result == "timeout" || result == "abandoned") {
+        else if (result === "resigned" || result === "checkmated" || result === "timeout" || result === "abandoned") {
           dataSets[ranges[j]]["loss"] += 1;
         }
         else if (
-          result == "stalemate" || result == "agreed" || 
-          result == "repetition" || result == "insufficient" || 
-          result == "50mov" || result == "timevsinsufficient" 
+          result === "stalemate" || result === "agreed" || 
+          result === "repetition" || result === "insufficient" || 
+          result === "50mov" || result === "timevsinsufficient" 
           ) {
           dataSets[ranges[j]]["draw"] += 1;
         }

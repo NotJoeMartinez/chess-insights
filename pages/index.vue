@@ -129,7 +129,7 @@
 
     mounted: function () {
       let localData = this.getLocalData();
-      if (localData != null) {
+      if (localData !== null) {
         this.finishSetup();
       }
       else {
@@ -171,7 +171,7 @@
 
 
         let archiveUrlsRes = await fetchArchiveUrls(userName);
-        if (archiveUrlsRes.status != 200){
+        if (archiveUrlsRes.status !== 200){
           this.showSpinner = false;
           this.showProg = false;
           this.showCharts = false;
@@ -253,7 +253,7 @@
         let numDraws = 0;
 
 
-        if (timeClass == "all") {
+        if (timeClass === "all") {
           let validTimeClasses = ["blitz", "rapid", "bullet", "daily"];
           for (let i = 0; i < validTimeClasses.length; i++) {
             apiTimeClass = "chess_" + validTimeClasses[i];
@@ -316,7 +316,7 @@
         let archivedGames = getArchivedGames(); 
       
 
-        if (userName == null || playerStats == null || openings == null || archivedGames == null) {
+        if (userName === null || playerStats === null || openings === null || archivedGames === null) {
           return null;
         } else {
           return {

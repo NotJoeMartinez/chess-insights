@@ -21,17 +21,17 @@ export function graphWinLoss(inputResult, timeClass = "all") {
   let data = [];
   let labels = [];
 
-  if (inputResult == "loss") {
+  if (inputResult === "loss") {
     ctx = document.getElementById("gamesLostBy");
     data = getLossData(timeClass)
     labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
   }
-  if (inputResult == "win") {
+  if (inputResult === "win") {
     ctx = document.getElementById("gamesWonBy");
     data = getWinData(timeClass)
     labels = ["Abandonment", "Checkmate", "Resignation", "Timeout"];
   }
-  if (inputResult == "draw") {
+  if (inputResult === "draw") {
     ctx = document.getElementById("gamesDrawnBy");
     data = getDrawData(timeClass)
     labels = ["Agreement", "Stalemate", "Repetition", "Insufficient"];
@@ -112,7 +112,7 @@ function getLossData(timeClass) {
     let result = parsedGameNode.result;
     let nodeTimeClass = parsedGameNode.timeClass;
 
-    if (timeClass != "all" && nodeTimeClass == timeClass) {
+    if (timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (result) {
         case "abandoned":
           lAbandoned++;
@@ -131,7 +131,7 @@ function getLossData(timeClass) {
       }
     }
 
-    if (timeClass == "all") {
+    if (timeClass === "all") {
       switch (result) {
         case "abandoned":
           lAbandoned++;
@@ -172,7 +172,7 @@ function getWinData(timeClass) {
     let nodeTimeClass = parsedGameNode.timeClass;
 
     // specific time class
-    if (wonBy != "" && timeClass != "all" && nodeTimeClass == timeClass) {
+    if (wonBy !== "" && timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (wonBy) {
         case "abandoned":
           wAbandoned++;
@@ -192,7 +192,7 @@ function getWinData(timeClass) {
     }
 
     // all time class
-    if (wonBy != "" && timeClass == "all") {
+    if (wonBy !== "" && timeClass === "all") {
       switch (wonBy) {
         case "abandoned":
           wAbandoned++;
@@ -233,7 +233,7 @@ function getDrawData(timeClass) {
     let result = parsedGameNode.result;
 
     // specific time class
-    if (timeClass != "all" && nodeTimeClass == timeClass) {
+    if (timeClass !== "all" && nodeTimeClass === timeClass) {
       switch (result) {
         case "agreed":
           agreed++;
@@ -253,7 +253,7 @@ function getDrawData(timeClass) {
     }
 
     // all time class
-    if (timeClass == "all") {
+    if (timeClass === "all") {
       switch (result) {
         case "agreed":
           agreed++;

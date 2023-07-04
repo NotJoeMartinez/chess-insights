@@ -47,12 +47,12 @@ export function saveOpeningsData(openingsData) {
 
 export function getSavedOpeningsData() {
 
-    if (window.localStorage.getItem("openings") != null) {
+    if (window.localStorage.getItem("openings") !== null) {
         console.log("openings found in local storage")
         let openings = window.localStorage.getItem("openings");
         return JSON.parse(openings);
     } 
-    else if (document.getElementById("openingsInlineStorage") != null) {
+    else if (document.getElementById("openingsInlineStorage") !== null) {
         console.log("openings not found in local storage")
         let inlineDiv = document.getElementById("openings");
         let openings = inlineDiv.textContent;
@@ -81,7 +81,7 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
                 else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
                     lossCount++;
                 }
-                else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+                else if (result === "agreed" || result === "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
                     drawCount++;
                 }
             }
@@ -100,10 +100,10 @@ export function getWinsAndLossesByOpenings(timeClass, opening, parsedArchivedGam
             let result = gameNode.result
             if (result === "win") {
                 winCount++;
-            } else if (result === "resigned" || result === "timeout" || result === "checkmated" || result == "abandoned") {
+            } else if (result === "resigned" || result === "timeout" || result === "checkmated" || result === "abandoned") {
                 lossCount++;
             }
-            else if (result === "agreed" || result == "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
+            else if (result === "agreed" || result === "stalemate" || result === "repetition" || result === "insufficient" || result === "timevsinsufficient" ) {
                 drawCount++;
             }
         }
@@ -195,12 +195,12 @@ export function filterOpeningsData(gameArchive, filters) {
         if (timeClass === "all" && color === "all") {
             return gameArchive;
         }
-        else if (timeClass != "all" && color === "all") {
+        else if (timeClass !== "all" && color === "all") {
             if (gameArchive[i].timeClass === timeClass) {
                 filteredGameArchive.push(gameArchive[i])
             }
         }
-        else if (timeClass === "all" && color != "all") {
+        else if (timeClass === "all" && color !== "all") {
             if (gameArchive[i].userColor === color) {
                 filteredGameArchive.push(gameArchive[i])
             }

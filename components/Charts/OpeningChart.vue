@@ -46,7 +46,7 @@
 			:class="color"
 			id="openingsColorBtn"
             @click="updateColor()">
-            {{ color == "all" ? "W/B" : color.charAt(0).toUpperCase() + color.slice(1) }}
+            {{ color === "all" ? "W/B" : color.charAt(0).toUpperCase() + color.slice(1) }}
             </button>
         </div>
     </div>
@@ -109,9 +109,9 @@ export default {
         updateColor(){
 
             let newColor = "";
-            if (this.color == "white") {
+            if (this.color === "white") {
                 newColor = "black";
-            } else if (this.color == "black") {
+            } else if (this.color === "black") {
                 newColor = "all";
             } else {
                 newColor = "white";
