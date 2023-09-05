@@ -86,7 +86,7 @@ export function makeOpeningsChart(filters="") {
           onClick: function (event, elements) {
             if (elements.length) {
               const dataIndex = elements[0].index;
-              const url = urls[dataIndex];
+              const url = urls[dataIndex] + "?ref_id=74104030";
               window.open(url, "_blank");
             }
           },
