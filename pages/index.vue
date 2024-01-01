@@ -40,7 +40,9 @@
     :ovDrawPercentage="ovDrawPercentage" 
     :ovDrawCount="ovDrawCount" 
     :ovLossPercentage="ovLossPercentage"
-    :ovLossCount="ovLossCount" />
+    :ovLossCount="ovLossCount"
+    :ovTimePlayed="ovTimePlayed" 
+    />
 
     <ChartsEloOverTimeChart 
     @update="writeEloOverTime($event)" 
@@ -90,6 +92,7 @@
     parseAndSaveArchivedGames, 
     verifyLiveChess,
     getArchivedGames,
+    getTotalTimePlayed
   } from '~/utils/archiveUtils.js'
 
   import {
@@ -124,6 +127,7 @@
         ovLossCount: 0,
         ovLossPercentage: 0,
         ovTotalGames: 0,
+        ovTimePlayed: 0,
       }
     },
 
@@ -297,8 +301,9 @@
           percentLosses = 0;
         }
 
-        this.ovTimeClass = timeClass;
+        let timePlayed = getTotalTimePlayed(); 
 
+        this.ovTimeClass = timeClass;
         this.ovTotalGames = totalGames.toString();
         this.ovWinPercentage = percentWins.toString();
         this.ovWinCount = numWins.toString();
@@ -306,6 +311,7 @@
         this.ovDrawCount = numDraws.toString();
         this.ovLossPercentage = percentLosses.toString();
         this.ovLossCount = numLosses.toString();
+        this.ovTimePlayed = timePlayed.toString();
 
       },
 

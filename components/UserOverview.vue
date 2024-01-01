@@ -32,11 +32,20 @@
             </div>
           </div>
 
+
         <div class="progress">
           <div class="progress-bar" id="progWinds" role="progressbar" :style="{ width: ovWinPercentage + '%' }" :aria-valuenow="ovWinPercentage" aria-valuemin="0" aria-valuemax="100"> </div>
           <div class="progress-bar " id="progDraws" role="progressbar" :style="{ width: ovDrawPercentage + '%'}" :aria-valuenow="ovDrawPercentage" aria-valuemin="0" aria-valuemax="100"></div>
           <div class="progress-bar " id="progLoss" role="progressbar" :style="{ width: ovLossPercentage + '%'}" :aria-valuenow="ovLossPercentage" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+
+          <div class="row" id="timePlayed">
+
+            <div class="col">
+              <h4><b>Time Played</b></h4>
+              {{ ovTimePlayed }} 
+            </div>
+          </div>
 
         </div>
         <div class="card-body" id="eloCardBody">
@@ -66,6 +75,7 @@ export default {
         ovDrawPercentage: Number,
         ovLossPercentage: Number,
         ovTotalGames: Number,
+        ovTimePlayed: String,
     },
     methods: {
         updateOverview(newovTimeClass) {

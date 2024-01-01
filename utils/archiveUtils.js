@@ -149,6 +149,18 @@ export function parseGameNode(gameNode) {
         parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
     }
 
+    if (parsedGameNode["timeClass"] === "daily") {
+        parsedGameNode["timePlayed"] = 0;
+    }
+    else {
+        let timePlayed = getSecondsBetween(parsedGameNode["startTime"], parsedGameNode["endTime"]);
+        if (timePlayed < 0) {
+            console.log(`error: date: ${parsedGameNode["date"]} startTime: ${parsedGameNode["startTime"]} endTime: ${parsedGameNode["endTime"]} timePlayed: ${timePlayed}`);
+        }
+        parsedGameNode["timePlayed"] = timePlayed;
+    }
+
+
 
 
 
@@ -182,6 +194,51 @@ export function getPgnGames(){
     }
 }
 
+
+export function getSecondsBetween(startTime, endTime) {
+    // Create Date objects from the start and end times
+    const startDate = new Date(`1970-01-01T${startTime}Z`);
+    const endDate = new Date(`1970-01-01T${endTime}Z`);
+
+    // Get the difference in milliseconds
+    let diff = endDate - startDate;
+
+    // If the difference is negative, add 24 hours to the difference
+    if (diff < 0) {
+        diff += 24 * 60 * 60 * 1000;
+    }
+
+    // Convert to seconds and return
+    return diff / 1000;
+}
+
+export function getTotalTimePlayed() {
+    let archivedGames = getArchivedGames();
+    let totalSeconds = 0;
+    for (let i = 0; i < archivedGames.length; i++) {
+        totalSeconds += archivedGames[i].timePlayed; 
+    }
+
+    let days = Math.floor(totalSeconds / 86400);
+    let hours = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+    let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+
+    let returnString = "";
+
+
+    if (hours > 0) {
+        returnString += hours + " hours ";
+    }
+    if (minutes > 0) {
+        returnString += minutes + " minutes ";
+    }
+    if (seconds > 0) {
+        returnString += seconds + " seconds ";
+    }
+
+    return returnString;
+}
 
 export function getArchivedGames() {
 
