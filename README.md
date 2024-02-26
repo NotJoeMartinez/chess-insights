@@ -10,6 +10,13 @@ or the API simply not publishing said data. For example game accuracy evaluation
 only be available to games you have analyzed and individual move evaluations 
 such as `brilliant` or `blunder` are not made public. 
 
+### Donations 🥺
+
+- [buymeacoffee](https://www.buymeacoffee.com/notjoemartinez)
+- [paypal](https://paypal.me/notjoemartinez)
+- [chess.com affiliate link](https://www.chess.com/membership?ref_id=74104030)
+
+
 ### Ignored game modes 
 The only game modes fetched from the api are `bullet`, `blitz`, `rapid`, and `daily`.
 

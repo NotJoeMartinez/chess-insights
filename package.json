@@ -11,7 +11,8 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
-    "nuxt": "^3.6.1"
+    "nuxt": "^3.6.1",
+    "wrangler": "^3.22.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
