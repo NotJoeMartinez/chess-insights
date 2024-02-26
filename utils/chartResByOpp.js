@@ -185,6 +185,7 @@ function getRanges(csvData) {
   for (let i = 0; i < csvData.length; i++) {
     let rating = Number(csvData[i]["opponentRating"]);
     if (isNaN(rating)) {
+      console.debug(i + " is rating is NaN: " + rating);
       continue;
     }
     oppRatingList.push(rating);
@@ -193,20 +194,35 @@ function getRanges(csvData) {
   let min = Math.min(...oppRatingList);
   let max = Math.max(...oppRatingList);
 
+  console.log(`oppRatingList: ${oppRatingList}`);
 
   let ranges = [];
   let current = Math.floor(min/100) * 100;
 
 
   while (current <= max) {
-    ranges.push(current+99);
+
+    if (verifyRatingRange(current, oppRatingList)) {
+      ranges.push(current + 99);
+    }
     current += 100;
   } 
 
 
+  console.debug("ranges: " + ranges);
   return ranges;
 }
 
+function verifyRatingRange(current, oppRatingList) {
+  let max = current + 99;
+
+  for (let i = 0; i < oppRatingList.length; i++) {
+    if (oppRatingList[i] >= current && oppRatingList[i] <= max) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function getRangeLabels(ranges) {
 let rangeLabels = [];
