@@ -13,7 +13,7 @@
         <div class="col-md-12">
           <div class="input-group mb-3">
 
-            <span class="input-group-text">ELO Range</span>
+            <span class="input-group-text">ELO Range:</span>
 
             <input type="text" class="form-control"  
             id="minEloInput"
@@ -37,7 +37,32 @@
       <div class="row">
         <div class="col-md-12">
           <div class="input-group mb-3">
-            <span class="input-group-text">Date Range</span>
+            <span class="input-group-text">Accuracy Range:</span>
+
+            <input type="text" class="form-control" 
+            id="minAccuracyInput"
+            v-bind="{value: accuracyRange[0]}">
+
+            <input type="text" class="form-control" 
+            id="maxAccuracyInput" 
+            v-bind="{value: accuracyRange[1]}">
+
+            <button class="btn btn-outline-secondary" 
+            type="button" 
+            id="applyAccuracyRangeBtn"
+            @click="setAccuracyRange">
+
+            Apply
+            </button>
+          </div>
+                    
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group mb-3">
+            <span class="input-group-text">Date Range:</span>
 
             <input type="date" class="form-control" 
             id="minDateInput"
@@ -237,6 +262,30 @@
 
       console.debug(`min: ${minDateStr}, max: ${maxDateStr}`);
       return [minDateStr, maxDateStr];
+    },
+    accuracyRange() {
+      let data = this.data;
+      let min = data[0].accuracy;
+      let max = data[0].accuracy;
+
+      for (let i = 0; i < data.length; i++) {
+        let currentAccuracy = data[i].accuracy;
+
+        // check if empty string 
+        if (currentAccuracy === "") {
+          console.debug(`currentAccuracy: ${currentAccuracy} is empty`);
+          continue;
+        }
+   
+
+        if (currentAccuracy < min) {
+          min = currentAccuracy;
+        }
+        if (currentAccuracy > max) {
+          max = currentAccuracy;
+        }
+      }
+      return [min, max];
     }
 
    },
@@ -272,6 +321,15 @@
       }
         
      }, 
+     filterByAccuracyRange(min, max) {
+        for (let i = 0; i < this.data.length; i++) {
+          let currentAccuracy = this.data[i].accuracy;
+          if (currentAccuracy < min || currentAccuracy > max) {
+            this.data.splice(i, 1);
+            i--;
+          }
+        }
+      },
 
      filterByDateRange(min, max) {
       for (let i = 0; i < this.data.length; i++) {
@@ -288,16 +346,20 @@
        let maxInput = document.querySelector("#maxEloInput").value; 
        this.filterEloByRange(minInput, maxInput);
      },
-
      setDateRange() {
        let minDateStr = document.querySelector("#minDateInput").value; 
        let maxDateStr = document.querySelector("#maxDateInput").value;
        
        let minDate = new Date(minDateStr.replace(/\./g, '-'));
-       let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
+      //  let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
 
        this.filterByDateRange(minDate, maxDate);
-     }  
+     },
+     setAccuracyRange() {
+       let minInput = document.querySelector("#minAccuracyInput").value; 
+       let maxInput = document.querySelector("#maxAccuracyInput").value; 
+       this.filterByAccuracyRange(minInput, maxInput);
+     }
      
     } 
   }
@@ -413,7 +475,7 @@ background-color: #272522;
   background-color: #272522; 
   border-radius: 10px;
   max-width: 50%;
-  height: 150px;
+  height: 200px;
   margin-bottom: 20px;
   padding: 10px;
 }
