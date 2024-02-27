@@ -9,3 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2024-02-26
 ### Added
 - Added changelog 
+
+
+## [2.0.1] - 2024-02-26
+### Added
+- [chess-insights-48](https://github.com/NotJoeMartinez/chess-insights/pull/48) 
+    - Adds accuracy column to explore page
