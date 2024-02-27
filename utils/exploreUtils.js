@@ -10,16 +10,31 @@ export function exploreAll(games) {
     let gridData = [];
 
     for (let i = 0; i < games.length; i++) {
+
+        // round to 2 decimal places
+        let userAccuracy; 
+
+        if (games[i].userAccuracy === null || 
+            games[i].userAccuracy === undefined ||
+            games[i].userAccuracy === "") {
+
+            userAccuracy = "";
+        }
+        else {
+            userAccuracy = Math.round(games[i].userAccuracy * 100) / 100; 
+        }
+
+
         let row = {
-        date : games[i].date,
-        timeClass: games[i].timeClass,
-        rating: games[i].userRating,
-        accuracy: games[i].userAccuracy,
-        result: getResult(games[i].result),
-        color: games[i].userColor,
-        opponent : games[i].opponent,
-        opening: getMainLine(games[i].opening),
-        gameUrl: games[i].gameUrl,
+          date : games[i].date,
+          timeClass: games[i].timeClass,
+          rating: games[i].userRating,
+          accuracy: userAccuracy,
+          result: getResult(games[i].result),
+          color: games[i].userColor,
+          opponent : games[i].opponent,
+          opening: getMainLine(games[i].opening),
+          gameUrl: games[i].gameUrl,
         }
         gridData.push(row)
     }

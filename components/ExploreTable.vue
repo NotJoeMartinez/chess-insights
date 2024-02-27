@@ -5,6 +5,13 @@
         <strong> {{ filteredData.length }}  </strong> Games Found 
       </h4>
 
+      <!-- conditionally show and hide spinner -->
+
+      <div v-if="applySpinner" class="container">
+        <div class="spinner-border">
+        </div>
+      </div>
+
     </div>
 
     <!-- only show if eloRange is defined --> 
@@ -27,7 +34,7 @@
 
             <button class="btn btn-outline-secondary exploreApplyBtn" 
             type="button" 
-            id="applyEloRange"
+            id="applyEloRangeBtn"
             @click="setEloRange">
 
             Apply
@@ -79,9 +86,8 @@
 
             <button class="btn btn-outline-secondary exploreApplyBtn" 
             type="button" 
-            id="applyEloRange"
+            id="applyDateRangeBtn"
             @click="setDateRange">
-
             Apply
             </button>
           </div>
@@ -145,7 +151,7 @@
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
               :class="{ 'SearchRow': filterColumn === key }" 
-
+              v-bind="{ class: (key === 'result') ?  entry[key] : ''}"
             >
               {{ entry[key] }}
             </td>
@@ -178,9 +184,11 @@
          "color": [],
          "opening": [], 
        },
+       applySpinner: false,
      };
    },
    computed: {
+
      filteredData() {
        let data = this.data;
        // Apply all active filters
@@ -224,8 +232,8 @@
         "color": ["white", "black"],
         "opening": this.opening
         }
-      }, 
-    eloRange() {
+     }, 
+     eloRange() {
         let data = this.data;
 
         let min = data[0].rating;
@@ -242,7 +250,7 @@
         }
 
         return [min, max];
-      },
+     },
     dateRange() {
       let data = this.data;
       let minDateStr = data[0].date.replace(/\./g, '-');
@@ -291,7 +299,8 @@
         }
       }
       return [min, max];
-    }
+    },
+    
 
    },
    methods: {
@@ -326,7 +335,7 @@
       }
         
      }, 
-     filterByAccuracyRange(min, max) {
+     async filterByAccuracyRange(min, max) {
         for (let i = 0; i < this.data.length; i++) {
           let currentAccuracy = this.data[i].accuracy;
           if (currentAccuracy < min || currentAccuracy > max) {
@@ -334,8 +343,7 @@
             i--;
           }
         }
-      },
-
+     },
      filterByDateRange(min, max) {
       for (let i = 0; i < this.data.length; i++) {
         let currentDate = new Date(this.data[i].date.replace(/\./g, '-'));
@@ -356,14 +364,18 @@
        let maxDateStr = document.querySelector("#maxDateInput").value;
        
        let minDate = new Date(minDateStr.replace(/\./g, '-'));
-      //  let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
+       let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
 
        this.filterByDateRange(minDate, maxDate);
      },
-     setAccuracyRange() {
+     async setAccuracyRange() {
        let minInput = document.querySelector("#minAccuracyInput").value; 
        let maxInput = document.querySelector("#maxAccuracyInput").value; 
-       this.filterByAccuracyRange(minInput, maxInput);
+       
+       this.applySpinner = true;
+       await this.filterByAccuracyRange(minInput, maxInput);
+       this.applySpinner = false;
+
      }
      
     } 
@@ -476,6 +488,20 @@ background-color: #272522;
 
 .exploreApplyBtn {
   color: #fff;
+
+}
+
+@keyframes glow {
+        0%, 100% {
+            box-shadow: 0 0 8px #ebecd0, 0 0 12px #ebecd0, 0 0 20px #ebecd0;
+        }
+        50% {
+            box-shadow: 0 0 15px #ebecd0, 0 0 20px #ebecd0, 0 0 25px #ebecd0;
+        }
+}
+
+.exploreApplyBtn:active {
+  animation: glow 1.5s infinite alternate; 
 }
 
 #exploreTableOptions {

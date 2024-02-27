@@ -93,6 +93,9 @@
       },
       editSearchColumn(column){
         this.searchColumn = column
+      },
+      showLoadSpinner() {
+        this.showSpinner = true
       }
 
     },
