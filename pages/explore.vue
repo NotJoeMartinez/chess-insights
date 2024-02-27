@@ -69,7 +69,7 @@
         searchQuery: '',
         searchColumn: 'opening',
         searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
-        gridColumns: ['date', 'timeClass', 'color', 'result', 'rating', 'opponent', 'opening'],
+        gridColumns: ['date', 'timeClass', 'color', 'result', 'accuracy', 'rating', 'opponent', 'opening'],
         openingFilter: [],
         gridData: [],
 

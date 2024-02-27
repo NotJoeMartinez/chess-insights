@@ -14,6 +14,7 @@ export function exploreAll(games) {
         date : games[i].date,
         timeClass: games[i].timeClass,
         rating: games[i].userRating,
+        accuracy: games[i].userAccuracy,
         result: getResult(games[i].result),
         color: games[i].userColor,
         opponent : games[i].opponent,
