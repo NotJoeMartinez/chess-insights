@@ -10,10 +10,12 @@
     <!-- only show if eloRange is defined --> 
     <div v-if="filteredData.length" class="container" id="exploreTableOptions">
       <div class="row">
-        <div class="col-md-12">
-          <div class="input-group mb-3">
+        <div class="col-md-4">
+          <span class="input-group-text">ELO Range:</span>
+        </div>
 
-            <span class="input-group-text">ELO Range:</span>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
 
             <input type="text" class="form-control"  
             id="minEloInput"
@@ -23,7 +25,7 @@
             id="maxEloInput"
             v-bind="{value: eloRange[1]}">
 
-            <button class="btn btn-outline-secondary" 
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
             type="button" 
             id="applyEloRange"
             @click="setEloRange">
@@ -35,9 +37,11 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12">
-          <div class="input-group mb-3">
+        <div class="col-md-4">
             <span class="input-group-text">Accuracy Range:</span>
+        </div>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
 
             <input type="text" class="form-control" 
             id="minAccuracyInput"
@@ -47,7 +51,7 @@
             id="maxAccuracyInput" 
             v-bind="{value: accuracyRange[1]}">
 
-            <button class="btn btn-outline-secondary" 
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
             type="button" 
             id="applyAccuracyRangeBtn"
             @click="setAccuracyRange">
@@ -60,10 +64,11 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12">
-          <div class="input-group mb-3">
+        <div class="col-md-4">
             <span class="input-group-text">Date Range:</span>
-
+        </div>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
             <input type="date" class="form-control" 
             id="minDateInput"
             v-bind="{value: dateRange[0]}">
@@ -72,7 +77,7 @@
             id="maxDateInput" 
             v-bind="{value: dateRange[1]}">
 
-            <button class="btn btn-outline-secondary" 
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
             type="button" 
             id="applyEloRange"
             @click="setDateRange">
@@ -469,12 +474,14 @@ color: #fff;
 background-color: #272522; 
 }
 
-
+.exploreApplyBtn {
+  color: #fff;
+}
 
 #exploreTableOptions {
   background-color: #272522; 
   border-radius: 10px;
-  max-width: 50%;
+  max-width: 60%;
   height: 200px;
   margin-bottom: 20px;
   padding: 10px;
