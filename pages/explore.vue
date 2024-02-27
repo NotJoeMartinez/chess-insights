@@ -148,7 +148,7 @@
       color: white;
   }
   .explorePage {
-    max-width: 60%;
+    max-width: 70%;
   }
 
   @media (max-width: 575.98px) {

@@ -6,7 +6,62 @@
       </h4>
 
     </div>
+
+    <!-- only show if eloRange is defined --> 
+    <div v-if="filteredData.length" class="container" id="exploreTableOptions">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group mb-3">
+
+            <span class="input-group-text">ELO Range</span>
+
+            <input type="text" class="form-control"  
+            id="minEloInput"
+            v-bind="{value: eloRange[0]}">
+
+            <input type="text" class="form-control" 
+            id="maxEloInput"
+            v-bind="{value: eloRange[1]}">
+
+            <button class="btn btn-outline-secondary" 
+            type="button" 
+            id="applyEloRange"
+            @click="setEloRange">
+
+            Apply
+          </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group mb-3">
+            <span class="input-group-text">Date Range</span>
+
+            <input type="date" class="form-control" 
+            id="minDateInput"
+            v-bind="{value: dateRange[0]}">
+
+            <input type="date" class="form-control" 
+            id="maxDateInput" 
+            v-bind="{value: dateRange[1]}">
+
+            <button class="btn btn-outline-secondary" 
+            type="button" 
+            id="applyEloRange"
+            @click="setDateRange">
+
+            Apply
+            </button>
+          </div>
+                    
+        </div>
+      </div>
+    </div>
+
     <div class="table-responsive">
+
       <table v-if="filteredData.length" class="table" id="exploreTable">
         <thead>
           <tr>
@@ -25,17 +80,25 @@
 
             <ul class="dropdown-menu dropdown-menu-end ">
               <li v-for="(option, optionIndex) in filterOptions[key] || []"
+
               class="dropdown-item"
               :class="{ active: activeFilters[key].includes(option) }"
               :key="'option-' + optionIndex"
               @click="filterColumnBy(key, option)"
               >
-              {{ option }}
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li class="dropdown-item" @click="sortBy(key)">
+
+                {{ option }}
+
+              </li>
+              
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="dropdown-item" @click="sortBy(key)">
                 Sort Ascending
-            </li>
+              </li>
+
             </ul>
               
             </th>
@@ -130,8 +193,52 @@
         "result": ["win", "loss", "draw"],
         "color": ["white", "black"],
         "opening": this.opening
+        }
+      }, 
+    eloRange() {
+        let data = this.data;
+
+        let min = data[0].rating;
+        let max = data[0].rating;
+        console.debug(`min: ${min}, max: ${max}`);
+
+        for (let i = 0; i < this.data.length; i++) {
+          if (this.data[i].rating < min) {
+            min = this.data[i].rating;
+          }
+          if (this.data[i].rating> max) {
+            max = this.data[i].rating;
+          }
+        }
+
+        return [min, max];
+      },
+    dateRange() {
+      let data = this.data;
+      let minDateStr = data[0].date.replace(/\./g, '-');
+      let maxDateStr = data[0].date.replace(/\./g, '-');
+
+      let minDate = new Date(minDateStr);
+      let maxDate = new Date(maxDateStr);
+
+      for (let i = 0; i < data.length; i++) {
+        let currentDate = new Date(data[i].date.replace(/\./g, '-'));
+        if (currentDate < minDate) {
+          minDate = new Date(data[i].date.replace(/\./g, '-'));
+        }
+        if (currentDate > maxDate) {
+          maxDate = new Date(data[i].date.replace(/\./g, '-'));
+        }
       }
-   }
+
+      // YYYY-MM-DD
+      minDateStr = minDate.toISOString().split('T')[0];
+      maxDateStr = maxDate.toISOString().split('T')[0];
+
+      console.debug(`min: ${minDateStr}, max: ${maxDateStr}`);
+      return [minDateStr, maxDateStr];
+    }
+
    },
    methods: {
      sortBy(key) {
@@ -152,10 +259,46 @@
      },
      capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
-      },
-      openGameUrl(url) {
-        window.open(url, '_blank');
+     },
+     openGameUrl(url) {
+      window.open(url, '_blank');
+     },
+     filterEloByRange(min, max) {
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.data[i].rating < min || this.data[i].rating > max) {
+          this.data.splice(i, 1);
+          i--;
+        }
       }
+        
+     }, 
+
+     filterByDateRange(min, max) {
+      for (let i = 0; i < this.data.length; i++) {
+        let currentDate = new Date(this.data[i].date.replace(/\./g, '-'));
+        if (currentDate < min || currentDate > max) {
+          this.data.splice(i, 1);
+          i--;
+        }
+      }
+
+     },
+     setEloRange() {
+       let minInput = document.querySelector("#minEloInput").value; 
+       let maxInput = document.querySelector("#maxEloInput").value; 
+       this.filterEloByRange(minInput, maxInput);
+     },
+
+     setDateRange() {
+       let minDateStr = document.querySelector("#minDateInput").value; 
+       let maxDateStr = document.querySelector("#maxDateInput").value;
+       
+       let minDate = new Date(minDateStr.replace(/\./g, '-'));
+       let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
+
+       this.filterByDateRange(minDate, maxDate);
+     }  
+     
     } 
   }
  </script> 
@@ -264,5 +407,15 @@ color: #fff;
 background-color: #272522; 
 }
 
+
+
+#exploreTableOptions {
+  background-color: #272522; 
+  border-radius: 10px;
+  max-width: 50%;
+  height: 150px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
 
 </style>
