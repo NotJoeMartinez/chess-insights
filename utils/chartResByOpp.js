@@ -38,7 +38,10 @@ export function graphResByOpp(timeClass) {
     chartInstance.data.datasets[0].data = losses; 
     chartInstance.data.datasets[1].data = draws; 
     chartInstance.data.datasets[2].data = wins;
+    chartInstance.data.labels = rangeLabels;
+
     chartInstance.update();
+    console.debug(`chart updated`);
     return;
   }
   chartData = getChartData(timeClass); 
@@ -194,7 +197,6 @@ function getRanges(csvData) {
   let min = Math.min(...oppRatingList);
   let max = Math.max(...oppRatingList);
 
-  console.log(`oppRatingList: ${oppRatingList}`);
 
   let ranges = [];
   let current = Math.floor(min/100) * 100;
@@ -209,7 +211,6 @@ function getRanges(csvData) {
   } 
 
 
-  console.debug("ranges: " + ranges);
   return ranges;
 }
 
