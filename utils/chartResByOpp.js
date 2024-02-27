@@ -38,7 +38,10 @@ export function graphResByOpp(timeClass) {
     chartInstance.data.datasets[0].data = losses; 
     chartInstance.data.datasets[1].data = draws; 
     chartInstance.data.datasets[2].data = wins;
+    chartInstance.data.labels = rangeLabels;
+
     chartInstance.update();
+    console.debug(`chart updated`);
     return;
   }
   chartData = getChartData(timeClass); 
@@ -185,6 +188,7 @@ function getRanges(csvData) {
   for (let i = 0; i < csvData.length; i++) {
     let rating = Number(csvData[i]["opponentRating"]);
     if (isNaN(rating)) {
+      console.debug(i + " is rating is NaN: " + rating);
       continue;
     }
     oppRatingList.push(rating);
@@ -199,7 +203,10 @@ function getRanges(csvData) {
 
 
   while (current <= max) {
-    ranges.push(current+99);
+
+    if (verifyRatingRange(current, oppRatingList)) {
+      ranges.push(current + 99);
+    }
     current += 100;
   } 
 
@@ -207,6 +214,16 @@ function getRanges(csvData) {
   return ranges;
 }
 
+function verifyRatingRange(current, oppRatingList) {
+  let max = current + 99;
+
+  for (let i = 0; i < oppRatingList.length; i++) {
+    if (oppRatingList[i] >= current && oppRatingList[i] <= max) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function getRangeLabels(ranges) {
 let rangeLabels = [];
