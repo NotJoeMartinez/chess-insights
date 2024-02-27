@@ -5,8 +5,99 @@
         <strong> {{ filteredData.length }}  </strong> Games Found 
       </h4>
 
+      <!-- conditionally show and hide spinner -->
+
+      <div v-if="applySpinner" class="container">
+        <div class="spinner-border">
+        </div>
+      </div>
+
     </div>
+
+    <!-- only show if eloRange is defined --> 
+    <div v-if="filteredData.length" class="container" id="exploreTableOptions">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="input-group-text">ELO Range:</span>
+        </div>
+
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+
+            <input type="text" class="form-control"  
+            id="minEloInput"
+            v-bind="{value: eloRange[0]}">
+
+            <input type="text" class="form-control" 
+            id="maxEloInput"
+            v-bind="{value: eloRange[1]}">
+
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
+            type="button" 
+            id="applyEloRangeBtn"
+            @click="setEloRange">
+
+            Apply
+          </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+            <span class="input-group-text">Accuracy Range:</span>
+        </div>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+
+            <input type="text" class="form-control" 
+            id="minAccuracyInput"
+            v-bind="{value: accuracyRange[0]}">
+
+            <input type="text" class="form-control" 
+            id="maxAccuracyInput" 
+            v-bind="{value: accuracyRange[1]}">
+
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
+            type="button" 
+            id="applyAccuracyRangeBtn"
+            @click="setAccuracyRange">
+
+            Apply
+            </button>
+          </div>
+                    
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+            <span class="input-group-text">Date Range:</span>
+        </div>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+            <input type="date" class="form-control" 
+            id="minDateInput"
+            v-bind="{value: dateRange[0]}">
+
+            <input type="date" class="form-control" 
+            id="maxDateInput" 
+            v-bind="{value: dateRange[1]}">
+
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
+            type="button" 
+            id="applyDateRangeBtn"
+            @click="setDateRange">
+            Apply
+            </button>
+          </div>
+                    
+        </div>
+      </div>
+    </div>
+
     <div class="table-responsive">
+
       <table v-if="filteredData.length" class="table" id="exploreTable">
         <thead>
           <tr>
@@ -25,17 +116,25 @@
 
             <ul class="dropdown-menu dropdown-menu-end ">
               <li v-for="(option, optionIndex) in filterOptions[key] || []"
+
               class="dropdown-item"
               :class="{ active: activeFilters[key].includes(option) }"
               :key="'option-' + optionIndex"
               @click="filterColumnBy(key, option)"
               >
-              {{ option }}
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li class="dropdown-item" @click="sortBy(key)">
+
+                {{ option }}
+
+              </li>
+              
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li class="dropdown-item" @click="sortBy(key)">
                 Sort Ascending
-            </li>
+              </li>
+
             </ul>
               
             </th>
@@ -52,7 +151,7 @@
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
               :class="{ 'SearchRow': filterColumn === key }" 
-
+              v-bind="{ class: (key === 'result') ?  entry[key] : ''}"
             >
               {{ entry[key] }}
             </td>
@@ -85,9 +184,11 @@
          "color": [],
          "opening": [], 
        },
+       applySpinner: false,
      };
    },
    computed: {
+
      filteredData() {
        let data = this.data;
        // Apply all active filters
@@ -130,8 +231,77 @@
         "result": ["win", "loss", "draw"],
         "color": ["white", "black"],
         "opening": this.opening
+        }
+     }, 
+     eloRange() {
+        let data = this.data;
+
+        let min = data[0].rating;
+        let max = data[0].rating;
+        console.debug(`min: ${min}, max: ${max}`);
+
+        for (let i = 0; i < this.data.length; i++) {
+          if (this.data[i].rating < min) {
+            min = this.data[i].rating;
+          }
+          if (this.data[i].rating> max) {
+            max = this.data[i].rating;
+          }
+        }
+
+        return [min, max];
+     },
+    dateRange() {
+      let data = this.data;
+      let minDateStr = data[0].date.replace(/\./g, '-');
+      let maxDateStr = data[0].date.replace(/\./g, '-');
+
+      let minDate = new Date(minDateStr);
+      let maxDate = new Date(maxDateStr);
+
+      for (let i = 0; i < data.length; i++) {
+        let currentDate = new Date(data[i].date.replace(/\./g, '-'));
+        if (currentDate < minDate) {
+          minDate = new Date(data[i].date.replace(/\./g, '-'));
+        }
+        if (currentDate > maxDate) {
+          maxDate = new Date(data[i].date.replace(/\./g, '-'));
+        }
       }
-   }
+
+      // YYYY-MM-DD
+      minDateStr = minDate.toISOString().split('T')[0];
+      maxDateStr = maxDate.toISOString().split('T')[0];
+
+      console.debug(`min: ${minDateStr}, max: ${maxDateStr}`);
+      return [minDateStr, maxDateStr];
+    },
+    accuracyRange() {
+      let data = this.data;
+      let min = data[0].accuracy;
+      let max = data[0].accuracy;
+
+      for (let i = 0; i < data.length; i++) {
+        let currentAccuracy = data[i].accuracy;
+
+        // check if empty string 
+        if (currentAccuracy === "") {
+          console.debug(`currentAccuracy: ${currentAccuracy} is empty`);
+          continue;
+        }
+   
+
+        if (currentAccuracy < min) {
+          min = currentAccuracy;
+        }
+        if (currentAccuracy > max) {
+          max = currentAccuracy;
+        }
+      }
+      return [min, max];
+    },
+    
+
    },
    methods: {
      sortBy(key) {
@@ -152,10 +322,62 @@
      },
      capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
-      },
-      openGameUrl(url) {
-        window.open(url, '_blank');
+     },
+     openGameUrl(url) {
+      window.open(url, '_blank');
+     },
+     filterEloByRange(min, max) {
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.data[i].rating < min || this.data[i].rating > max) {
+          this.data.splice(i, 1);
+          i--;
+        }
       }
+        
+     }, 
+     async filterByAccuracyRange(min, max) {
+        for (let i = 0; i < this.data.length; i++) {
+          let currentAccuracy = this.data[i].accuracy;
+          if (currentAccuracy < min || currentAccuracy > max) {
+            this.data.splice(i, 1);
+            i--;
+          }
+        }
+     },
+     filterByDateRange(min, max) {
+      for (let i = 0; i < this.data.length; i++) {
+        let currentDate = new Date(this.data[i].date.replace(/\./g, '-'));
+        if (currentDate < min || currentDate > max) {
+          this.data.splice(i, 1);
+          i--;
+        }
+      }
+
+     },
+     setEloRange() {
+       let minInput = document.querySelector("#minEloInput").value; 
+       let maxInput = document.querySelector("#maxEloInput").value; 
+       this.filterEloByRange(minInput, maxInput);
+     },
+     setDateRange() {
+       let minDateStr = document.querySelector("#minDateInput").value; 
+       let maxDateStr = document.querySelector("#maxDateInput").value;
+       
+       let minDate = new Date(minDateStr.replace(/\./g, '-'));
+       let maxDate = new Date(maxDateStr.replace(/\./g, '-'));
+
+       this.filterByDateRange(minDate, maxDate);
+     },
+     async setAccuracyRange() {
+       let minInput = document.querySelector("#minAccuracyInput").value; 
+       let maxInput = document.querySelector("#maxAccuracyInput").value; 
+       
+       this.applySpinner = true;
+       await this.filterByAccuracyRange(minInput, maxInput);
+       this.applySpinner = false;
+
+     }
+     
     } 
   }
  </script> 
@@ -264,5 +486,31 @@ color: #fff;
 background-color: #272522; 
 }
 
+.exploreApplyBtn {
+  color: #fff;
+
+}
+
+@keyframes glow {
+        0%, 100% {
+            box-shadow: 0 0 8px #ebecd0, 0 0 12px #ebecd0, 0 0 20px #ebecd0;
+        }
+        50% {
+            box-shadow: 0 0 15px #ebecd0, 0 0 20px #ebecd0, 0 0 25px #ebecd0;
+        }
+}
+
+.exploreApplyBtn:active {
+  animation: glow 1.5s infinite alternate; 
+}
+
+#exploreTableOptions {
+  background-color: #272522; 
+  border-radius: 10px;
+  max-width: 60%;
+  height: 200px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
 
 </style>
