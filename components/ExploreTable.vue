@@ -98,7 +98,7 @@
 
     <div class="table-responsive">
 
-      <table v-if="filteredData.length" class="table" id="exploreTable">
+      <table v-if="filteredData.length" class="table table-hover" id="exploreTable">
         <thead>
           <tr>
             <th
@@ -181,6 +181,7 @@
        activeFilters: {
          "timeClass": [],
          "result": [],
+         "outcome": [],
          "color": [],
          "opening": [], 
        },
@@ -229,6 +230,8 @@
       return {
         "timeClass": ["rapid", "blitz", "bullet", "daily"],
         "result": ["win", "loss", "draw"],
+        "outcome": ["checkmated", "stalemate", "agreed", 
+                    "resigned", "abandoned", "timeout"],
         "color": ["white", "black"],
         "opening": this.opening
         }
@@ -420,6 +423,8 @@ th {
     color: #ebecd0 !important;
     background-color: #0c131c!important;
     user-select: none;
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
 }
 .column-filter-selector {
   font-weight: bold;
@@ -433,6 +438,11 @@ td {
 }
 table tr {
   border-bottom: 2px solid #312e2b;
+}
+
+/* change row background color to #ebecd0 on hover */
+table tr:hover {
+  background-color: #1f1e1b; 
 }
 
 table tr:nth-child(even) {
@@ -512,5 +522,7 @@ background-color: #272522;
   margin-bottom: 20px;
   padding: 10px;
 }
+
+
 
 </style>
