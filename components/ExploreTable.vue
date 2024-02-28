@@ -14,7 +14,7 @@
 
     </div>
 
-    <!-- only show if eloRange is defined --> 
+    <!-- explore table filter options -->
     <div v-if="filteredData.length" class="container" id="exploreTableOptions">
       <div class="row">
         <div class="col-md-4">
@@ -42,7 +42,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
             <span class="input-group-text">Accuracy Range:</span>
@@ -69,7 +68,6 @@
                     
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
             <span class="input-group-text">Date Range:</span>
@@ -94,17 +92,43 @@
                     
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <span class="input-group-text">Move Count:</span>
+        </div>
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" 
+            id="minMoveInput"
+            v-bind="{value: moveRange[0]}">
+
+            <input type="text" class="form-control" 
+            id="maxMoveInput" 
+            v-bind="{value: moveRange[1]}">
+
+            <button class="btn btn-outline-secondary exploreApplyBtn" 
+            type="button" 
+            id="applyMoveRangeBtn"
+            @click="setMoveRange">
+            Apply
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- actual table -->
     <div class="table-responsive">
 
-      <table v-if="filteredData.length" class="table" id="exploreTable">
+      <table v-if="filteredData.length" class="table table-hover" id="exploreTable">
         <thead>
           <tr>
             <th
               v-for="(key, index) in columns"
               :key="'header-' + index"
               :class="{ active: filterColumn === key }" 
+              v-show="key !== 'gameUrl'"
             >
 
             <button
@@ -150,8 +174,9 @@
             <td
               v-for="(key, colIndex) in columns"
               :key="'cell-' + rowIndex + '-' + colIndex"
-              :class="{ 'SearchRow': filterColumn === key }" 
+              :class="{'SearchRow': filterColumn === key }" 
               v-bind="{ class: (key === 'result') ?  entry[key] : ''}"
+              v-show="key !== 'gameUrl'"
             >
               {{ entry[key] }}
             </td>
@@ -181,6 +206,7 @@
        activeFilters: {
          "timeClass": [],
          "result": [],
+         "outcome": [],
          "color": [],
          "opening": [], 
        },
@@ -188,8 +214,7 @@
      };
    },
    computed: {
-
-     filteredData() {
+    filteredData() {
        let data = this.data;
        // Apply all active filters
        Object.keys(this.activeFilters).forEach((filterKey) => {
@@ -224,16 +249,18 @@
          });
        }
        return data;
-     },
-     filterOptions() {
+    },
+    filterOptions() {
       return {
         "timeClass": ["rapid", "blitz", "bullet", "daily"],
         "result": ["win", "loss", "draw"],
+        "outcome": ["checkmated", "resigned", "timeout", "stalemate", "insufficient", 
+                    "agreed",  "abandoned", "timevsinsufficient"],
         "color": ["white", "black"],
         "opening": this.opening
         }
-     }, 
-     eloRange() {
+    }, 
+    eloRange() {
         let data = this.data;
 
         let min = data[0].rating;
@@ -250,7 +277,7 @@
         }
 
         return [min, max];
-     },
+    },
     dateRange() {
       let data = this.data;
       let minDateStr = data[0].date.replace(/\./g, '-');
@@ -300,6 +327,24 @@
       }
       return [min, max];
     },
+    moveRange() {
+      let data = this.data;
+      let min = data[0].moves;
+      let max = data[0].moves;
+
+      console.debug(`min: ${min}, max: ${max}`);
+      for (let i = 0; i < data.length; i++) {
+        let currentMoves = data[i].moves;
+
+        if (currentMoves < min) {
+          min = currentMoves;
+        }
+        if (currentMoves > max) {
+          max = currentMoves;
+        }
+      }
+      return [min, max];
+    }
     
 
    },
@@ -368,6 +413,15 @@
 
        this.filterByDateRange(minDate, maxDate);
      },
+     async filterByMoveRange(min, max) {
+       for (let i = 0; i < this.data.length; i++) {
+         let currentMoves = this.data[i].moves;
+         if (currentMoves < min || currentMoves > max) {
+           this.data.splice(i, 1);
+           i--;
+         }
+       }
+     },
      async setAccuracyRange() {
        let minInput = document.querySelector("#minAccuracyInput").value; 
        let maxInput = document.querySelector("#maxAccuracyInput").value; 
@@ -376,6 +430,11 @@
        await this.filterByAccuracyRange(minInput, maxInput);
        this.applySpinner = false;
 
+     },
+     async setMoveRange() {
+       let minInput = document.querySelector("#minMoveInput").value; 
+       let maxInput = document.querySelector("#maxMoveInput").value; 
+       this.filterByMoveRange(minInput, maxInput);
      }
      
     } 
@@ -420,6 +479,8 @@ th {
     color: #ebecd0 !important;
     background-color: #0c131c!important;
     user-select: none;
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
 }
 .column-filter-selector {
   font-weight: bold;
@@ -433,6 +494,11 @@ td {
 }
 table tr {
   border-bottom: 2px solid #312e2b;
+}
+
+/* change row background color to #ebecd0 on hover */
+table tr:hover {
+  background-color: #1f1e1b; 
 }
 
 table tr:nth-child(even) {
@@ -512,5 +578,7 @@ background-color: #272522;
   margin-bottom: 20px;
   padding: 10px;
 }
+
+
 
 </style>

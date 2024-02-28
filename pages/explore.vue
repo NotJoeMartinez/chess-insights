@@ -69,7 +69,10 @@
         searchQuery: '',
         searchColumn: 'opening',
         searchColumns: ['opening', 'opponent', 'result', 'rating', 'date', 'all'],
-        gridColumns: ['date', 'timeClass', 'color', 'result', 'accuracy', 'rating', 'opponent', 'opening'],
+
+        gridColumns: ['date', 'timeClass', 'color', 'result',
+                      'rating', 'moves', 'accuracy', 'outcome', 
+                      'opening', 'opponent', 'gameUrl'],
         openingFilter: [],
         gridData: [],
 
@@ -151,7 +154,7 @@
       color: white;
   }
   .explorePage {
-    max-width: 70%;
+    max-width: 80%;
   }
 
   @media (max-width: 575.98px) {

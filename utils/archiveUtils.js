@@ -131,7 +131,7 @@ export function parseGameNode(gameNode) {
 
     if (parsedGameNode.userColor === "white") {
         if (parsedGameNode.result === "win") {
-            parsedGameNode["outcome"] = parsedGameNode.wonBy 
+            parsedGameNode["outcome"] = gameNode.black.result; 
         }
         else if (parsedGameNode.result === "loss") {
             parsedGameNode["outcome"] = gameNode.white.result;
@@ -142,7 +142,7 @@ export function parseGameNode(gameNode) {
     }
     else {
         if (parsedGameNode.result === "win") {
-            parsedGameNode["outcome"] = parsedGameNode.wonBy; 
+            parsedGameNode["outcome"] = gameNode.white.result;
         }
         else {
             parsedGameNode["outcome"] = gameNode.black.result;
