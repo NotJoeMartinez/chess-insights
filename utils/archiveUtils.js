@@ -103,15 +103,54 @@ export function parseGameNode(gameNode) {
 
     }
 
-    // find out how you won
+    // find out how you won and the title of the outcome
     parsedGameNode["wonBy"] = "";
+    parsedGameNode["outcome"] = ""; 
+
     if ((parsedGameNode.userColor === "white") && (parsedGameNode.result === "win")) {
-        parsedGameNode["wonBy"] = gameNode.black.result;
+
+        let result = gameNode.black.result;
+
+        if (result === "checkmated") {
+            parsedGameNode["wonBy"] = "checkmate";
+        }
+        else {
+            parsedGameNode["wonBy"] = result; 
+        }
+    }
+    if ((parsedGameNode.userColor === "black") && (parsedGameNode.result === "win")) {
+        let result = gameNode.white.result;
+        if (result === "checkmated") {
+            parsedGameNode["wonBy"] = "checkmate";
+        }
+        else {
+            parsedGameNode["wonBy"] = result;
+        }
+    } 
+
+
+    if (parsedGameNode.userColor === "white") {
+        if (parsedGameNode.result === "win") {
+            parsedGameNode["outcome"] = parsedGameNode.wonBy 
+        }
+        else if (parsedGameNode.result === "loss") {
+            parsedGameNode["outcome"] = gameNode.white.result;
+        }
+        else {
+            parsedGameNode["outcome"] = gameNode.white.result; 
+        }
+    }
+    else {
+        if (parsedGameNode.result === "win") {
+            parsedGameNode["outcome"] = parsedGameNode.wonBy; 
+        }
+        else {
+            parsedGameNode["outcome"] = gameNode.black.result;
+        }
     }
 
-    if ((parsedGameNode.userColor === "black") && (parsedGameNode.result === "win")) {
-        parsedGameNode["wonBy"] = gameNode.white.result;
-    }
+
+ 
 
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
