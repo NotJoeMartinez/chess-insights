@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.5] - 2024-02-28
+## Added
+- [chess-insights-53](https://github.com/NotJoeMartinez/chess-insights/pull/53)
+    - Medium: Added move count and outcome to explore page 
+
+## Fixed
+- [chess-insights-53](https://github.com/NotJoeMartinez/chess-insights/pull/53)
+    - Major: added hidden column to explore table with gameUrl so it will be available on the exported file
+
+
 ## [2.0.4] - 2024-02-28
 ## Added
 - [chess-insights-52](https://github.com/NotJoeMartinez/chess-insights/pull/52)
