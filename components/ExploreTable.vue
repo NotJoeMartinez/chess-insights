@@ -265,7 +265,6 @@
 
         let min = data[0].rating;
         let max = data[0].rating;
-        console.debug(`min: ${min}, max: ${max}`);
 
         for (let i = 0; i < this.data.length; i++) {
           if (this.data[i].rating < min) {
@@ -300,7 +299,6 @@
       minDateStr = minDate.toISOString().split('T')[0];
       maxDateStr = maxDate.toISOString().split('T')[0];
 
-      console.debug(`min: ${minDateStr}, max: ${maxDateStr}`);
       return [minDateStr, maxDateStr];
     },
     accuracyRange() {
@@ -313,7 +311,6 @@
 
         // check if empty string 
         if (currentAccuracy === "") {
-          console.debug(`currentAccuracy: ${currentAccuracy} is empty`);
           continue;
         }
    
@@ -332,7 +329,6 @@
       let min = data[0].moves;
       let max = data[0].moves;
 
-      console.debug(`min: ${min}, max: ${max}`);
       for (let i = 0; i < data.length; i++) {
         let currentMoves = data[i].moves;
 
