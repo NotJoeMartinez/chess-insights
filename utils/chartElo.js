@@ -269,3 +269,10 @@ export function graphElo(timeClass="rapid") {
 
   return allData;
  }
+
+export function resetChartZoom(timeClass) {
+    const ctx = document.getElementById('eloOverTime');
+    let chartInstance = Chart.getChart(ctx);
+
+    chartInstance.resetZoom();
+}
