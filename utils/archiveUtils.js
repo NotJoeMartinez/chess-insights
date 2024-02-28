@@ -103,15 +103,54 @@ export function parseGameNode(gameNode) {
 
     }
 
-    // find out how you won
+    // find out how you won and the title of the outcome
     parsedGameNode["wonBy"] = "";
+    parsedGameNode["outcome"] = ""; 
+
     if ((parsedGameNode.userColor === "white") && (parsedGameNode.result === "win")) {
-        parsedGameNode["wonBy"] = gameNode.black.result;
+
+        let result = gameNode.black.result;
+
+        if (result === "checkmated") {
+            parsedGameNode["wonBy"] = "checkmate";
+        }
+        else {
+            parsedGameNode["wonBy"] = result; 
+        }
+    }
+    if ((parsedGameNode.userColor === "black") && (parsedGameNode.result === "win")) {
+        let result = gameNode.white.result;
+        if (result === "checkmated") {
+            parsedGameNode["wonBy"] = "checkmate";
+        }
+        else {
+            parsedGameNode["wonBy"] = result;
+        }
+    } 
+
+
+    if (parsedGameNode.userColor === "white") {
+        if (parsedGameNode.result === "win") {
+            parsedGameNode["outcome"] = parsedGameNode.wonBy 
+        }
+        else if (parsedGameNode.result === "loss") {
+            parsedGameNode["outcome"] = gameNode.white.result;
+        }
+        else {
+            parsedGameNode["outcome"] = gameNode.white.result; 
+        }
+    }
+    else {
+        if (parsedGameNode.result === "win") {
+            parsedGameNode["outcome"] = parsedGameNode.wonBy; 
+        }
+        else {
+            parsedGameNode["outcome"] = gameNode.black.result;
+        }
     }
 
-    if ((parsedGameNode.userColor === "black") && (parsedGameNode.result === "win")) {
-        parsedGameNode["wonBy"] = gameNode.white.result;
-    }
+
+ 
 
     // pgn parsing
     let pgn = gameNode.pgn.split('\n');
@@ -140,6 +179,7 @@ export function parseGameNode(gameNode) {
         parsedGameNode["mainLineOpening"] = parsedGameNode["opening"];
     }
 
+    // start and end time
     if (gameNode.hasOwnProperty("tournament")){
         parsedGameNode["startTime"] = pgn[18].replace(/\s|\[StartTime|\]|\"/g, '');
         parsedGameNode["endTime"] = pgn[20].replace(/\s|\[EndTime|\]|\"/g, '');
@@ -149,6 +189,8 @@ export function parseGameNode(gameNode) {
         parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
     }
 
+
+    // time played
     if (parsedGameNode["timeClass"] === "daily") {
         parsedGameNode["timePlayed"] = 0;
     }
@@ -160,9 +202,10 @@ export function parseGameNode(gameNode) {
         parsedGameNode["timePlayed"] = timePlayed;
     }
 
+    console.log(parsedGameNode.pgn);
 
-
-
+    // move numbers 
+    parsedGameNode["moveCount"] = countMoves(parsedGameNode.pgn);
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
@@ -259,3 +302,38 @@ export function getArchivedGames() {
     }
 
 }
+
+
+function countMoves(gameString) {
+
+    for (let i = gameString.length - 1; i > 0; i--) {
+        if (gameString[i] === '}') {
+            while (gameString[i] !== '{') {
+                i--;
+            }
+        }
+        else {
+            continue;
+        }
+       
+
+        while (gameString[i] !== '.') {
+            i--;
+        }
+
+
+        let moveCount = "";
+        while (gameString[i] !== ' ') {
+            moveCount += gameString[i];
+            i--;
+        }
+
+        let withDots = moveCount.split('').reverse().join('');
+
+        // replace all instances of '.' with ''
+        moveCount = withDots.replace(/\./g, '');
+
+        return Number(moveCount);
+    }
+
+  }

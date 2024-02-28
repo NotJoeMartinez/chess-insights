@@ -177,7 +177,7 @@ function getWinData(timeClass) {
         case "abandoned":
           wAbandoned++;
           break;
-        case "checkmated":
+        case "checkmate":
           wCheckmated++;
           break;
         case "resigned":
@@ -197,7 +197,7 @@ function getWinData(timeClass) {
         case "abandoned":
           wAbandoned++;
           break;
-        case "checkmated":
+        case "checkmate":
           wCheckmated++;
           break;
         case "resigned":

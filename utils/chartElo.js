@@ -20,15 +20,18 @@ export function graphElo(timeClass="rapid") {
     let dates = allData.dates;
     let ratings = allData.ratings;
     let results = allData.results;
+    let outcomes = allData.outcomes;
     let links = allData.links;
     let openings = allData.opening;
     let userColor = allData.userColor;
+    let moveCount = allData.moveCount;
 
     let green = "#32CD32"
     let grey = "#cacac9"
     let red = "#E10600" 
     
-    let colors = results.map(result => result === "win" ? green : result === "loss" ? red: grey);
+    let colors = results.map(result => 
+        result === "win" ? green : result === "loss" ? red: grey);
 
     if (chartInstance) {
         console.debug("Chart instance exists, updating data");
@@ -44,37 +47,40 @@ export function graphElo(timeClass="rapid") {
             label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) {
-                label += ': ';
+                  label += ': ';
                 }
                 if (context.parsed.y !== null) {
-                let index = context.dataIndex;
-                let result = results[index];
-                let rating = ratings[index];
-                label += `${rating} (${result}) `;
+                  let index = context.dataIndex;
+                  let color = userColor[index];
+                  let rating = ratings[index];
+                  let moves = moveCount[index]
+                  label += `${rating} - ${color}`;
+
                 }
                 return label;
-            },
-    
-            labelColor: function(context) {
+              },
+
+              labelColor: function(context) {
                 let index = context.dataIndex;
                 return {
-                borderColor: colors[index],
-                backgroundColor: colors[index],
-                borderWidth: 2,
-                borderDash: [2, 2],
-                borderRadius: 2,
+                  borderColor: colors[index],
+                  backgroundColor: colors[index],
+                  borderWidth: 2,
+                  borderDash: [2, 2],
+                  borderRadius: 2,
                 };
-            },
-            footer: function(context){
+              },
+              beforeFooter: function(context) {
+                let index = context[0].dataIndex;
+                let moves = moveCount[index];
+                let outcome = outcomes[index];
+                return `${outcome} in ${moves} moves`;
+              }, 
+              footer: function(context){
                 let index = context[0].dataIndex;
                 let opening = openings[index];
                 return opening;
-            },
-            beforeFooter: function(context) {
-                let index = context[0].dataIndex;
-                return `${userColor[index]}`;
-    
-            }
+              }
         }
 
         // update click handler
@@ -161,9 +167,11 @@ export function graphElo(timeClass="rapid") {
                   }
                   if (context.parsed.y !== null) {
                     let index = context.dataIndex;
-                    let result = results[index];
+                    let color = userColor[index];
                     let rating = ratings[index];
-                    label += `${rating} (${result}) `;
+                    let moves = moveCount[index]
+                    label += `${rating} - ${color}`;
+
                   }
                   return label;
                 },
@@ -178,16 +186,17 @@ export function graphElo(timeClass="rapid") {
                     borderRadius: 2,
                   };
                 },
+                beforeFooter: function(context) {
+                  let index = context[0].dataIndex;
+                  let moves = moveCount[index];
+                  let outcome = outcomes[index];
+                  return `${outcome} in ${moves} moves`;
+                }, 
                 footer: function(context){
                   let index = context[0].dataIndex;
                   let opening = openings[index];
                   return opening;
                 },
-                beforeFooter: function(context) {
-                  let index = context[0].dataIndex;
-                  return `${userColor[index]}`;
-
-                }
               },
             },
 
@@ -238,9 +247,11 @@ export function graphElo(timeClass="rapid") {
         ratings: [],
         dates: [],
         results: [],
+        outcomes: [],
         links: [],
         opening: [],
-        userColor: []
+        userColor: [], 
+        moveCount: [],
     }
 
 
@@ -253,7 +264,9 @@ export function graphElo(timeClass="rapid") {
             let userColor = parsedGameNode.userColor;
             let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
             let result = getResult(parsedGameNode.result);
+            let outcome = parsedGameNode.outcome;
             let opening = getMainLine(parsedGameNode.opening);
+            let moveCount = parsedGameNode.moveCount;
 
             allData.userColor.push(userColor);
             allData.dates.push(safeDate);
@@ -261,6 +274,8 @@ export function graphElo(timeClass="rapid") {
             allData.links.push(link);
             allData.opening.push(opening);
             allData.results.push(result);
+            allData.outcomes.push(outcome);
+            allData.moveCount.push(moveCount);
 
 
         }
