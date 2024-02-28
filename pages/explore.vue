@@ -72,7 +72,7 @@
 
         gridColumns: ['date', 'timeClass', 'color', 'result',
                       'rating', 'moves', 'accuracy', 'outcome', 
-                      'opening', 'opponent'],
+                      'opening', 'opponent', 'gameUrl'],
         openingFilter: [],
         gridData: [],
 
