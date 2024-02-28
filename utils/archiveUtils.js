@@ -140,6 +140,7 @@ export function parseGameNode(gameNode) {
         parsedGameNode["mainLineOpening"] = parsedGameNode["opening"];
     }
 
+    // start and end time
     if (gameNode.hasOwnProperty("tournament")){
         parsedGameNode["startTime"] = pgn[18].replace(/\s|\[StartTime|\]|\"/g, '');
         parsedGameNode["endTime"] = pgn[20].replace(/\s|\[EndTime|\]|\"/g, '');
@@ -149,6 +150,8 @@ export function parseGameNode(gameNode) {
         parsedGameNode["endTime"] = pgn[19].replace(/\s|\[EndTime|\]|\"/g, '');
     }
 
+
+    // time played
     if (parsedGameNode["timeClass"] === "daily") {
         parsedGameNode["timePlayed"] = 0;
     }
@@ -160,9 +163,10 @@ export function parseGameNode(gameNode) {
         parsedGameNode["timePlayed"] = timePlayed;
     }
 
+    console.log(parsedGameNode.pgn);
 
-
-
+    // move numbers 
+    parsedGameNode["moveCount"] = countMoves(parsedGameNode.pgn);
 
     // ugly  
     parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
@@ -259,3 +263,38 @@ export function getArchivedGames() {
     }
 
 }
+
+
+function countMoves(gameString) {
+
+    for (let i = gameString.length - 1; i > 0; i--) {
+        if (gameString[i] === '}') {
+            while (gameString[i] !== '{') {
+                i--;
+            }
+        }
+        else {
+            continue;
+        }
+       
+
+        while (gameString[i] !== '.') {
+            i--;
+        }
+
+
+        let moveCount = "";
+        while (gameString[i] !== ' ') {
+            moveCount += gameString[i];
+            i--;
+        }
+
+        let withDots = moveCount.split('').reverse().join('');
+
+        // replace all instances of '.' with ''
+        moveCount = withDots.replace(/\./g, '');
+
+        return Number(moveCount);
+    }
+
+  }

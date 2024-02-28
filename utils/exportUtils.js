@@ -32,10 +32,11 @@ export function rowsToCsv(csvData, option) {
 
 export function exportChessData(option) {
 
-    let headers = ["userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
-        "timeClass", "fen", "userColor", "userRating",
-        "opponent", "opponentRating", "opponentUrl", "result", "wonBy",
-        "date", "openingUrl", "opening", "startTime", "endTime" 
+    let headers = [
+        "userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
+        "timeClass", "fen", "userColor", "userRating","opponent", 
+        "opponentRating", "opponentUrl", "result", "wonBy", "date", 
+        "openingUrl", "opening", "startTime", "endTime", "moveCount" 
     ];
 
     let archivedGames = getArchivedGames();
@@ -76,12 +77,13 @@ export function exportChessData(option) {
             row.push(parsedGameNode.opening);
             row.push(parsedGameNode.startTime);
             row.push(parsedGameNode.endTime);
+            row.push(parsedGameNode.moveCount);
             csvData.push(row);
         }
         rowsToCsv(csvData, "all");
 
     } else if (option === "simple") {
-        csvData.push(["date", "timeClass", "result", "rating", "gameUrl"]);
+        csvData.push(["date", "timeClass", "result", "rating", "moveCount", "gameUrl"]);
         for (let i = 0; i < archivedGames.length; i++) {
             let row = [];
             let parsedGameNode = archivedGames[i];
@@ -91,6 +93,7 @@ export function exportChessData(option) {
             row.push(parsedGameNode.result);
             row.push(parsedGameNode.userRating);
             row.push(parsedGameNode.gameUrl);
+            row.push(parsedGameNode.moveCount);
             csvData.push(row);
         }
         rowsToCsv(csvData, "simple");
@@ -159,10 +162,11 @@ export function exportChessData(option) {
 export function showCustomExport() {
     document.querySelector("#exportModal > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)").click();
 
-    let headers = ["userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
-        "timeClass", "fen", "userColor", "userRating",
-        "opponent", "opponentRating", "opponentUrl", "result",
-        "date", "openingUrl", "opening", "startTime", "endTime", "pgn"
+    let headers = [
+        "userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
+        "timeClass", "fen", "userColor", "userRating", "opponent", 
+        "opponentRating", "opponentUrl", "result", "date", "openingUrl", 
+        "opening", "startTime", "endTime", "pgn", "moveCount"
     ];
 
     let modalBody = document.getElementById("customExportBody");
