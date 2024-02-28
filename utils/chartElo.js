@@ -10,36 +10,95 @@ Chart.register(zoomPlugin, LinearScale, PointElement, Tooltip, Legend, TimeScale
 import { getArchivedGames } from '~/utils/archiveUtils.js';
 
 
-export function graphElo(timeClass="rapid")  {
-
-  
-    const ctx = document.getElementById('eloOverTime');
-    const chartInstance = Chart.getChart(ctx);
+export function graphElo(timeClass="rapid") {
+    console.debug(`graphElo called with timeClass: ${timeClass}`);
+    let ctx = document.getElementById('eloOverTime');
+    let chartInstance = Chart.getChart(ctx);
 
     let allData = getChartData(timeClass);
 
-    const dates = allData.dates;
-    const ratings = allData.ratings;
-    const results = allData.results;
-    const links = allData.links;
-    const openings = allData.opening;
-    const userColor = allData.userColor;
+    let dates = allData.dates;
+    let ratings = allData.ratings;
+    let results = allData.results;
+    let links = allData.links;
+    let openings = allData.opening;
+    let userColor = allData.userColor;
 
-  let green = "#32CD32"
-  let grey = "#cacac9"
-  let red = "#E10600" 
-
-  const colors = results.map(result => result === "win" ? green : result === "loss" ? red: grey);
+    let green = "#32CD32"
+    let grey = "#cacac9"
+    let red = "#E10600" 
+    
+    let colors = results.map(result => result === "win" ? green : result === "loss" ? red: grey);
 
     if (chartInstance) {
-      chartInstance.data.labels = dates; 
-      chartInstance.data.datasets[0].data = ratings;
-      chartInstance.update();
-      return;
+        console.debug("Chart instance exists, updating data");
+
+        // update labels
+        chartInstance.data.labels = dates; 
+        chartInstance.data.datasets[0].data = ratings;
+        chartInstance.data.datasets[0].links = links;
+        chartInstance.data.datasets[0].backgroundColor = colors;
+
+        // update toolips 
+        chartInstance.options.plugins.tooltip.callbacks = {
+            label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                let index = context.dataIndex;
+                let result = results[index];
+                let rating = ratings[index];
+                label += `${rating} (${result}) `;
+                }
+                return label;
+            },
+    
+            labelColor: function(context) {
+                let index = context.dataIndex;
+                return {
+                borderColor: colors[index],
+                backgroundColor: colors[index],
+                borderWidth: 2,
+                borderDash: [2, 2],
+                borderRadius: 2,
+                };
+            },
+            footer: function(context){
+                let index = context[0].dataIndex;
+                let opening = openings[index];
+                return opening;
+            },
+            beforeFooter: function(context) {
+                let index = context[0].dataIndex;
+                return `${userColor[index]}`;
+    
+            }
+        }
+
+        // update click handler
+        chartInstance.clickHandler = function(click) {
+            const points = chartInstance.getElementsAtEventForMode(click, 'nearest',
+            {intersect: true}, true);
+            if (points.length) {
+              const firstPoint = points[0]
+              let url = links[firstPoint.index]
+              window.open(url, "_blank");
+            }
+        }
+
+        ctx.onclick = chartInstance.clickHandler;
+
+        console.debug(chartInstance.data.datasets);
+
+        chartInstance.update();
+        chartInstance.resetZoom();
+        return chartInstance;
     }
 
 
-    const eloChart = new Chart(ctx, {
+    let eloChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: dates,
@@ -54,15 +113,15 @@ export function graphElo(timeClass="rapid")  {
         ]
         },
         options: {
-          responsive: true,
-          interactions:  {
+            responsive: true,
+            interactions:  {
             intersect: false,
             mode: 'index'
-          },
-          parsing: {
+        },
+        parsing: {
             yAxisKey: ratings,
             xAxisKey: dates
-          },
+        },
 
           scales: {
             x: {
@@ -135,7 +194,8 @@ export function graphElo(timeClass="rapid")  {
             zoom: {
               zoom: {
                 wheel: {
-                  enabled: true 
+                  enabled: true ,
+                  speed: 0.02
                 },
                 pan: {
                   enabled: true,
@@ -164,75 +224,48 @@ export function graphElo(timeClass="rapid")  {
           window.open(url, "_blank");
         }
       }
-  
+      console.debug("This should not run if chart is already defined");
       ctx.onclick = clickHandler;
-      eloChart.update();
 
       return eloChart;
  }
 
 
  function getChartData(timeClass) {
+    let archivedGames = getArchivedGames();
 
-  let archivedGames = getArchivedGames();
-
-
-
-  let allData = {
-    ratings: [],
-    dates: [],
-    results: [],
-    links: [],
-    opening: [],
-    userColor: []
-  }
+    let allData = {
+        ratings: [],
+        dates: [],
+        results: [],
+        links: [],
+        opening: [],
+        userColor: []
+    }
 
 
-  for (let i=0; i<archivedGames.length; i++) {
-      let parsedGameNode = archivedGames[i]
-      if (parsedGameNode.timeClass === timeClass){
+    for (let i=0; i<archivedGames.length; i++) {
+        let parsedGameNode = archivedGames[i]
+        if (parsedGameNode.timeClass === timeClass){
 
-        let rating = parsedGameNode.userRating;
-        let link = parsedGameNode.gameUrl;
-        let userColor = parsedGameNode.userColor;
-        let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
-        let result = getResult(parsedGameNode.result);
-        let opening = getMainLine(parsedGameNode.opening);
+            let rating = parsedGameNode.userRating;
+            let link = parsedGameNode.gameUrl;
+            let userColor = parsedGameNode.userColor;
+            let safeDate = parsedGameNode.timeStamp.replaceAll(".","-");
+            let result = getResult(parsedGameNode.result);
+            let opening = getMainLine(parsedGameNode.opening);
 
-        allData.userColor.push(userColor);
-        allData.dates.push(safeDate);
-        allData.ratings.push(rating);
-        allData.links.push(link);
-        allData.opening.push(opening);
-        allData.results.push(result);
+            allData.userColor.push(userColor);
+            allData.dates.push(safeDate);
+            allData.ratings.push(rating);
+            allData.links.push(link);
+            allData.opening.push(opening);
+            allData.results.push(result);
 
 
-      }
+        }
 
   }
 
   return allData;
- }
-
-export function resetChartZoom(timeClass) {
-
-  const ctx = document.getElementById('eloOverTime');
-  const chartInstance = Chart.getChart(ctx);
-
-  let allData = getChartData(timeClass);
-  let dates = allData.dates;
-  let ratings = allData.ratings;
-
-
-  if (chartInstance) {
-    chartInstance.data.labels = dates; 
-    chartInstance.data.datasets[0].data = ratings;
-
-    chartInstance.resetZoom();
-    chartInstance.update();
-    return;
-  }
-
-
- 
  }
