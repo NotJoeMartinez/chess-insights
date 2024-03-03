@@ -7,7 +7,6 @@
       <div class="spinner-border">
       </div>
     </div>
-    
     <div class="container search-form-container">
       <div class="input-group mb-3">
           <input type="text" 
@@ -56,9 +55,10 @@
 
 <script>
   import { getOpeningsForExplore } from '~/utils/openingsUtils.js';
+  import { getArchivedGames } from '~/utils/archiveUtils.js';
   import {
     exploreAll,
-    exploreFromAPI
+    exploreFromAPI,
   } from '~/utils/exploreUtils.js';
 
   export default {
@@ -91,7 +91,7 @@
 
         await exploreFromAPI(userName)
         this.showSpinner = false
-        let games = JSON.parse(window.localStorage.getItem("archivedGames"))
+        let games = getArchivedGames();
         this.gridData = exploreAll(games)
       },
       editSearchColumn(column){
@@ -102,17 +102,16 @@
       }
 
     },
-    mounted: function () {
+    mounted: async function () {
 
       let games = JSON.parse(window.localStorage.getItem("archivedGames"))
-
       if (games !== null) {
         console.log("we have enough space")
-        this.gridData = exploreAll(games)
-        this.openingFilter = getOpeningsForExplore(games)  
+        this.gridData = exploreAll(games);
+        this.openingFilter = getOpeningsForExplore(games);
       } else {
         console.log("we don't have enough space")
-        this.fetchData()
+        await this.fetchData();
       }
     }
   }

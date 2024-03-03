@@ -11,7 +11,6 @@ import { getArchivedGames } from '~/utils/archiveUtils.js';
 
 
 export function graphElo(timeClass="rapid") {
-    console.debug(`graphElo called with timeClass: ${timeClass}`);
     let ctx = document.getElementById('eloOverTime');
     let chartInstance = Chart.getChart(ctx);
 
@@ -34,7 +33,6 @@ export function graphElo(timeClass="rapid") {
         result === "win" ? green : result === "loss" ? red: grey);
 
     if (chartInstance) {
-        console.debug("Chart instance exists, updating data");
 
         // update labels
         chartInstance.data.labels = dates; 
@@ -96,7 +94,6 @@ export function graphElo(timeClass="rapid") {
 
         ctx.onclick = chartInstance.clickHandler;
 
-        console.debug(chartInstance.data.datasets);
 
         chartInstance.update();
         chartInstance.resetZoom();
@@ -233,7 +230,6 @@ export function graphElo(timeClass="rapid") {
           window.open(url, "_blank");
         }
       }
-      console.debug("This should not run if chart is already defined");
       ctx.onclick = clickHandler;
 
       return eloChart;

@@ -41,7 +41,6 @@ export function graphResByOpp(timeClass) {
     chartInstance.data.labels = rangeLabels;
 
     chartInstance.update();
-    console.debug(`chart updated`);
     return;
   }
   chartData = getChartData(timeClass); 
@@ -188,7 +187,6 @@ function getRanges(csvData) {
   for (let i = 0; i < csvData.length; i++) {
     let rating = Number(csvData[i]["opponentRating"]);
     if (isNaN(rating)) {
-      console.debug(i + " is rating is NaN: " + rating);
       continue;
     }
     oppRatingList.push(rating);

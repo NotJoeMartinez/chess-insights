@@ -202,7 +202,6 @@ export function parseGameNode(gameNode) {
         parsedGameNode["timePlayed"] = timePlayed;
     }
 
-    console.log(parsedGameNode.pgn);
 
     // move numbers 
     parsedGameNode["moveCount"] = countMoves(parsedGameNode.pgn);

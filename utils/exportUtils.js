@@ -36,7 +36,7 @@ export function exportChessData(option) {
         "userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
         "timeClass", "fen", "userColor", "userRating","opponent", 
         "opponentRating", "opponentUrl", "result", "wonBy", "date", 
-        "openingUrl", "opening", "startTime", "endTime", "moveCount" 
+        "openingUrl", "opening", "startTime", "endTime", "outcome", "moveCount" 
     ];
 
     let archivedGames = getArchivedGames();
@@ -78,6 +78,7 @@ export function exportChessData(option) {
             row.push(parsedGameNode.startTime);
             row.push(parsedGameNode.endTime);
             row.push(parsedGameNode.moveCount);
+            row.push(parsedGameNode.outcome);
             csvData.push(row);
         }
         rowsToCsv(csvData, "all");
@@ -166,7 +167,7 @@ export function showCustomExport() {
         "userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
         "timeClass", "fen", "userColor", "userRating", "opponent", 
         "opponentRating", "opponentUrl", "result", "date", "openingUrl", 
-        "opening", "startTime", "endTime", "pgn", "moveCount"
+        "opening", "startTime", "endTime", "pgn", "moveCount", "outcome"
     ];
 
     let modalBody = document.getElementById("customExportBody");
