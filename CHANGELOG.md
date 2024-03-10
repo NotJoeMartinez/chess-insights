@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.7] - 2024-03-09
+## Added 
+- [chess-insights-55](https://github.com/NotJoeMartinez/chess-insights/pull/55)
+    - converted alert notification to html dialog.
+    - added nick Nik Romano's chess.com account to suggested users
+        - https://www.chess.com/blog/2019C7Z06/nik-romano-aka-nowhere2b
+        - https://fund.utsa.edu/project/39473/wall
+
 ## [2.0.6] - 2024-03-03
 ## Fixed
 - [chess-insights-54](https://github.com/NotJoeMartinez/chess-insights/pull/54/files)
