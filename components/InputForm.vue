@@ -42,7 +42,18 @@
   </div>
   </div>  
   <datalist id="gmsList">
-</datalist>
+  </datalist>
+
+  <dialog id="invalidUser">
+    <h4>
+      <strong>Invalid User </strong>
+    </h4>
+    
+    <p>
+      {{ userName }}
+    </p>
+    <button id="closeInvalidUserBtn" @click="closeResetModal">Close</button>
+  </dialog>
 </header>
 
 
@@ -55,18 +66,43 @@ export default {
   data() {
     return {
       userName: '',
+      invalidUser: false
     }
   },
   mounted() {
     this.suggestUserInput();
   },
   methods: {
-    submitForm() {
-      this.$emit('get-all-user-data', this.userName);
+    async submitForm() {
+      
+
+      let res = null;
+      try {
+        res = await fetch(`https://api.chess.com/pub/player/${this.userName}`);
+      } catch (e) {
+        this.invalidUser = true;
+        this.triggerInvalidUserModal();
+      }
+
+      if (res !== null && res.status === 200) {
+        this.$emit('get-all-user-data', this.userName);
+      } else {
+        this.invalidUser = true;
+        this.triggerInvalidUserModal();
+      }
+
     },
-
+    closeResetModal() {
+      let modal = document.getElementById('invalidUser')
+      modal.close();
+      this.invalidUser = false;
+      this.userName = '';
+    },
+    triggerInvalidUserModal() {
+      let modal = document.getElementById('invalidUser')
+      modal.showModal();
+    },
     uploadFile() {
-
       let inputElement = document.createElement("input");
       inputElement.type = "file";
       inputElement.accept = ".json";
@@ -100,6 +136,7 @@ export default {
     suggestUserInput() {
       const input = document.getElementById("uname");
       const gms = [
+        "nowhere2b",
         "mastoblood",
         "ajseventeen",
         "slimshaneyyy",
@@ -201,4 +238,41 @@ export default {
     color: white;
     z-index: 1;
 }
+
+
+#invalidUser {
+  background-color: #312e2b; 
+  color: #ffffff; 
+  
+  border-style: solid;
+  border-color: #a94442; 
+  border-width: 0 0 0 5px;
+  
+  border-radius: 4px; 
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2); 
+  
+  padding: 10px 15px; 
+  font-family: sans-serif; 
+  font-size: 0.9em; 
+  
+}
+
+
+#closeInvalidUserBtn {
+  background-color: #505050; 
+  color: #ffffff; 
+  
+  border: none; 
+  border-radius: 2px; 
+  
+  padding: 5px 10px; 
+  cursor: pointer; 
+  
+  font-family: inherit; 
+}
+
+#closeInvalidUserBtn:hover {
+  background-color: #606060; 
+}
+
 </style>
