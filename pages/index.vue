@@ -157,7 +157,7 @@
 
         userName = userName.replace(/^\s+|\s+$/g, "");
 
-        logAPIRequest(userName);
+        // logAPIRequest(userName);
         let userStatsRes = await fetchUserStats(userName);
 
         if (userStatsRes.error){
