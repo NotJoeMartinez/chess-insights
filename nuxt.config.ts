@@ -17,6 +17,21 @@ export default defineNuxtConfig({
   ],
   app:{
     head: {
+      script: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=G-RWYGJG4RC3",
+          async: true
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RWYGJG4RC3');
+          `,
+          type: 'text/javascript',
+        }
+      ],
       title: 'Free Chess.com Insights',
       meta: [
         { charset: 'utf-8' },
