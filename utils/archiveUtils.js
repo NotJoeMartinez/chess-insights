@@ -54,7 +54,7 @@ export function parseGameNode(gameNode) {
     // easy ones
     parsedGameNode["unixTimeStamp"] = gameNode.end_time;
     parsedGameNode["timeClass"] = gameNode.time_class;
-    parsedGameNode["gameUrl"] = gameNode.url + refId;
+    parsedGameNode["gameUrl"] = gameNode.url + refId; 
     parsedGameNode["fen"] = gameNode.fen;
     parsedGameNode["timeStamp"] = utcToHuman(gameNode.end_time);
 
@@ -207,8 +207,8 @@ export function parseGameNode(gameNode) {
     parsedGameNode["moveCount"] = countMoves(parsedGameNode.pgn);
 
     // ugly  
-    parsedGameNode["gameId"] = parsedGameNode["gameUrl"].match(/(live|daily)\/(.*)$/)[2];
-    parsedGameNode.gameId = parsedGameNode.gameId.replace(/\?ref_id=74104030/, '');
+    parsedGameNode["gameId"] = parsedGameNode["gameUrl"].split('/').pop().split('?')[0];
+    parsedGameNode.gameId = parsedGameNode.gameId;
 
     delete parsedGameNode.pgn
     // main line openings 
