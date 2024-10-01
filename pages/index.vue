@@ -190,6 +190,11 @@
           let archive = await fetch(archiveUrls[i]);
           let archiveJson = await archive.json();
           let archiveGameList = archiveJson.games;
+
+          if (archiveGameList === null || archiveGameList === undefined) {
+            console.log("No games found in this archive");
+            continue;
+         }
           for (let j = 0; j < archiveGameList.length; j++) {
             if (verifyLiveChess(archiveGameList[j])) {
               archivedGames.push(archiveGameList[j]);
