@@ -137,6 +137,7 @@ export default {
       const input = document.getElementById("uname");
       const gms = [
         "nowhere2b",
+        "nakulcarpenter",
         "mastoblood",
         "ajseventeen",
         "slimshaneyyy",
@@ -144,7 +145,7 @@ export default {
         "SvenskaRullstolen",
         "Dolols",
         "micbear1",
-        "RedPanda1705",
+        "RedPanda1705"
       ];
 
       const randGms = gms
