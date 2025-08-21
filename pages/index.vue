@@ -72,6 +72,11 @@
     :timeClass="drawTimeClass" 
     />
 
+    <ChartsStreakChart 
+    @updateStreak="streakTimeClass = $event" 
+    :timeClass="streakTimeClass" 
+    />
+
     <ExportPopup />
 
 
@@ -118,6 +123,7 @@
         lossTimeClass: 'all',
         winTimeClass: 'all',
         drawTimeClass: 'all',
+        streakTimeClass: 'all',
         ovTimeClass: '',
         ovUserGames: 0,
         ovWinPercentage: 0,
