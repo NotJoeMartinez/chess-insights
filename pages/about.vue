@@ -83,7 +83,7 @@
             <h2><a id="donations"> Donations </a> </h2>
                 
             <p>
-                I'm a broke collage student and I made this site for fun. If you want to support
+                I'm a broke college student and I made this site for fun. If you want to support
                 this site and help me pay for hosting you can donate to me on the following platforms:
             </p>
 
