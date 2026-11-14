@@ -36,7 +36,7 @@ export function exportChessData(option) {
         "userAccuracy", "opponentAccuracy", "gameUrl", "gameId",
         "timeClass", "fen", "userColor", "userRating","opponent", 
         "opponentRating", "opponentUrl", "result", "wonBy", "date", 
-        "openingUrl", "opening", "startTime", "endTime", "outcome", "moveCount" 
+        "openingUrl", "opening", "startTime", "endTime", "moveCount", "outcome"
     ];
 
     let archivedGames = getArchivedGames();
@@ -84,7 +84,7 @@ export function exportChessData(option) {
         rowsToCsv(csvData, "all");
 
     } else if (option === "simple") {
-        csvData.push(["date", "timeClass", "result", "rating", "moveCount", "gameUrl"]);
+        csvData.push(["date", "timeClass", "result", "rating", "gameUrl", "moveCount"]);
         for (let i = 0; i < archivedGames.length; i++) {
             let row = [];
             let parsedGameNode = archivedGames[i];
